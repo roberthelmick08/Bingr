@@ -11,15 +11,24 @@
 <body>
 <h2>Add a season to ${show.title} ...</h2>
 	<div class="navBar">
+		<div class="profileThumbnail">
+		<img src="${user.imgUrl}"/>
 		<p>Hi ${user.username}!</p>
-	<ul>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
+		</div>
 
+		<select name="group">
+			<option value="" selected>Manage Group</option>
+			
+			<!-- Add iterable to loop over group -->
+			<c:forEach var="group" item="${groups}"><option value="name"><a href="manageGroup.do">${group.name}</a></option></c:forEach>
+		</select>
+		<select>
+			<option value="">Manage Stores</option>
+		</select>
 	</div>
-	
-	
+
+	<div class="mainFlexBox">
+		
+	</div>
 </body>
 </html>

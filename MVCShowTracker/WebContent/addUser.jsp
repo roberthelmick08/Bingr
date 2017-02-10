@@ -11,6 +11,10 @@
 <body>
 	<h2>Create Account</h2>
 	
+	<div class="navBar">
+		<a href="index.jsp">Home</a>
+	</div>
+	
 	<div class="inputForm">
 		<form action="addUser.do" method="POST">
 			<input type="text" name="username" placeholder="Username..." required>
