@@ -1,0 +1,19 @@
+Phase I
+
+User story 1: User goes to ip/www address and sees login screen
+
+User story 2: User can create new account
+
+User story 3: User can login
+
+User story 4: User can follow shows
+
+User story 5: User can see shows they are following
+
+User story 6: User can mark shows watched
+
+Phase II
+
+User story 7: User can search/view other users
+
+User story 8: User can "follow" other users, see what shows they are following, and which episodes they have watched.
