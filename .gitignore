@@ -3,4 +3,5 @@
 .gradle
 target
 build
+.metadata
 bin
