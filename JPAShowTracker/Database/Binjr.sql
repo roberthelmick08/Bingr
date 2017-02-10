@@ -5,15 +5,15 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema BingrDB
+-- Schema BinjrDB
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `BingrDB` ;
+DROP SCHEMA IF EXISTS `BinjrDB` ;
 
 -- -----------------------------------------------------
--- Schema BingrDB
+-- Schema BinjrDB
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `BingrDB` DEFAULT CHARACTER SET utf8 ;
-USE `BingrDB` ;
+CREATE SCHEMA IF NOT EXISTS `BinjrDB` DEFAULT CHARACTER SET utf8 ;
+USE `BinjrDB` ;
 
 -- -----------------------------------------------------
 -- Table `user`
@@ -153,7 +153,7 @@ GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'student';
 -- Data for table `user`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BingrDB`;
+USE `BinjrDB`;
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Chaz', 'chaz', 1, 'Chaaaz', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Nik', 'nik', 2, 'Nikolaus', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Robert', 'robert', 3, 'Rupert', DEFAULT);
@@ -166,7 +166,7 @@ COMMIT;
 -- Data for table `show`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BingrDB`;
+USE `BinjrDB`;
 INSERT INTO `show` (`id`, `title`, `description`, `img_url`) VALUES (1, 'Game of Swords', 'People killing eachother', NULL);
 INSERT INTO `show` (`id`, `title`, `description`, `img_url`) VALUES (2, 'Stranger Thrones', 'Throne Improvement Show', NULL);
 
@@ -177,7 +177,7 @@ COMMIT;
 -- Data for table `season`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BingrDB`;
+USE `BinjrDB`;
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (1, 'Season 1 of Stranger Thrones', 'Season 1', NULL, 1, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (2, 'Season 2 of Stranger Thrones', 'Season 2', NULL, 2, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (3, 'Season 1 of Game of Swords', 'Season 1', NULL, 1, 1);
@@ -190,7 +190,7 @@ COMMIT;
 -- Data for table `episode`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BingrDB`;
+USE `BinjrDB`;
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 2 GOS', 'Episode 2', NULL, 2, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 4);
