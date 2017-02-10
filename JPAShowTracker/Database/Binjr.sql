@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 
 -- -----------------------------------------------------
--- Table `show`
+-- Table `tv_show`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `show` ;
+DROP TABLE IF EXISTS `tv_show` ;
 
-CREATE TABLE IF NOT EXISTS `show` (
+CREATE TABLE IF NOT EXISTS `tv_show` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128) NOT NULL,
   `description` VARCHAR(1000) NULL,
@@ -54,16 +54,16 @@ CREATE TABLE IF NOT EXISTS `season` (
   `title` VARCHAR(120) NULL,
   `img_url` VARCHAR(90) NULL,
   `season_number` INT NULL,
-  `show_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `show_id`),
+  `tv_show_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `tv_show_id`),
   CONSTRAINT `fk_seasons_show1`
-    FOREIGN KEY (`show_id`)
-    REFERENCES `show` (`id`)
+    FOREIGN KEY (`tv_show_id`)
+    REFERENCES `tv_show` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_seasons_show1_idx` ON `season` (`show_id` ASC);
+CREATE INDEX `fk_seasons_show1_idx` ON `season` (`tv_show_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -90,28 +90,28 @@ CREATE INDEX `fk_episodes_seasons1_idx` ON `episode` (`season_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `user_has_Show`
+-- Table `user_has_tvshow`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_has_Show` ;
+DROP TABLE IF EXISTS `user_has_tvshow` ;
 
-CREATE TABLE IF NOT EXISTS `user_has_Show` (
+CREATE TABLE IF NOT EXISTS `user_has_tvshow` (
   `user_id` INT NOT NULL,
-  `show_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `show_id`),
+  `tv_show_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `tv_show_id`),
   CONSTRAINT `fk_user_has_Show_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_Show_Show1`
-    FOREIGN KEY (`show_id`)
-    REFERENCES `show` (`id`)
+    FOREIGN KEY (`tv_show_id`)
+    REFERENCES `tv_show` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE INDEX `fk_user_has_Show_Show1_idx` ON `user_has_Show` (`show_id` ASC);
+CREATE INDEX `fk_user_has_Show_Show1_idx` ON `user_has_tvshow` (`tv_show_id` ASC);
 
-CREATE INDEX `fk_user_has_Show_user_idx` ON `user_has_Show` (`user_id` ASC);
+CREATE INDEX `fk_user_has_Show_user_idx` ON `user_has_tvshow` (`user_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -163,12 +163,12 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `show`
+-- Data for table `tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `show` (`id`, `title`, `description`, `img_url`) VALUES (1, 'Game of Swords', 'People killing eachother', NULL);
-INSERT INTO `show` (`id`, `title`, `description`, `img_url`) VALUES (2, 'Stranger Thrones', 'Throne Improvement Show', NULL);
+INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (1, 'Game of Swords', 'People killing eachother', NULL);
+INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (2, 'Stranger Thrones', 'Throne Improvement Show', NULL);
 
 COMMIT;
 
@@ -178,10 +178,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (1, 'Season 1 of Stranger Thrones', 'Season 1', NULL, 1, 2);
-INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (2, 'Season 2 of Stranger Thrones', 'Season 2', NULL, 2, 2);
-INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (3, 'Season 1 of Game of Swords', 'Season 1', NULL, 1, 1);
-INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `show_id`) VALUES (4, 'Season 2 of Game of Swords', 'Season2', NULL, 2, 1);
+INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (1, 'Season 1 of Stranger Thrones', 'Season 1', NULL, 1, 2);
+INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (2, 'Season 2 of Stranger Thrones', 'Season 2', NULL, 2, 2);
+INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (3, 'Season 1 of Game of Swords', 'Season 1', NULL, 1, 1);
+INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (4, 'Season 2 of Game of Swords', 'Season2', NULL, 2, 1);
 
 COMMIT;
 
