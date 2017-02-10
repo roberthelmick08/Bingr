@@ -33,7 +33,7 @@ public class User {
 	private String imgUrl;
 	
 	@ManyToMany
-	@JoinTable(name="user_show",
+	@JoinTable(name="user_tv_show",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;

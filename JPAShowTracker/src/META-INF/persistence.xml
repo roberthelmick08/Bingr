@@ -8,7 +8,11 @@
    	 </provider>
 
 		<!-- List Entities Here -->
-		<!-- <class>entities.Customer</class> -->
+		<class>entities.Episode</class>
+		<class>entities.Season</class>
+		<class>entities.TVShow</class>
+		<class>entities.User</class>
+		<class>entities.UserEpisode</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/binjrdb" />
