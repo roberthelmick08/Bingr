@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class TVShow {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@OneToMany(mappedBy="tvShow")
+	@OneToMany(mappedBy="tvShow", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Season> seasons;
 
 	@ManyToMany(mappedBy="shows")

@@ -11,7 +11,7 @@
 		<!-- <class>entities.Customer</class> -->
 
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sdvid" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/binjrdb" />
 			<property name="javax.persistence.jdbc.user" value="student" />
 			<property name="javax.persistence.jdbc.password" value="student" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

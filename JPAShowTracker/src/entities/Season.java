@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Season {
 	@JoinColumn(name="tv_show_id")
 	private TVShow tvShow;
 	
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy="season", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Episode> episodes;
 
 	

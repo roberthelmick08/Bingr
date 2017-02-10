@@ -32,14 +32,14 @@ public class User {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@ManyToMany
 	@JoinTable(name="user_show",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;
 	
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	private List<UserEpisode> episodes;
+	private List<UserEpisode> userEpisodes;
 
 	
 	// Getters and Setters
