@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="tv_show")
 public class TVShow {
 
 	@Id
@@ -30,7 +32,7 @@ public class TVShow {
 	@OneToMany(mappedBy="tvShow", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Season> seasons;
 
-	@ManyToMany(mappedBy="shows")
+	@ManyToMany(mappedBy="tvShows")
 	private List<User> users;
 	
 	// Getters and Setters

@@ -10,18 +10,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import entities.User;
+import entities.Season;
 
-public class UserTest {
+public class SeasonTest {
 	private EntityManagerFactory emf = null;
 	private EntityManager em = null;
-	private User user = null;
+	private Season season = null;
 	
 	@Before
 	public void setUp() throws Exception {
 		emf = Persistence.createEntityManagerFactory("ShowTracker");
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
+		season = em.find(Season.class, 1);
 	}
 	
 	@After
@@ -31,12 +31,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_user_mapping() {
-		assertNotNull(user);
-		assertEquals(1, user.getId());
-		assertEquals("Chaaaz", user.getDisplayName());
-		assertEquals("Chaz" , user.getUsername());
-		assertEquals("chaz" , user.getPassword());
-		assertEquals("img/default.jpg" , user.getImgUrl());
+	public void test_season_mapping() {
+		assertNotNull(season);
+		assertEquals(1, season.getId());
+		assertEquals(1, season.getSeasonNumber());
+		assertEquals("Season 1", season.getTitle());
+		assertEquals("Season 1 of Stranger Thrones", season.getDescription());
 	}
 }

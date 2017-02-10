@@ -10,18 +10,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import entities.User;
+import entities.Episode;
 
-public class UserTest {
+public class EpisodeTest {
 	private EntityManagerFactory emf = null;
 	private EntityManager em = null;
-	private User user = null;
+	private Episode episode = null;
 	
 	@Before
 	public void setUp() throws Exception {
 		emf = Persistence.createEntityManagerFactory("ShowTracker");
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
+		episode = em.find(Episode.class, 1);
 	}
 	
 	@After
@@ -31,12 +31,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_user_mapping() {
-		assertNotNull(user);
-		assertEquals(1, user.getId());
-		assertEquals("Chaaaz", user.getDisplayName());
-		assertEquals("Chaz" , user.getUsername());
-		assertEquals("chaz" , user.getPassword());
-		assertEquals("img/default.jpg" , user.getImgUrl());
+	public void test_episode_mapping() {
+		assertNotNull(episode);
+		assertEquals(1, episode.getId());
+		assertEquals(1, episode.getEpisodeNumber());
+		assertEquals("Ep 1 GOS", episode.getTitle());
+		assertEquals("Episode 1", episode.getDescription());
 	}
 }
