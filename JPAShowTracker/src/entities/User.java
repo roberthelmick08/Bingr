@@ -2,6 +2,7 @@ package entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,13 +32,13 @@ public class User {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name="user_show",
-		joinColumns=@JoinColumn(name="show_id"),
+		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
-	List<Show> shows;
+	List<TVShow> tvShows;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<UserEpisode> episodes;
 
 	

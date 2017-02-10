@@ -31,8 +31,8 @@ public class Season {
 	private String imgUrl;
 	
 	@ManyToOne
-	@JoinColumn(name="show_id")
-	private Show show;
+	@JoinColumn(name="tv_show_id")
+	private TVShow tvShow;
 	
 	@OneToMany(mappedBy="season")
 	private List<Episode> episodes;
@@ -75,12 +75,12 @@ public class Season {
 		return id;
 	}
 	
-	public Show getShow() {
-		return show;
+	public TVShow getShow() {
+		return tvShow;
 	}
 
-	public void setShow(Show show) {
-		this.show = show;
+	public void setShow(TVShow tvShow) {
+		this.tvShow = tvShow;
 	}
 	
 	public List<Episode> getEpisodes() {

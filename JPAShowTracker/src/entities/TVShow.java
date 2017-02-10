@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Show {
+public class TVShow {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Show {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@OneToMany(mappedBy="show")
+	@OneToMany(mappedBy="tvShow")
 	private List<Season> seasons;
 
 	@ManyToMany(mappedBy="shows")
