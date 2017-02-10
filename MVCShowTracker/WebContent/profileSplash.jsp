@@ -6,23 +6,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>BinjR login</title>
+<title>${user.username}'s profile</title>
 </head>
 <body>
-	<h1>BinjR</h1>
-	<h2>Login</h2>
-	
-	<div class="inputForm">
-		<form action="login.do" method="POST">
-		<input type="text" name="username" placeholder="Username..." required>
-		<br>
-		<input type="password" name="password" placeholder="Password..." required>
-		<input type="submit" value="Login">
-		</form>
-		
-		<form action="addUser.jsp">
-		<input type="submit" value="Add New User">
-		</form>
+<h2>Add a season to ${show.title} ...</h2>
+	<div class="navBar">
+		<p>Hi ${user.username}!</p>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+
 	</div>
+	
+	
 </body>
 </html>
