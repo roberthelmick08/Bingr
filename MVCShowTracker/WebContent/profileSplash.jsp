@@ -9,26 +9,42 @@
 <title>${user.username}'s profile</title>
 </head>
 <body>
-<h2>Add a season to ${show.title} ...</h2>
 	<div class="navBar">
-		<div class="profileThumbnail">
-		<img src="${user.imgUrl}"/>
-		<p>Hi ${user.username}!</p>
-		</div>
-
+		<h2>Hi ${user.username}!</p>
+		
 		<select name="group">
 			<option value="" selected>Manage Group</option>
 			
 			<!-- Add iterable to loop over group -->
 			<c:forEach var="group" item="${groups}"><option value="name"><a href="manageGroup.do">${group.name}</a></option></c:forEach>
 		</select>
+		
 		<select>
 			<option value="">Manage Stores</option>
 		</select>
 	</div>
 
+<h2>Add a season to ${tvshow.title} ...</h2>
+
+
+	<!-- add forEach loop to iterate over groups -->
 	<div class="mainFlexBox">
 		
+		<div class="groupBox">
+			<h4>${user.username}</h4>
+			<br>
+			<img src="${user.imgUrl}" class=/>
+		</div>
+		<!-- add forEach loop to iterate through favorited shows -->
+		<div class="showBox">
+			<h4>${tvshow.title}</h4>
+			<br>
+			<!-- add forEach loop to iterate through watched/unwatched episodes -->
+			<div>
+				
+			</div>
+		</div>
 	</div>
+	
 </body>
 </html>

@@ -28,5 +28,8 @@
 			<input type="submit" value="Submit">
 		</form>
 	</div>
+	
+	<c:if test="${doesNotMatch}"><h4>Passwords do not match. Please reenter.</h4></c:if>
+	
 </body>
 </html>
