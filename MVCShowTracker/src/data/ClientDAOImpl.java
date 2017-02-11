@@ -14,33 +14,65 @@ import entities.UserEpisode;
 
 @Repository
 @Transactional
-public class ClientDAOImpl implements ClientDAO{
-	@PersistenceContext 
+public class ClientDAOImpl implements ClientDAO {
+	@PersistenceContext
 	private EntityManager em;
 
 	@Override
 	public User getUser(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String queryString = "select u from User u where u.username = :username AND u.password = :password";
+			User user = em.createQuery(queryString, User.class).setParameter("username", username)
+					.setParameter("password", password).getSingleResult();
+			System.out.println(user);
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
 
 	@Override
 	public User getUserByUserId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String queryString = "select u from User u where u.id = :id";
+			User user = em.createQuery(queryString, User.class).setParameter("id", id).getSingleResult();
+			System.out.println(user);
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public User createUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			em.persist(user);
+			em.flush();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public UserEpisode watchEpisode(UserEpisode ue) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+//			if (ue.getWatched() == 0) {
+//				ue.setWatched(1);
+//			} else if (ue.getWatched() == 1) {
+//				ue.setWatched(0);
+//			}
+			em.persist(ue);
+			em.flush();
+			System.out.println(ue);
+			return ue;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -49,7 +81,7 @@ public class ClientDAOImpl implements ClientDAO{
 		return null;
 	}
 	// SPLIT UP WORK HERE!!
-	
+
 	@Override
 	public List<TVShow> getUserShows(int userId) {
 		// TODO Auto-generated method stub
@@ -79,6 +111,5 @@ public class ClientDAOImpl implements ClientDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 }

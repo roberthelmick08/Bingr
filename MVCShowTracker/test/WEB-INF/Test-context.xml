@@ -13,10 +13,11 @@
 
 	<!-- @TODO -->
 	<!-- <bean id="testdao" class="data.ActorDAOImpl" /> -->
+	<bean id="ClientDAOBean" class="data.ClientDAOImpl" />
 
 	<bean id="myEntityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="ShowTracker" />
+		<property name="persistenceUnitName" value="TestShowTracker" />
 	</bean>
 
 	<bean id="myTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
