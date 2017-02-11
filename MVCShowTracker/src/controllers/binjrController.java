@@ -12,7 +12,6 @@ import entities.User;
 
 @Controller
 public class binjrController {
-<<<<<<< HEAD
 	private ClientDAO cDao = null;
 	private AdminDAO aDao = null;
 	
