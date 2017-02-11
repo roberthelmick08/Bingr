@@ -90,11 +90,11 @@ CREATE INDEX `fk_episodes_seasons1_idx` ON `episode` (`season_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `user_has_tvshow`
+-- Table `user_tv_show`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_has_tvshow` ;
+DROP TABLE IF EXISTS `user_tv_show` ;
 
-CREATE TABLE IF NOT EXISTS `user_has_tvshow` (
+CREATE TABLE IF NOT EXISTS `user_tv_show` (
   `user_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `tv_show_id`),
@@ -109,9 +109,9 @@ CREATE TABLE IF NOT EXISTS `user_has_tvshow` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE INDEX `fk_user_has_Show_Show1_idx` ON `user_has_tvshow` (`tv_show_id` ASC);
+CREATE INDEX `fk_user_has_Show_Show1_idx` ON `user_tv_show` (`tv_show_id` ASC);
 
-CREATE INDEX `fk_user_has_Show_user_idx` ON `user_has_tvshow` (`user_id` ASC);
+CREATE INDEX `fk_user_has_Show_user_idx` ON `user_tv_show` (`user_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -120,7 +120,7 @@ CREATE INDEX `fk_user_has_Show_user_idx` ON `user_has_tvshow` (`user_id` ASC);
 DROP TABLE IF EXISTS `user_episode` ;
 
 CREATE TABLE IF NOT EXISTS `user_episode` (
-  `watchewd` INT NOT NULL DEFAULT 0,
+  `watched` INT NOT NULL DEFAULT 0,
   `user_id` INT NOT NULL,
   `episode_id` INT NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
