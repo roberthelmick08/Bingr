@@ -79,7 +79,6 @@ public class User {
 		return id;
 	}
 
-
 	// toString
 	@Override
 	public String toString() {
