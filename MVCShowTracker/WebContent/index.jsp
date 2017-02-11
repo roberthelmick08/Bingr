@@ -24,5 +24,8 @@
 		<input type="submit" value="Add New User">
 		</form>
 	</div>
+	
+	<c:if test="${noUser}"><h4>Username and password combination does not exist</h4></c:if>
+	
 </body>
 </html>

@@ -20,7 +20,7 @@
 			<br>
 			<input type="text" name="img" placeholder="Image url..." required>
 			<br>
-			<input type="hidden" name="id" value="${show.id}">
+			<input type="hidden" name="id" value="${tvshow.id}">
 			<input type="submit" value="Add Show">
 		</form>
 	</div>
