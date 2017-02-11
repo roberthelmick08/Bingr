@@ -16,12 +16,9 @@
 			<option value="" selected>Manage Group</option>
 			
 			<!-- Add iterable to loop over group -->
-			<c:forEach var="group" item="${groups}"><option value="name"><a href="manageGroup.do">${group.name}</a></option></c:forEach>
-		</select>
+<%-- 			<c:forEach var="group" item="${groups}"><option value="name"><a href="manageGroup.do">${group.name}</a></option></c:forEach>
+ --%>		</select>
 		
-		<select>
-			<option value="">Manage Stores</option>
-		</select>
 	</div>
 
 <h2>Add a season to ${tvshow.title} ...</h2>
@@ -29,7 +26,7 @@
 
 	<!-- add forEach loop to iterate over groups -->
 	<div class="mainFlexBox">
-		
+		<!-- Add conditional statement: if group.name -->
 		<div class="groupBox">
 			<h4>${user.username}</h4>
 			<br>
@@ -40,8 +37,8 @@
 			<h4>${tvshow.title}</h4>
 			<br>
 			<!-- add forEach loop to iterate through watched/unwatched episodes -->
-			<div>
-				
+			<div class="episodeBox">
+				<h5>S${tvshow.season_id}, E${season.episode_id}</h5>
 			</div>
 		</div>
 	</div>
