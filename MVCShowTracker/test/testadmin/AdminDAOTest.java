@@ -1,7 +1,6 @@
 package testadmin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -90,17 +89,36 @@ public class AdminDAOTest {
 	}
 	
 	@Test
-	public void test_removeTVShow_removes_show_and_season_and_episodes() {
+	public void test_removeTVShow_removes_show() {
+		TVShow tvShow = new TVShow();
+		tvShow.setTitle("New Show");
+		tvShow.setDescription("Its so new!");
 		
+		TVShow newShow = dao.addTVShow(tvShow);
+		assertNotNull(newShow);
+		assertTrue(dao.removeTVShow(newShow.getId()));
 	}
 	
 	@Test
-	public void test_removeSeason_removes_season_and_episodes() {
+	public void test_removeSeason_removes_season() {
+		Season season = new Season();
+		season.setTitle("New Season");
+		season.setDescription("All New!");
 		
+		Season newSeason = dao.addSeason(1, season);
+		assertNotNull(newSeason);
+		assertTrue(dao.removeSeason(season.getId()));
 	}
 	
 	@Test
 	public void test_removeEpisode_removes_episode() {
+		Episode episode = new Episode();
+		episode.setEpisodeNumber(1);
+		episode.setTitle("New 1");
+		episode.setDescription("New Episode");
 		
+		Episode newEpisode = dao.addEpisode(4, episode);
+		assertNotNull(newEpisode);
+		assertTrue(dao.removeEpisode(newEpisode.getId()));
 	}
 }
