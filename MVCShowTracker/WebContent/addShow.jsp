@@ -18,7 +18,7 @@
 			<br>
 			<input type="text" name="description" placeholder="Description..." required>
 			<br>
-			<input type="text" name="img" placeholder="Image url...">
+			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
 			<input type="submit" value="Add Show">
 		</form>

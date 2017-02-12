@@ -2,6 +2,7 @@ package controllers;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,17 +16,21 @@ import entities.User;
 
 @Controller
 public class binjrController {
-	private ClientDAO cDao = null;
-	private AdminDAO aDao = null;
+	@Autowired
+	private ClientDAO cDao;
+	@Autowired
+	private AdminDAO aDao;
 
 	@RequestMapping(path = "login.do")
 	public String userLogin(@RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password, HttpSession session) {
+		System.out.println("running login");
 		User user = null;
 		try {
 			user = cDao.getUser(username, password);
 		} catch (Exception e) {
 			session.setAttribute("noUser", true);
+			e.printStackTrace();
 			return "index.jsp";
 		}
 		session.setAttribute("user", user);
@@ -59,6 +64,7 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.setAttribute("show", tvshow);
 		return "addSeason.jsp";
 	}
 
@@ -79,6 +85,8 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.setAttribute("season", season);
+		session.setAttribute("show", season.getTvShow());
 		return "addEpisode.jsp";
 	}
 	
@@ -95,6 +103,7 @@ public class binjrController {
 	@RequestMapping(path = "addEpisode.do")
 	public String addEpisode(Integer seasonId, Episode episode, HttpSession session) {
 		try {
+//			System.out.println("seasonId: " + seasonId + "episode: " + episode);
 			aDao.addEpisode(seasonId, episode);
 		} catch (Exception e) {
 			return "error.jsp";
