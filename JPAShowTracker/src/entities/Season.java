@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class Season {
 	@JoinColumn(name="tv_show_id")
 	private TVShow tvShow;
 	
-	@OneToMany(mappedBy="season", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy="season", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private List<Episode> episodes;
 
 	
@@ -76,14 +77,6 @@ public class Season {
 		return id;
 	}
 	
-	public TVShow getShow() {
-		return tvShow;
-	}
-
-	public void setShow(TVShow tvShow) {
-		this.tvShow = tvShow;
-	}
-	
 	public List<Episode> getEpisodes() {
 		return episodes;
 	}
@@ -91,8 +84,16 @@ public class Season {
 	public void setEpisodes(List<Episode> episodes) {
 		this.episodes = episodes;
 	}
-	
 
+	public TVShow getTvShow() {
+		return tvShow;
+	}
+
+	public void setTvShow(TVShow tvShow) {
+		this.tvShow = tvShow;
+	}
+
+	
 	// toString
 	@Override
 	public String toString() {

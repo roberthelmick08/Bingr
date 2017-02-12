@@ -2,6 +2,7 @@ package controllers;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,8 +16,10 @@ import entities.User;
 
 @Controller
 public class binjrController {
-	private ClientDAO cDao = null;
-	private AdminDAO aDao = null;
+	@Autowired
+	private ClientDAO cDao;
+	@Autowired
+	private AdminDAO aDao;
 
 	@RequestMapping(path = "login.do")
 	public String userLogin(@RequestParam(name = "username") String username,
@@ -26,6 +29,7 @@ public class binjrController {
 			user = cDao.getUser(username, password);
 		} catch (Exception e) {
 			session.setAttribute("noUser", true);
+			e.printStackTrace();
 			return "index.jsp";
 		}
 		session.setAttribute("user", user);
@@ -59,13 +63,14 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.setAttribute("show", tvshow);
 		return "addSeason.jsp";
 	}
 
 	@RequestMapping(path = "deleteShow.do")
-	public String deleteTVShow(TVShow tvshow, HttpSession session) {
+	public String removeTVShow(int tvShowId, HttpSession session) {
 		try {
-			aDao.deleteTVShow(tvshow);
+			aDao.removeTVShow(tvShowId);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
@@ -73,19 +78,21 @@ public class binjrController {
 	}
 
 	@RequestMapping(path = "addSeason.do")
-	public String addSeason(Season season, HttpSession session) {
+	public String addSeason(Integer tvShowId, Season season, HttpSession session) {
 		try {
-			aDao.addSeason(season);
+			aDao.addSeason(tvShowId, season);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.setAttribute("season", season);
+		session.setAttribute("show", season.getTvShow());
 		return "addEpisode.jsp";
 	}
 	
-	@RequestMapping(path = "deleteSeason.do")
-	public String deleteSeason(Season season, HttpSession session) {
+	@RequestMapping(path = "removeSeason.do")
+	public String removeSeason(Integer seasonId, HttpSession session) {
 		try {
-			aDao.deleteSeason(season);
+			aDao.removeSeason(seasonId);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
@@ -93,19 +100,19 @@ public class binjrController {
 	}
 
 	@RequestMapping(path = "addEpisode.do")
-	public String addEpisode(Episode episode, HttpSession session) {
+	public String addEpisode(Integer seasonId, Episode episode, HttpSession session) {
 		try {
-			aDao.addEpisode(episode);
+			aDao.addEpisode(seasonId, episode);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
 		return "profileSplash.jsp";
 	}
 
-	@RequestMapping(path = "deleteEpisode.do")
-	public String deleteEpisode(Episode episode, HttpSession session) {
+	@RequestMapping(path = "removeEpisode.do")
+	public String removeEpisode(Integer episodeId, HttpSession session) {
 		try {
-			aDao.deleteEpisode(episode);
+			aDao.removeEpisode(episodeId);
 		} catch (Exception e) {
 			return "error.jsp";
 		}

@@ -75,6 +75,22 @@ public class User {
 		this.imgUrl = imgUrl;
 	}
 
+	public List<TVShow> getTvShows() {
+		return tvShows;
+	}
+
+	public void setTvShows(List<TVShow> tvShows) {
+		this.tvShows = tvShows;
+	}
+
+	public List<UserEpisode> getUserEpisodes() {
+		return userEpisodes;
+	}
+
+	public void setUserEpisodes(List<UserEpisode> userEpisodes) {
+		this.userEpisodes = userEpisodes;
+	}
+
 	public int getId() {
 		return id;
 	}

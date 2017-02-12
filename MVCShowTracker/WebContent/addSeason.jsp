@@ -12,14 +12,16 @@
 <h2>Add a season to ${show.title} ...</h2>
 	<div class="inputForm">
 		<form action="addSeason.do" method="POST">
-			<input type="text" name="title" placeholder="Show Title..." required>
+			<input type="text" name="seasonNumber" placeholder="Season Number..." required>
+			<br>
+			<input type="text" name="title" placeholder="Season Title..." required>
 			<br>
 			<input type="text" name="description" placeholder="Description..." required>
 			<br>
-			<input type="text" name="img" placeholder="Image url...">
+			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
-			<input type="hidden" name="id" value="${season.id}">
-			<input type="submit" value="Add Show">
+			<input type="hidden" name="tvShowId" value="${show.id}">
+			<input type="submit" value="Add Season">
 		</form>
 		
 		<form action="addMoreSeasons.do" method="POST">
