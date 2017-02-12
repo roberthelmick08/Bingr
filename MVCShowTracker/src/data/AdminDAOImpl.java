@@ -18,44 +18,102 @@ public class AdminDAOImpl implements AdminDAO {
 	private EntityManager em;
 
 	@Override
-	public boolean addTVShow(TVShow tvShow) {
+	public TVShow addTVShow(TVShow tvShow) {
 		try {
 			em.persist(tvShow);
 			em.flush();
+			return tvShow;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Season addSeason(Integer tvShowId, Season season) {
+		season.setTvShow(getTVShowById(tvShowId));
+		try {
+			em.persist(season);
+			em.flush();
+			return season;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Episode addEpisode(Integer seasonId, Episode episode) {
+		episode.setSeason(getSeasonById(seasonId));
+		try {
+			em.persist(episode);
+			em.flush();
+			return episode;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public boolean removeTVShow(int id) {
+		try {
+			TVShow s = em.find(TVShow.class, id);
+
+			em.remove(s);
+
 			return true;
+
 		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	@Override
-	public boolean addSeason(TVShow tvShow, Season season) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean removeSeason(int id) {
+		try {
+			Season s = em.find(Season.class, id);
+
+			em.remove(s);
+
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean addEpisode(TVShow tvShow, Season season, Episode episode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean removeEpisode(int id) {
+		try {
+			Episode e = em.find(Episode.class, id);
 
-	@Override
-	public boolean removeTVShow(TVShow tvShow) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+			em.remove(e);
 
-	@Override
-	public boolean removeSeason(TVShow tvShow, Season season) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+			return true;
 
-	@Override
-	public boolean removeEpisode(TVShow tvShow, Season season, Episode episode) {
-		// TODO Auto-generated method stub
-		return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public TVShow getTVShowById(int tvShowId) {
+		try {
+			String queryString = "SELECT tvs FROM TVShow tvs WHERE tvs.id = :id";
+			TVShow tvShow = em.createQuery(queryString, TVShow.class).setParameter("id", tvShowId).getSingleResult();
+			return tvShow;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Season getSeasonById(int seasonId) {
+		try {
+			String queryString = "SELECT s FROM Season s WHERE s.id = :id";
+			Season season = em.createQuery(queryString, Season.class).setParameter("id", seasonId).getSingleResult();
+			return season;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

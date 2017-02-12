@@ -5,15 +5,15 @@ import entities.Season;
 import entities.TVShow;
 
 public interface AdminDAO {
-	boolean addTVShow(TVShow tvShow);
+	TVShow addTVShow(TVShow tvShow);
 	
-	boolean addSeason(TVShow tvShow, Season season);
+	Season addSeason(Integer tvShowId, Season season);
 	
-	boolean addEpisode(TVShow tvShow, Season season, Episode episode);
+	Episode addEpisode(Integer seasonId, Episode episode);
 	
-	boolean removeTVShow(TVShow tvShow);
+	boolean removeTVShow(int id);
 	
-	boolean removeSeason(TVShow tvShow, Season season);
+	boolean removeSeason(int id);
 	
-	boolean removeEpisode(TVShow tvShow, Season season, Episode episode);
+	boolean removeEpisode(int id);
 }

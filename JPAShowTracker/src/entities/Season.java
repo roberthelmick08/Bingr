@@ -76,14 +76,6 @@ public class Season {
 		return id;
 	}
 	
-	public TVShow getShow() {
-		return tvShow;
-	}
-
-	public void setShow(TVShow tvShow) {
-		this.tvShow = tvShow;
-	}
-	
 	public List<Episode> getEpisodes() {
 		return episodes;
 	}
@@ -91,8 +83,16 @@ public class Season {
 	public void setEpisodes(List<Episode> episodes) {
 		this.episodes = episodes;
 	}
-	
 
+	public TVShow getTvShow() {
+		return tvShow;
+	}
+
+	public void setTvShow(TVShow tvShow) {
+		this.tvShow = tvShow;
+	}
+
+	
 	// toString
 	@Override
 	public String toString() {
