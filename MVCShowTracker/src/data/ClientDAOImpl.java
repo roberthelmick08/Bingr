@@ -105,26 +105,70 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<TVShow> addUserShow(int userId, int showId) {
-		// TODO Auto-generated method stub
-		return null;
+		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+		try {
+			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
+		User user = getUserByUserId(userId);
+		user.getTvShows().add(tvs);
+		em.persist(user);
+		em.flush();
+		return user.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<TVShow> addMultipleUserShows(int userId, int... showIds) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			User user = getUserByUserId(userId);
+			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			for (int i : showIds) {	
+				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
+				user.getTvShows().add(tvs);
+			}
+			em.persist(user);
+			em.flush();
+		return user.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<TVShow> removeUserShow(int userId, int showId) {
-		// TODO Auto-generated method stub
-		return null;
+		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+		try {
+			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
+		User user = getUserByUserId(userId);
+		user.getTvShows().remove(tvs);
+		em.persist(user);
+		em.flush();
+		return user.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<TVShow> removeMultipleUserShows(int userId, int... showIds) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			User user = getUserByUserId(userId);
+			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			for (int i : showIds) {	
+				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
+				user.getTvShows().remove(tvs);
+			}
+			em.persist(user);
+			em.flush();
+		return user.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
