@@ -2,6 +2,8 @@ package testclient;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import data.ClientDAO;
-import entities.User;
+import entities.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "../WEB-INF/Test-context.xml" })
@@ -58,5 +60,22 @@ public class ClientDAOTest {
 		User user = dao.getUserByUserId(1);
 		assertNotNull(user);
 		assertEquals("Chaaaz", user.getDisplayName());
+	}
+	@Test
+	public void test_get_all_shows() {
+		List<TVShow> tvs = dao.getAllShows();
+		assertNotNull(tvs);
+		assertEquals(2, tvs.size());
+		assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		
+	}
+	
+	@Test
+	public void test_get_user_shows() {
+		List<TVShow> tvs = dao.getUserShows(1);
+		assertNotNull(tvs);
+		assertEquals(2, tvs.size());
+		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		
 	}
 }

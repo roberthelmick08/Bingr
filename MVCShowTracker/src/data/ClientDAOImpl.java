@@ -77,15 +77,30 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<TVShow> getAllShows() {
-		// TODO Auto-generated method stub
-		return null;
+			String queryString = "SELECT tvs FROM TVShow tvs";
+			try {
+				List<TVShow> tvShows = em.createQuery(queryString, TVShow.class).getResultList();
+				// System.out.println(results);
+				return tvShows;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 	}
 	// SPLIT UP WORK HERE!!
 
 	@Override
 	public List<TVShow> getUserShows(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		String queryString = "SELECT u FROM User u WHERE id = :id";
+		try {
+			User user = em.createQuery(queryString, User.class).setParameter("id", userId).getSingleResult();
+			List<TVShow> userShows = user.getTvShows();
+			// System.out.println(results);
+			return userShows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
