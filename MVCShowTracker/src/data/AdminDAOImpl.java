@@ -115,5 +115,17 @@ public class AdminDAOImpl implements AdminDAO {
 			return null;
 		}
 	}
+	
+	@Override
+	public Episode getEpisodeById(int episodeId) {
+		try {
+			String queryString = "SELECT e FROM Episode e WHERE e.id = :id";
+			Episode episode = em.createQuery(queryString, Episode.class).setParameter("id", episodeId).getSingleResult();
+			return episode;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
