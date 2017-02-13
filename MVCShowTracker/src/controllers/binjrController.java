@@ -26,15 +26,20 @@ public class binjrController {
 			@RequestParam(name = "password") String password, HttpSession session) {
 		System.out.println("running login");
 		User user = null;
-		try {
-			user = cDao.getUser(username, password);
-		} catch (Exception e) {
-			session.setAttribute("noUser", true);
-			e.printStackTrace();
-			return "index.jsp";
+		if (username == "admin" && password == "12345") {
+			session.setAttribute("tvShows", cDao.getAllShows());
+			return "addShow.jsp";
+		} else {
+			try {
+				user = cDao.getUser(username, password);
+			} catch (Exception e) {
+				session.setAttribute("noUser", true);
+				e.printStackTrace();
+				return "index.jsp";
+			}
+			session.setAttribute("user", user);
+			return "profileSplash.jsp";
 		}
-		session.setAttribute("user", user);
-		return "profileSplash.jsp";
 	}
 
 	@RequestMapping(path = "addUser.do")
@@ -89,7 +94,7 @@ public class binjrController {
 		session.setAttribute("show", season.getTvShow());
 		return "addEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "removeSeason.do")
 	public String removeSeason(Integer seasonId, HttpSession session) {
 		try {
@@ -103,7 +108,6 @@ public class binjrController {
 	@RequestMapping(path = "addEpisode.do")
 	public String addEpisode(Integer seasonId, Episode episode, HttpSession session) {
 		try {
-//			System.out.println("seasonId: " + seasonId + "episode: " + episode);
 			aDao.addEpisode(seasonId, episode);
 		} catch (Exception e) {
 			return "error.jsp";
