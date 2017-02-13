@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,18 +10,23 @@
 </head>
 <body>
 
-<h2>Add a show...</h2>
+	<h2>Add or Select a Show...</h2>
 
 	<div class="inputForm">
 		<form action="addShow.do" method="POST">
 			<input type="text" name="title" placeholder="Show Title..." required>
-			<br>
-			<input type="text" name="description" placeholder="Description..." required>
-			<br>
-			<input type="text" name="imgUrl" placeholder="Image url...">
-			<br>
+			<br> <input type="text" name="description"
+				placeholder="Description..." required> <br> <input
+				type="text" name="imgUrl" placeholder="Image url..."> <br>
 			<input type="submit" value="Add Show">
 		</form>
+	</div>
+	<div>
+		<ul>
+			<c:forEach var="tvShow" items="${tvShows}">
+				<li><h4><a href="editShow.do?id=${tvShow.id}"><c:out value="${tvShow.title}"/></a></h4></li>
+			</c:forEach>
+		</ul>
 	</div>
 </body>
 </html>
