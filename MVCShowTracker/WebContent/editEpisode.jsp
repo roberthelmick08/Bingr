@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h2><c:out value="Edit Episode ${episode.title} from ${show.title} ${season.title}..."/></h2>
+<h2><c:out value="Edit Episode ${episode.title} from ${tvShow.title} ${season.title}..."/></h2>
 
 	<div class="inputForm">
 		<form action="updateEpisode.do" method="POST">

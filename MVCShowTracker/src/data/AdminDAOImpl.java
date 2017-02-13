@@ -128,4 +128,46 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 	}
 
+	@Override
+	public TVShow updateTVShow(int id, TVShow tvShow) {
+		try {
+			TVShow tvShow1 = em.find(TVShow.class, id);
+			tvShow1.setTitle(tvShow.getTitle());
+			tvShow1.setDescription(tvShow.getDescription());
+			tvShow1.setImgUrl(tvShow.getImgUrl());
+			em.flush();
+			return tvShow1;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Season updateSeason(int id, Season season) {
+		try {
+			Season season1 = em.find(Season.class, id);
+			season1.setTitle(season.getTitle());
+			season1.setDescription(season.getDescription());
+			season1.setImgUrl(season.getImgUrl());
+			em.flush();
+			return season1;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Episode updateEpisode(int id, Episode episode) {
+		try {
+			Episode episode1 = em.find(Episode.class, id);
+			episode1.setTitle(episode.getTitle());
+			episode1.setDescription(episode.getDescription());
+			episode1.setImgUrl(episode.getImgUrl());
+			em.flush();
+			return episode1;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }
