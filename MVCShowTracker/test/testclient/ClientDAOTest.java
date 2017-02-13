@@ -2,6 +2,8 @@ package testclient;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import data.ClientDAO;
-import entities.User;
+import entities.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "../WEB-INF/Test-context.xml" })
@@ -59,4 +61,66 @@ public class ClientDAOTest {
 		assertNotNull(user);
 		assertEquals("Chaaaz", user.getDisplayName());
 	}
+	@Test
+	public void test_get_all_shows() {
+		List<TVShow> tvs = dao.getAllShows();
+		assertNotNull(tvs);
+		assertEquals(2, tvs.size());
+		assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		
+	}
+	
+	@Test
+	public void test_get_user_shows() {
+		List<TVShow> tvs = dao.getUserShows(1);
+		assertNotNull(tvs);
+		assertEquals(2, tvs.size());
+		assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+		
+	}
+	
+	@Test
+	public void test_add_user_show() {
+		List<TVShow> tvs = dao.getUserShows(2);
+		assertNotNull(tvs);
+		assertEquals(1, tvs.size());
+		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		dao.addUserShow(2, 2);
+		assertEquals(2, tvs.size());
+		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+		
+	}
+//	@Test
+//	public void test_add_multiple_user_shows() {
+//		List<TVShow> tvs = dao.getUserShows(3);
+//		assertNotNull(tvs);
+//		assertEquals(0, tvs.size());
+//		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+//		dao.addMultipleUserShows(3, 1, 2);
+//		assertEquals(2, tvs.size());
+//		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+//		
+//	}
+		@Test
+		public void test_remove_user_show() {
+			List<TVShow> tvs = dao.getUserShows(1);
+			assertNotNull(tvs);
+			assertEquals(2, tvs.size());
+			assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+			dao.removeUserShow(1, 1);
+			assertEquals(1, tvs.size());
+			assertEquals("Stranger Thrones", tvs.get(0).getTitle());
+		}
+		@Test
+		public void test_remove_multiple_user_shows() {
+			List<TVShow> tvs = dao.getUserShows(1);
+			assertNotNull(tvs);
+			assertEquals(2, tvs.size());
+			assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+			dao.removeMultipleUserShows(1, 1, 2);
+			assertEquals(0, tvs.size());
+			//assertEquals("Stranger Thrones", tvs.get(0).getTitle());
+		}
+			
 }

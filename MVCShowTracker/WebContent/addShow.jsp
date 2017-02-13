@@ -18,9 +18,8 @@
 			<br>
 			<input type="text" name="description" placeholder="Description..." required>
 			<br>
-			<input type="text" name="img" placeholder="Image url..." required>
+			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
-			<input type="hidden" name="id" value="${tvshow.id}">
 			<input type="submit" value="Add Show">
 		</form>
 	</div>

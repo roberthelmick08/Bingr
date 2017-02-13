@@ -14,13 +14,15 @@
 
 	<div class="inputForm">
 		<form action="addEpisode.do" method="POST">
-			<input type="text" name="title" placeholder="Show Title..." required>
+			<input type="text" name="episodeNumber" placeholder="Episode Number..." required>
+			<br>
+			<input type="text" name="title" placeholder="Episode Title..." required>
 			<br>
 			<input type="text" name="description" placeholder="Description..." required>
 			<br>
-			<input type="text" name="img" placeholder="Image url...">
+			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
-			<input type="hidden" name="id" value="${season.id}">
+			<input type="hidden" name="seasonId" value="${season.id}">
 			<input type="submit" value="Add Episode">
 		</form>
 		<!-- Need to pass in show id and season id -->

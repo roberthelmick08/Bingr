@@ -14,6 +14,7 @@
 	<!-- @TODO -->
 	<!-- <bean id="testdao" class="data.ActorDAOImpl" /> -->
 	<bean id="ClientDAOBean" class="data.ClientDAOImpl" />
+	<bean id="AdminDAOBean" class="data.AdminDAOImpl" />
 
 	<bean id="myEntityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
