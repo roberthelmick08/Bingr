@@ -33,7 +33,6 @@
 			<h4>${tvShow.title}</h4>
 			<br>
 			<c:forEach items="${tvShow.seasons}" var="season">
-			
 			<div class="episodeBox">
 				<h5>S${season.seasonNumber}, E${episode.episodeNumber}</h5>
 			</div>
