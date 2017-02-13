@@ -91,17 +91,17 @@ public class ClientDAOTest {
 		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
 		
 	}
-//	@Test
-//	public void test_add_multiple_user_shows() {
-//		List<TVShow> tvs = dao.getUserShows(3);
-//		assertNotNull(tvs);
-//		assertEquals(0, tvs.size());
-//		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
-//		dao.addMultipleUserShows(3, 1, 2);
-//		assertEquals(2, tvs.size());
-//		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
-//		
-//	}
+	@Test
+	public void test_add_multiple_user_shows() {
+		List<TVShow> tvs = dao.getUserShows(3);
+		assertNotNull(tvs);
+		assertEquals(0, tvs.size());
+		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
+		dao.addMultipleUserShows(3, 1, 2);
+		assertEquals(2, tvs.size());
+		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
+		
+	}
 		@Test
 		public void test_remove_user_show() {
 			List<TVShow> tvs = dao.getUserShows(1);
