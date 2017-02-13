@@ -143,11 +143,11 @@ CREATE INDEX `fk_user_episode_episode1_idx` ON `user_episode` (`episode_id` ASC)
 
 
 -- -----------------------------------------------------
--- Table `group`
+-- Table `party`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group` ;
+DROP TABLE IF EXISTS `party` ;
 
-CREATE TABLE IF NOT EXISTS `group` (
+CREATE TABLE IF NOT EXISTS `party` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(90) NOT NULL,
   PRIMARY KEY (`id`))
@@ -155,17 +155,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `group_user`
+-- Table `party_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group_user` ;
+DROP TABLE IF EXISTS `party_user` ;
 
-CREATE TABLE IF NOT EXISTS `group_user` (
-  `group_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `party_user` (
+  `party_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`group_id`, `user_id`),
+  PRIMARY KEY (`party_id`, `user_id`),
   CONSTRAINT `fk_Group_has_user_Group1`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `group` (`id`)
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Group_has_user_user1`
@@ -175,23 +175,23 @@ CREATE TABLE IF NOT EXISTS `group_user` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Group_has_user_user1_idx` ON `group_user` (`user_id` ASC);
+CREATE INDEX `fk_Group_has_user_user1_idx` ON `party_user` (`user_id` ASC);
 
-CREATE INDEX `fk_Group_has_user_Group1_idx` ON `group_user` (`group_id` ASC);
+CREATE INDEX `fk_Group_has_user_Group1_idx` ON `party_user` (`party_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `group_tv_show`
+-- Table `party_tv_show`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group_tv_show` ;
+DROP TABLE IF EXISTS `party_tv_show` ;
 
-CREATE TABLE IF NOT EXISTS `group_tv_show` (
-  `group_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `party_tv_show` (
+  `party_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
-  PRIMARY KEY (`group_id`, `tv_show_id`),
+  PRIMARY KEY (`party_id`, `tv_show_id`),
   CONSTRAINT `fk_group_has_tv_show_group1`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `group` (`id`)
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_group_has_tv_show_tv_show1`
@@ -201,9 +201,9 @@ CREATE TABLE IF NOT EXISTS `group_tv_show` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_group_has_tv_show_tv_show1_idx` ON `group_tv_show` (`tv_show_id` ASC);
+CREATE INDEX `fk_group_has_tv_show_tv_show1_idx` ON `party_tv_show` (`tv_show_id` ASC);
 
-CREATE INDEX `fk_group_has_tv_show_group1_idx` ON `group_tv_show` (`group_id` ASC);
+CREATE INDEX `fk_group_has_tv_show_group1_idx` ON `party_tv_show` (`party_id` ASC);
 
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO student;
@@ -298,33 +298,33 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group`
+-- Data for table `party`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `group` (`id`, `name`) VALUES (1, 'First Group');
+INSERT INTO `party` (`id`, `name`) VALUES (1, 'First Group');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group_user`
+-- Data for table `party_user`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `group_user` (`group_id`, `user_id`) VALUES (1, 1);
-INSERT INTO `group_user` (`group_id`, `user_id`) VALUES (1, 2);
+INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 1);
+INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 2);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group_tv_show`
+-- Data for table `party_tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `group_tv_show` (`group_id`, `tv_show_id`) VALUES (1, 2);
-INSERT INTO `group_tv_show` (`group_id`, `tv_show_id`) VALUES (1, 1);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 2);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 1);
 
 COMMIT;
 
