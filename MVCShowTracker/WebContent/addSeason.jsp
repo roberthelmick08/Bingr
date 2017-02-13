@@ -9,7 +9,7 @@
 <title>Add Season</title>
 </head>
 <body>
-<h2>Add a season to ${show.title} ...</h2>
+<h2>Add a season to ${tvShow.title} ...</h2>
 	<div class="inputForm">
 		<form action="addSeason.do" method="POST">
 			<input type="text" name="seasonNumber" placeholder="Season Number..." required>
@@ -20,7 +20,7 @@
 			<br>
 			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
-			<input type="hidden" name="tvShowId" value="${show.id}">
+			<input type="hidden" name="tvShowId" value="${tvShow.id}">
 			<input type="submit" value="Add Season">
 		</form>
 		
@@ -28,7 +28,16 @@
 			<input type="submit" value="Add More Shows"/>
 		</form>
 	</div>
-	
+	<div>
+		<ul>
+			<c:forEach var="season" items="${seasons}">
+				<li><form action="deleteSeason.do?id=${season.id}" method="POST">
+				<h4><a href="editSeason.do?id=${season.id}"><c:out value="${season.seasonNumber} - ${season.title}"/></a>
+				<button type="submit">Delete</button></h4>
+				</form></li>
+			</c:forEach>
+		</ul>
+	</div>
 	
 </body>
 </html>

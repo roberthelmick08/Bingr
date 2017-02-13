@@ -12,6 +12,7 @@
 		<class>entities.Season</class>
 		<class>entities.TVShow</class>
 		<class>entities.User</class>
+		<class>entities.Party</class>
 		<class>entities.UserEpisode</class>
 
 		<properties>

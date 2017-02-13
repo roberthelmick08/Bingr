@@ -141,6 +141,70 @@ CREATE INDEX `fk_user_episode_user1_idx` ON `user_episode` (`user_id` ASC);
 
 CREATE INDEX `fk_user_episode_episode1_idx` ON `user_episode` (`episode_id` ASC);
 
+
+-- -----------------------------------------------------
+-- Table `party`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party` ;
+
+CREATE TABLE IF NOT EXISTS `party` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(90) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `party_user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party_user` ;
+
+CREATE TABLE IF NOT EXISTS `party_user` (
+  `party_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`party_id`, `user_id`),
+  CONSTRAINT `fk_party_has_user_party1`
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_party_has_user_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_party_has_user_user1_idx` ON `party_user` (`user_id` ASC);
+
+CREATE INDEX `fk_party_has_user_party1_idx` ON `party_user` (`party_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `party_tv_show`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party_tv_show` ;
+
+CREATE TABLE IF NOT EXISTS `party_tv_show` (
+  `party_id` INT NOT NULL,
+  `tv_show_id` INT NOT NULL,
+  PRIMARY KEY (`party_id`, `tv_show_id`),
+  CONSTRAINT `fk_party_has_tv_show_party1`
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_party_has_tv_show_tv_show1`
+    FOREIGN KEY (`tv_show_id`)
+    REFERENCES `tv_show` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_party_has_tv_show_tv_show1_idx` ON `party_tv_show` (`tv_show_id` ASC);
+
+CREATE INDEX `fk_party_has_tv_show_party1_idx` ON `party_tv_show` (`party_id` ASC);
+
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO student;
  DROP USER student;
@@ -148,6 +212,10 @@ SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE USER 'student' IDENTIFIED BY 'student';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'student';
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- Data for table `user`
@@ -203,6 +271,60 @@ INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`
 COMMIT;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- Data for table `user_tv_show`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `BinjrDB`;
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (1, 1);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (1, 2);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (2, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `user_episode`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `BinjrDB`;
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 1, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 3, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 2, 3, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (0, 2, 1, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 2, 2, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `BinjrDB`;
+INSERT INTO `party` (`id`, `name`) VALUES (1, 'First Group');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party_user`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `BinjrDB`;
+INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 1);
+INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party_tv_show`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `BinjrDB`;
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 1);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 2);
+
+COMMIT;
+

@@ -24,7 +24,10 @@
 	<div>
 		<ul>
 			<c:forEach var="tvShow" items="${tvShows}">
-				<li><h4><a href="editShow.do?id=${tvShow.id}"><c:out value="${tvShow.title}"/></a></h4></li>
+				<li><form action="deleteShow.do?id=${tvShow.id}" method="POST">
+				<h4><a href="editShow.do?id=${tvShow.id}"><c:out value="${tvShow.title}"/></a>
+				<button type="submit">Delete</button></h4>
+				</form></li>
 			</c:forEach>
 		</ul>
 	</div>

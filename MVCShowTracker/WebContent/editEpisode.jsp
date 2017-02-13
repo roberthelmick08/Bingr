@@ -6,22 +6,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Episode</title>
+<title>Edit Episode</title>
 </head>
 <body>
 
-<h2>Add an Episode to ${show.title} ${season.title}...</h2>
+<h2><c:out value="Edit Episode ${episode.title} from ${tvShow.title} ${season.title}..."/></h2>
 
 	<div class="inputForm">
-		<form action="addEpisode.do" method="POST">
-			<input type="text" name="episodeNumber" placeholder="Episode Number..." required>
+		<form action="updateEpisode.do" method="POST">
+			<input type="text" name="episodeNumber" value="${episode.episodeNumber}" required>
 			<br>
-			<input type="text" name="title" placeholder="Episode Title..." required>
+			<input type="text" name="title" value="${episode.title}" required>
 			<br>
-			<input type="text" name="description" placeholder="Description..." required>
+			<input type="text" name="description" value="${episode.description}" required>
 			<br>
-			<input type="text" name="imgUrl" placeholder="Image url...">
+			<input type="text" name="imgUrl" value="${episode.imgUrl}">
 			<br>
+			<input type="hidden" name="episodeId" value="${episode.id}">
 			<input type="hidden" name="seasonId" value="${season.id}">
 			<input type="submit" value="Add Episode">
 		</form>
