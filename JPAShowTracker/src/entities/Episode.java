@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Episode {
@@ -31,6 +35,9 @@ public class Episode {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="season_id")
 	private Season season;
+	
+	@OneToMany(mappedBy="episode", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<UserEpisode> userEpisodes;
 	
 	
 	// Getters and Setter

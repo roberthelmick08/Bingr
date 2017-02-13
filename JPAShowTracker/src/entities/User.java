@@ -33,8 +33,8 @@ public class User {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="user_has_tvshow",
+	@ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinTable(name="user_tv_show",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;

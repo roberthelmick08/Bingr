@@ -55,43 +55,66 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public boolean removeTVShow(int id) {
 		try {
-			TVShow s = em.find(TVShow.class, id);
-
-			em.remove(s);
-
-			return true;
-
+			em.remove(em.find(TVShow.class, id));
+			
+//			List<Season> seasons = getTVShowById(id).getSeasons();
+//			for (Season season : seasons) {
+//				removeSeason(season.getId());
+//			}
+//			String queryString = "DELETE FROM TVShow tvs WHERE tvs.id = :id";
+//			if (em.createQuery(queryString).setParameter("id", id).executeUpdate() > 0) {
+//				return true;
+//			}
+			
+			
+//			String queryString = "DELETE FROM Episode e WHERE e.season.tvShow.id = :id";
+//			if (em.createQuery(queryString).setParameter("id", id).executeUpdate() >= 0) {
+//				queryString = "DELETE FROM Season s WHERE s.tvShow.id = :id";
+//				if (em.createQuery(queryString).setParameter("id", id).executeUpdate() >= 0) {
+//					queryString = "DELETE FROM TVShow tvs WHERE tvs.id = ;id";
+//					if (em.createQuery(queryString).setParameter("id", id).executeUpdate() > 0) {
+//						return true;
+//					}
+//				}
+//			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean removeSeason(int id) {
 		try {
-			Season s = em.find(Season.class, id);
-
-			em.remove(s);
-
-			return true;
-
+//			em.remove(em.find(Season.class, id));
+			String queryString = "DELETE FROM Episode e WHERE e.season.id = :id";
+			if (em.createQuery(queryString).setParameter("id", id).executeUpdate() >= 0) {
+				queryString = "DELETE FROM Season s WHERE s.id = :id";
+				if (em.createQuery(queryString).setParameter("id", id).executeUpdate() > 0) {
+					return true;
+				}
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean removeEpisode(int id) {
 		try {
-			Episode e = em.find(Episode.class, id);
-
-			em.remove(e);
-
-			return true;
-
+//			em.remove(em.find(Episode.class, id));
+			String queryString = "DELETE FROM Episode e WHERE e.id = :id";
+			if (em.createQuery(queryString).setParameter("id", id).executeUpdate() > 0) {
+				return true;
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+		return false;
 	}
 	
 	public TVShow getTVShowById(int tvShowId) {

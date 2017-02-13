@@ -30,11 +30,17 @@
 	<div>
 		<ul>
 			<c:forEach var="episode" items="${episodes}">
-				<li><form action="deleteEpisode.do?id=${episode.id}" method="POST">
-				<h4><a href="editEpisode.do?id=${episode.id}"><c:out value="${episode.episodeNumber} - ${episode.title}"/></a>
-				<button type="submit">Delete</button></h4>
+				<li>
+				<c:out value="${episode.episodeNumber} - ${episode.title}"/>
+				<form action="editEpisode.do?id=${episode.id}" method ="POST">
+				<button type="submit">Edit Info</button>
 				<input type="hidden" name="seasonId" value="${season.id}">
-				</form></li>
+				</form>
+				<form action="deleteEpisode.do?id=${episode.id}" method="POST">
+				<button type="submit">Delete</button>
+				<input type="hidden" name="seasonId" value="${season.id}">
+				</form>
+				</li>
 			</c:forEach>
 		</ul>
 	</div>

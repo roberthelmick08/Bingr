@@ -33,7 +33,7 @@ public class TVShow {
 	@OneToMany(mappedBy="tvShow", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private List<Season> seasons;
 
-	@ManyToMany(mappedBy="tvShows")
+	@ManyToMany
 	private List<User> users;
 	
 	// Getters and Setters
