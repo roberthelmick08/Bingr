@@ -40,6 +40,9 @@ public class User {
 	
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<UserEpisode> userEpisodes;
+	
+	@ManyToMany(mappedBy="users")
+	List<Party> parties;
 
 	
 	// Getters and Setters
