@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,8 +33,8 @@ public class User {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@ManyToMany
-	@JoinTable(name="user_tv_show",
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="user_has_tvshow",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;
