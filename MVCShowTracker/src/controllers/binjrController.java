@@ -26,7 +26,7 @@ public class binjrController {
 			@RequestParam(name = "password") String password, HttpSession session) {
 		System.out.println("running login");
 		User user = null;
-		if (username == "admin" && password == "12345") {
+		if (username.equals("admin") && password.equals("12345")) {
 			session.setAttribute("tvShows", cDao.getAllShows());
 			return "addShow.jsp";
 		} else {
