@@ -28,15 +28,17 @@
 			<h4>${user.username}</h4>
 			<br>
 			<img src="${user.imgUrl}" class=/>
-		</div>
-		<!-- add forEach loop to iterate through favorited shows -->
+		<c:forEach items="${user.tvShows}" var="tvShow">
 		<div class="showBox">
-			<h4>${tvshow.title}</h4>
+			<h4>${tvShow.title}</h4>
 			<br>
-			<!-- add forEach loop to iterate through watched/unwatched episodes -->
+			<c:forEach items="${tvShow.seasons}" var="season">
 			<div class="episodeBox">
 				<h5>S${season.seasonNumber}, E${episode.episodeNumber}</h5>
 			</div>
+			</c:forEach>
+		</div>
+		</c:forEach>
 		</div>
 	</div>
 	

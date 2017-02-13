@@ -131,8 +131,8 @@ public class ClientDAOImpl implements ClientDAO {
 				user.getTvShows().add(tvs);
 			}
 			em.persist(user);
-			// em.flush();
-			return user.getTvShows();
+	//		em.flush();
+		return user.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
