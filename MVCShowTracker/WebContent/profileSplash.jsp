@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user.username}'sprofile</title>
+<title>${user.username}'s profile</title>
 </head>
 <body>
 	<div class="navBar">
@@ -20,9 +20,6 @@
  --%>		</select>
 		
 	</div>
-
-<h2>Add a season to ${tvshow.title} ...</h2>
-
 
 	<!-- add forEach loop to iterate over groups -->
 	<div class="mainFlexBox">
