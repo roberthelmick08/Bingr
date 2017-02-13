@@ -35,7 +35,7 @@
 			<br>
 			<!-- add forEach loop to iterate through watched/unwatched episodes -->
 			<div class="episodeBox">
-				<h5>S${tvshow.season_id}, E${season.episode_id}</h5>
+				<h5>S${season.seasonNumber}, E${episode.episodeNumber}</h5>
 			</div>
 		</div>
 	</div>
