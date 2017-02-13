@@ -6,31 +6,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Show: Admin</title>
+<title>Edit Show: Admin</title>
 </head>
 <body>
 
-	<h2>Add or Select a Show...</h2>
+	<h2>Edit or Select another Show...</h2>
 
 	<div class="inputForm">
-		<h3>Add Show:</h3>
-		<form action="addShow.do" method="POST">
-			<input type="text" name="title" placeholder="Show Title..." required>
+		<form action="updateShow.do" method="POST">
+			<input type="text" name="title" value="${tvShow.title}" required>
+			<br>
+			<input type="text" name="description" value="${tvShow.description}" required> 
 			<br> 
-			<input type="text" name="description" placeholder="Description..." required> 
-			<br> 
-			<input type="text" name="imgUrl" placeholder="Image url..."> <br>
-			<input type="submit" value="Add Show">
+			<input type="text" name="imgUrl" value="${tvShow.imgUrl}"> 
+			<br>
+			<input type="hidden" value="${tvShow.id}">
+			<input type="submit" value="Update Show">
 		</form>
 	</div>
 	<div>
-	<h3>Current Shows:</h3>
 		<ul>
 			<c:forEach var="tvShow" items="${tvShows}">
 				<li>
-				<a href="editShow.do?id=${tvShow.id}">
-				<c:out value="${tvShow.title}"/>
-				</a>
+				<a href="editShow.do?id=${tvShow.id}"><c:out value="${tvShow.title}"/></a>
+				<form action="editShow.do?id=${tvShow.id}" method="POST">
+				<button type="submit">Edit Info</button>
+				</form>
 				<form action="deleteShow.do?id=${tvShow.id}" method="POST">
 				<button type="submit">Delete</button>
 				</form>

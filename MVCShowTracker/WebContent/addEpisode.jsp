@@ -6,13 +6,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Episode</title>
+<title>Edit Season</title>
 </head>
 <body>
-
-<h2>Add an Episode to ${show.title} ${season.title}...</h2>
-
+	<form action="editShow.do?id=${tvShow.id}" method="POST">
+		<button type="submit">Back to Seasons</button>
+	</form>
+	<form action="shows.do" method="POST">
+		<button type="submit">Back to Shows</button>
+	</form>
 	<div class="inputForm">
+		<h2>Edit season ${season.seasonNumber} - ${season.title} from ${tvShow.title}:</h2>
+		<form action="updateSeason.do?id=${season.id}" method="POST">
+			<input type="text" name="seasonNumber" value="${season.seasonNumber}" required>
+			<br>
+			<input type="text" name="title" value="${season.title}" required>
+			<br>
+			<input type="text" name="description" value="${season.description}" required>
+			<br>
+			<input type="text" name="imgUrl" value="${season.imgUrl}">
+			<br>
+			<input type="hidden" name="seasonId" value="${season.id}">
+			<input type="submit" value="Update Season">
+		</form>
+	</div>
+	<div class="inputForm">
+		<h2>Add an Episode to ${season.seasonNumber} - ${season.title} from ${tvShow.title}:</h2>
 		<form action="addEpisode.do" method="POST">
 			<input type="text" name="episodeNumber" placeholder="Episode Number..." required>
 			<br>
@@ -25,10 +44,22 @@
 			<input type="hidden" name="seasonId" value="${season.id}">
 			<input type="submit" value="Add Episode">
 		</form>
-		<!-- Need to pass in show id and season id -->
-		<form action="addMoreEpisodes.do" method="POST">
-			<input type="submit" value="Add More Episodes">
-		</form>
+	</div>
+	<div>
+		<h3>Edit Episodes from ${tvShow.title} - Season ${season.seasonNumber} - ${season.title}:</h3>
+		<ul>
+			<c:forEach var="episode" items="${episodes}">
+				<li>
+				<a href="editEpisode.do?id${episode.id}">
+				<c:out value="${episode.episodeNumber} - ${episode.title}"/>
+				</a>
+				<form action="deleteEpisode.do?id=${episode.id}" method="POST">
+				<button type="submit">Delete</button>
+				<input type="hidden" name="seasonId" value="${season.id}">
+				</form>
+				</li>
+			</c:forEach>
+		</ul>
 	</div>
 </body>
 </html>

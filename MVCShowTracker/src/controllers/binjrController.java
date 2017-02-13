@@ -69,18 +69,41 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.setAttribute("show", tvshow);
+		session.setAttribute("tvShow", tvshow);
+		return "addSeason.jsp";
+	}
+	
+	@RequestMapping(path = "shows.do")
+	public String shows(HttpSession session) {
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "addShow.jsp";
+	}
+	
+	@RequestMapping(path = "editShow.do")
+	public String editTVShow(@RequestParam("id") Integer id, HttpSession session) {
+		TVShow tvShow = aDao.getTVShowById(id);
+		session.setAttribute("tvShow", tvShow);
+		session.setAttribute("seasons", tvShow.getSeasons());
+		return "addSeason.jsp";
+	}
+	
+	@RequestMapping(path = "updateShow.do")
+	public String updateTVShow(@RequestParam("id") Integer id, TVShow tvShow, HttpSession session) {
+		TVShow tvShow1 = aDao.updateTVShow(id, tvShow);
+		session.setAttribute("tvShow", tvShow1);
 		return "addSeason.jsp";
 	}
 
 	@RequestMapping(path = "deleteShow.do")
-	public String removeTVShow(int tvShowId, HttpSession session) {
+	public String removeTVShow(@RequestParam("id") Integer id, HttpSession session) {
 		try {
-			aDao.removeTVShow(tvShowId);
+			System.out.println(aDao.removeTVShow(id));
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "addSeason.jsp";
+		session.removeAttribute("tvShows");
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "addShow.jsp";
 	}
 
 	@RequestMapping(path = "addSeason.do")
@@ -91,18 +114,38 @@ public class binjrController {
 			return "error.jsp";
 		}
 		session.setAttribute("season", season);
-		session.setAttribute("show", season.getTvShow());
+		session.setAttribute("tvShow", season.getTvShow());
+		return "addEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "editSeason.do")
+	public String editSeason(@RequestParam("id") Integer id, HttpSession session) {
+		Season season = aDao.getSeasonById(id);
+		session.setAttribute("tvShow", season.getTvShow());
+		session.setAttribute("season", season);
+		session.setAttribute("episodes", season.getEpisodes());
+		return "addEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "updateSeason.do")
+	public String updateSeason(@RequestParam("id") Integer id, Season season, HttpSession session) {
+		aDao.updateSeason(id, season);
 		return "addEpisode.jsp";
 	}
 
-	@RequestMapping(path = "removeSeason.do")
-	public String removeSeason(Integer seasonId, HttpSession session) {
+	@RequestMapping(path = "deleteSeason.do")
+	public String removeSeason(@RequestParam("id") Integer id, Integer tvShowId, HttpSession session) {
 		try {
-			aDao.removeSeason(seasonId);
+			System.out.println(aDao.removeSeason(id));
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "addEpisode.jsp";
+		TVShow tvShow = aDao.getTVShowById(tvShowId);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("seasons");
+		session.setAttribute("tvShow", tvShow);
+		session.setAttribute("seasons", tvShow.getSeasons());
+		return "addSeason.jsp";
 	}
 
 	@RequestMapping(path = "addEpisode.do")
@@ -112,16 +155,39 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "profileSplash.jsp";
+		Season season = aDao.getSeasonById(seasonId);
+		session.setAttribute("tvShow", season.getTvShow());
+		session.setAttribute("season", season);
+		session.setAttribute("episodes", season.getEpisodes());
+		return "addEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "editEpisode.do")
+	public String editEpisode(@RequestParam("id") Integer id, 
+							Integer seasonId, HttpSession session) {
+		session.setAttribute("episode", aDao.getEpisodeById(id));
+		return "editEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "updateEpisode.do")
+	public String updateEpisode(@RequestParam("id") Integer id, Episode episode, HttpSession session) {
+		Episode updatedEpisode = aDao.updateEpisode(id, episode);
+		Season season = updatedEpisode.getSeason();
+		session.setAttribute("tvShow", season.getTvShow());
+		session.setAttribute("season", season);
+		session.setAttribute("episodes", season.getEpisodes());
+		return "addEpisode.jsp";
 	}
 
-	@RequestMapping(path = "removeEpisode.do")
-	public String removeEpisode(Integer episodeId, HttpSession session) {
+	@RequestMapping(path = "deleteEpisode.do")
+	public String removeEpisode(@RequestParam("id") Integer id, Integer seasonId, HttpSession session) {
 		try {
-			aDao.removeEpisode(episodeId);
+			aDao.removeEpisode(id);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "profileSplash.jsp";
+		session.removeAttribute("episodes");
+		session.setAttribute("episodes", aDao.getSeasonById(seasonId).getEpisodes());
+		return "addEpisode.jsp";
 	}
 }
