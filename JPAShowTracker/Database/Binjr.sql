@@ -163,21 +163,21 @@ CREATE TABLE IF NOT EXISTS `party_user` (
   `party_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`party_id`, `user_id`),
-  CONSTRAINT `fk_Group_has_user_Group1`
+  CONSTRAINT `fk_party_has_user_party1`
     FOREIGN KEY (`party_id`)
     REFERENCES `party` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Group_has_user_user1`
+  CONSTRAINT `fk_party_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Group_has_user_user1_idx` ON `party_user` (`user_id` ASC);
+CREATE INDEX `fk_party_has_user_user1_idx` ON `party_user` (`user_id` ASC);
 
-CREATE INDEX `fk_Group_has_user_Group1_idx` ON `party_user` (`party_id` ASC);
+CREATE INDEX `fk_party_has_user_party1_idx` ON `party_user` (`party_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -189,21 +189,21 @@ CREATE TABLE IF NOT EXISTS `party_tv_show` (
   `party_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
   PRIMARY KEY (`party_id`, `tv_show_id`),
-  CONSTRAINT `fk_group_has_tv_show_group1`
+  CONSTRAINT `fk_party_has_tv_show_party1`
     FOREIGN KEY (`party_id`)
     REFERENCES `party` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_has_tv_show_tv_show1`
+  CONSTRAINT `fk_party_has_tv_show_tv_show1`
     FOREIGN KEY (`tv_show_id`)
     REFERENCES `tv_show` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_group_has_tv_show_tv_show1_idx` ON `party_tv_show` (`tv_show_id` ASC);
+CREATE INDEX `fk_party_has_tv_show_tv_show1_idx` ON `party_tv_show` (`tv_show_id` ASC);
 
-CREATE INDEX `fk_group_has_tv_show_group1_idx` ON `party_tv_show` (`party_id` ASC);
+CREATE INDEX `fk_party_has_tv_show_party1_idx` ON `party_tv_show` (`party_id` ASC);
 
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO student;
@@ -323,8 +323,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `BinjrDB`;
-INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 2);
 INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 1);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 2);
 
 COMMIT;
 
