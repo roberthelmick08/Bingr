@@ -72,12 +72,14 @@ public class binjrController {
 			return "error.jsp";
 		}
 		session.removeAttribute("tvShow");
+		session.removeAttribute("seasons");
 		session.setAttribute("tvShow", tvshow);
 		return "addSeason.jsp";
 	}
 	
 	@RequestMapping(path = "shows.do")
 	public String shows(HttpSession session) {
+		session.removeAttribute("tvShows");
 		session.setAttribute("tvShows", cDao.getAllShows());
 		return "addShow.jsp";
 	}
@@ -118,6 +120,8 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.removeAttribute("season");
+		session.removeAttribute("tvShow");
 		session.setAttribute("season", season);
 		session.setAttribute("tvShow", season.getTvShow());
 		return "addEpisode.jsp";
@@ -126,6 +130,9 @@ public class binjrController {
 	@RequestMapping(path = "editSeason.do")
 	public String editSeason(@RequestParam("id") Integer id, HttpSession session) {
 		Season season = aDao.getSeasonById(id);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
@@ -161,6 +168,9 @@ public class binjrController {
 			return "error.jsp";
 		}
 		Season season = aDao.getSeasonById(seasonId);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
@@ -170,6 +180,7 @@ public class binjrController {
 	@RequestMapping(path = "editEpisode.do")
 	public String editEpisode(@RequestParam("id") Integer id, 
 							Integer seasonId, HttpSession session) {
+		session.removeAttribute("episode");
 		session.setAttribute("episode", aDao.getEpisodeById(id));
 		return "editEpisode.jsp";
 	}
@@ -178,6 +189,9 @@ public class binjrController {
 	public String updateEpisode(@RequestParam("id") Integer id, Episode episode, HttpSession session) {
 		Episode updatedEpisode = aDao.updateEpisode(id, episode);
 		Season season = updatedEpisode.getSeason();
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
