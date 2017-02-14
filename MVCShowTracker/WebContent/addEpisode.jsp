@@ -9,14 +9,14 @@
 <title>Edit Season</title>
 </head>
 <body>
-	<form action="editShow.do?id=${tvShow.id}" method="POST">
-		<button type="submit">Back to Seasons</button>
-	</form>
 	<form action="shows.do" method="POST">
 		<button type="submit">Back to Shows</button>
 	</form>
+	<form action="editShow.do?id=${tvShow.id}" method="POST">
+		<button type="submit">Back to Seasons</button>
+	</form>
 	<div class="inputForm">
-		<h2>Edit season ${season.seasonNumber} - ${season.title} from ${tvShow.title}:</h2>
+		<h2><c:out value="Edit season ${season.seasonNumber} - ${season.title} from ${tvShow.title}:"/></h2>
 		<form action="updateSeason.do?id=${season.id}" method="POST">
 			<input type="text" name="seasonNumber" value="${season.seasonNumber}" required>
 			<br>
@@ -50,7 +50,7 @@
 		<ul>
 			<c:forEach var="episode" items="${episodes}">
 				<li>
-				<a href="editEpisode.do?id${episode.id}">
+				<a href="editEpisode.do?id=${episode.id}">
 				<c:out value="${episode.episodeNumber} - ${episode.title}"/>
 				</a>
 				<form action="deleteEpisode.do?id=${episode.id}" method="POST">

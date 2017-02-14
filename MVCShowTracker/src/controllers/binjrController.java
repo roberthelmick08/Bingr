@@ -183,8 +183,11 @@ public class binjrController {
 	@RequestMapping(path = "editEpisode.do")
 	public String editEpisode(@RequestParam("id") Integer id, 
 							Integer seasonId, HttpSession session) {
+		Episode episode = aDao.getEpisodeById(id);
 		session.removeAttribute("episode");
-		session.setAttribute("episode", aDao.getEpisodeById(id));
+		session.removeAttribute("season");
+		session.setAttribute("season", episode.getSeason());
+		session.setAttribute("episode", episode);
 		return "editEpisode.jsp";
 	}
 	
