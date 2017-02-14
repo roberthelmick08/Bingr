@@ -2,12 +2,10 @@ package data;
 
 import java.util.List;
 
-import entities.TVShow;
-import entities.User;
-import entities.UserEpisode;
+import entities.*;
 
 public interface ClientDAO {
-	
+	//Phase I
 	User getUser(String username, String password);
 	
 	User getUserByUserId(int id);
@@ -27,4 +25,21 @@ public interface ClientDAO {
 	List<TVShow> removeUserShow(int userId, int showId);
 
 	List<TVShow> removeMultipleUserShows(int userId, int... showIds);
+	
+	//Phase II
+
+	Party addParty(Party party);
+	
+	Party addUsersToParty(int partyId, int... userIds);
+	
+	Party removeUsersFromParty(int partyId, int... userIds);
+	
+	Boolean deleteParty(int partyId, int userId);
+	
+	Boolean deleteParty(int partyId);
+	
+	List<TVShow> addTVShowsToParty(int partyId, int... showIds);
+	
+	List<Party> getAllParties();
+	
 }

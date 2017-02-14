@@ -16,36 +16,40 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name="display_name")
 	private String displayName;
-	
+
 	@Column(name="username")
 	private String username;
-	
+
 	@Column(name="password")
 	private String password;
-	
+
 	@Column(name="img_url")
 	private String imgUrl;
-	
+
+
 	@ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name="user_tv_show",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;
-	
+
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST})
 	private List<UserEpisode> userEpisodes;
-	
+
 	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
 	private List<UserShow> userShows;
 
-	
+	@ManyToMany(mappedBy="users")
+	List<Party> parties;
+
+
 	public List<UserShow> getUserShows() {
 		return userShows;
 	}
@@ -116,5 +120,5 @@ public class User {
 	public String toString() {
 		return "User: " + displayName;
 	}
-	
+
 }
