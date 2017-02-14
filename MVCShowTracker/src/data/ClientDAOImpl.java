@@ -1,5 +1,6 @@
 package data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import entities.Party;
 import entities.TVShow;
 import entities.User;
 import entities.UserEpisode;
@@ -60,11 +62,11 @@ public class ClientDAOImpl implements ClientDAO {
 	@Override
 	public UserEpisode watchEpisode(UserEpisode ue) {
 		try {
-//			if (ue.getWatched() == 0) {
-//				ue.setWatched(1);
-//			} else if (ue.getWatched() == 1) {
-//				ue.setWatched(0);
-//			}
+			// if (ue.getWatched() == 0) {
+			// ue.setWatched(1);
+			// } else if (ue.getWatched() == 1) {
+			// ue.setWatched(0);
+			// }
 			em.persist(ue);
 			em.flush();
 			System.out.println(ue);
@@ -77,15 +79,15 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<TVShow> getAllShows() {
-			String queryString = "SELECT tvs FROM TVShow tvs";
-			try {
-				List<TVShow> tvShows = em.createQuery(queryString, TVShow.class).getResultList();
-				// System.out.println(results);
-				return tvShows;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+		String queryString = "SELECT tvs FROM TVShow tvs";
+		try {
+			List<TVShow> tvShows = em.createQuery(queryString, TVShow.class).getResultList();
+			// System.out.println(results);
+			return tvShows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	// SPLIT UP WORK HERE!!
 
@@ -108,11 +110,11 @@ public class ClientDAOImpl implements ClientDAO {
 		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
 		try {
 			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
-		User user = getUserByUserId(userId);
-		user.getTvShows().add(tvs);
-		em.persist(user);
-		em.flush();
-		return user.getTvShows();
+			User user = getUserByUserId(userId);
+			user.getTvShows().add(tvs);
+			em.persist(user);
+			em.flush();
+			return user.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -124,7 +126,7 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			User user = getUserByUserId(userId);
 			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
-			for (int i : showIds) {	
+			for (int i : showIds) {
 				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
 				user.getTvShows().add(tvs);
 			}
@@ -142,11 +144,11 @@ public class ClientDAOImpl implements ClientDAO {
 		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
 		try {
 			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
-		User user = getUserByUserId(userId);
-		user.getTvShows().remove(tvs);
-		em.persist(user);
-		em.flush();
-		return user.getTvShows();
+			User user = getUserByUserId(userId);
+			user.getTvShows().remove(tvs);
+			em.persist(user);
+			em.flush();
+			return user.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -158,17 +160,77 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			User user = getUserByUserId(userId);
 			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
-			for (int i : showIds) {	
+			for (int i : showIds) {
 				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
 				user.getTvShows().remove(tvs);
 			}
 			em.persist(user);
 			em.flush();
-		return user.getTvShows();
+			return user.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public Party addParty(Party party) {
+		try {
+			em.persist(party);
+			em.flush();
+			// System.out.println(party);
+			return party;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public Party addUsersToParty(int partyId, int... userIds) {
+		try {
+			Party party = em.find(Party.class, partyId);
+			if (party == null) {
+				return null;
+			} else {
+				if (party.getUsers() == null) {
+					party.setUsers(new ArrayList<User>());
+				}
+				for (int id : userIds) {
+					party.getUsers().add(em.find(User.class, id));
+				}
+				em.persist(party);
+//				em.flush();
+				return party;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public Boolean deleteParty(int partyId, int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean deleteParty(int partyId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TVShow> addTVShowsToParty(int partyId, int... showIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Party> getAllParties() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
