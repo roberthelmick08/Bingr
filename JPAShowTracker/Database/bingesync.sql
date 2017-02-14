@@ -5,15 +5,15 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema BinjrDB
+-- Schema bingesync
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `BinjrDB` ;
+DROP SCHEMA IF EXISTS `bingesync` ;
 
 -- -----------------------------------------------------
--- Schema BinjrDB
+-- Schema bingesync
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `BinjrDB` DEFAULT CHARACTER SET utf8 ;
-USE `BinjrDB` ;
+CREATE SCHEMA IF NOT EXISTS `bingesync` DEFAULT CHARACTER SET utf8 ;
+USE `bingesync` ;
 
 -- -----------------------------------------------------
 -- Table `user`
@@ -97,7 +97,8 @@ DROP TABLE IF EXISTS `user_tv_show` ;
 CREATE TABLE IF NOT EXISTS `user_tv_show` (
   `user_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `tv_show_id`),
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_has_Show_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
@@ -141,6 +142,72 @@ CREATE INDEX `fk_user_episode_user1_idx` ON `user_episode` (`user_id` ASC);
 
 CREATE INDEX `fk_user_episode_episode1_idx` ON `user_episode` (`episode_id` ASC);
 
+
+-- -----------------------------------------------------
+-- Table `party`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party` ;
+
+CREATE TABLE IF NOT EXISTS `party` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(90) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `party_user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party_user` ;
+
+CREATE TABLE IF NOT EXISTS `party_user` (
+  `party_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_party_has_user_party1`
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_party_has_user_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_party_has_user_user1_idx` ON `party_user` (`user_id` ASC);
+
+CREATE INDEX `fk_party_has_user_party1_idx` ON `party_user` (`party_id` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `party_tv_show`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `party_tv_show` ;
+
+CREATE TABLE IF NOT EXISTS `party_tv_show` (
+  `party_id` INT NOT NULL,
+  `tv_show_id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_party_has_tv_show_party1`
+    FOREIGN KEY (`party_id`)
+    REFERENCES `party` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_party_has_tv_show_tv_show1`
+    FOREIGN KEY (`tv_show_id`)
+    REFERENCES `tv_show` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_party_has_tv_show_tv_show1_idx` ON `party_tv_show` (`tv_show_id` ASC);
+
+CREATE INDEX `fk_party_has_tv_show_party1_idx` ON `party_tv_show` (`party_id` ASC);
+
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO student;
  DROP USER student;
@@ -149,11 +216,15 @@ CREATE USER 'student' IDENTIFIED BY 'student';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'student';
 
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 -- -----------------------------------------------------
 -- Data for table `user`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesync`;
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Chaz', 'chaz', 1, 'Chaaaz', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Nik', 'nik', 2, 'Nikolaus', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Robert', 'robert', 3, 'Rupert', DEFAULT);
@@ -166,7 +237,7 @@ COMMIT;
 -- Data for table `tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesync`;
 INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (1, 'Game of Swords', 'People killing eachother', NULL);
 INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (2, 'Stranger Thrones', 'Throne Improvement Show', NULL);
 
@@ -177,7 +248,7 @@ COMMIT;
 -- Data for table `season`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesync`;
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (1, 'Season 1 of Stranger Thrones', 'Season 1', NULL, 1, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (2, 'Season 2 of Stranger Thrones', 'Season 2', NULL, 2, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (3, 'Season 1 of Game of Swords', 'Season 1', NULL, 1, 1);
@@ -190,7 +261,7 @@ COMMIT;
 -- Data for table `episode`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesync`;
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 2 GOS', 'Episode 2', NULL, 2, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 4);
@@ -203,6 +274,60 @@ INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`
 COMMIT;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- Data for table `user_tv_show`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bingesync`;
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (1, 2, DEFAULT);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (2, 1, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `user_episode`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bingesync`;
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 1, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 3, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 2, 3, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (0, 2, 1, DEFAULT);
+INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 2, 2, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bingesync`;
+INSERT INTO `party` (`id`, `name`) VALUES (1, 'First Group');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party_user`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bingesync`;
+INSERT INTO `party_user` (`party_id`, `user_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `party_user` (`party_id`, `user_id`, `id`) VALUES (1, 2, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `party_tv_show`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bingesync`;
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`, `id`) VALUES (1, 2, DEFAULT);
+
+COMMIT;
+

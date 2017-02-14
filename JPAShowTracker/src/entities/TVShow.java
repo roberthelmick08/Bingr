@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,12 +30,27 @@ public class TVShow {
 	@Column(name="img_url")
 	private String imgUrl;
 	
-	@OneToMany(mappedBy="tvShow", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy="tvShow", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private List<Season> seasons;
 
 	@ManyToMany(mappedBy="tvShows")
 	private List<User> users;
 	
+	@OneToMany(mappedBy="tvShow", cascade={CascadeType.REMOVE})
+	private List<UserShow> userShows;
+	
+	public List<UserShow> getUserShows() {
+		return userShows;
+	}
+
+	public void setUserShows(List<UserShow> userShows) {
+		this.userShows = userShows;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	// Getters and Setters
 	public String getTitle() {
 		return title;
