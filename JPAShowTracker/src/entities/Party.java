@@ -27,7 +27,7 @@ public class Party {
 	inverseJoinColumns = @JoinColumn(name = "tv_show_id"))
 	List<TVShow> tvShows;
 
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.REMOVE, CascadeType.PERSIST})
 	@JoinTable(name = "party_user", joinColumns = @JoinColumn(name = "party_id"), 
 	inverseJoinColumns = @JoinColumn(name = "user_id"))
 	List<User> users;

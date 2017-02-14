@@ -38,13 +38,20 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
-//			for (int i : user.getUserEpisodes().keySet()) {
-//				System.out.println(i);
-//			}
 			System.out.println("******user.getID() after userLogin: " + user.getId());
-			session.setAttribute("user", user);
+			resetSessionAttributes(session, user);
+			System.out.println("**** number of shows: " + user.getTvShows().size());
+			for (TVShow s : user.getTvShows()) {
+				System.out.println("**** number of seasons in " + s.getTitle() + s.getSeasons().size());
+			}
 			return "profileSplash.jsp";
 		}
+	}
+
+	private void resetSessionAttributes(HttpSession session, User user) {
+		user = cDao.getUserByUserId(user.getId());
+		user.setTvShows(cDao.cleanUserTVShows(user.getId()));
+		session.setAttribute("user", user);
 	}
 
 	@RequestMapping(path = "addUser.do")
@@ -220,7 +227,7 @@ public class binjrController {
 	public String trackShow(HttpSession session) {
 //		session.setAttribute("userId", userId);
 //		System.out.println("******** userId in trackShow(): " + userId);
-		session.setAttribute("tvShows", cDao.getAllShows());
+		session.setAttribute("allTVShows", cDao.getAllShows());
 		return "trackShow.jsp";
 	}
 	
@@ -235,7 +242,7 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.setAttribute("tvShows", cDao.getAllShows());
+		session.setAttribute("allTVShows", cDao.getAllShows());
 		return "profileSplash.jsp";
 	}
 	
