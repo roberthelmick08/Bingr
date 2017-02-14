@@ -43,12 +43,11 @@ public class User {
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST})
 	private List<UserEpisode> userEpisodes;
 
-	@ManyToMany(mappedBy="users")
-	List<Party> parties;
-
 	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
 	private List<UserShow> userShows;
 
+	@ManyToMany(mappedBy="users")
+	List<Party> parties;
 
 
 	public List<UserShow> getUserShows() {

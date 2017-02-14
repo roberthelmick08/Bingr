@@ -25,7 +25,6 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
 			<!-- <property name="hibernate.hbm2ddl.auto" value="update"></property> -->
-
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
 
