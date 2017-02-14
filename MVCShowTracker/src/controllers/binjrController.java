@@ -38,12 +38,17 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
-			System.out.println("******user.getID() after userLogin: " + user.getId());
-			resetSessionAttributes(session, user);
-			System.out.println("**** number of shows: " + user.getTvShows().size());
-			for (TVShow s : user.getTvShows()) {
-				System.out.println("**** number of seasons in " + s.getTitle() + s.getSeasons().size());
+//			System.out.println("******user.getID() after userLogin: " + user.getId());
+			if (user != null) {
+				resetSessionAttributes(session, user);
+			} else {
+				session.setAttribute("noUser", true);
+				return "index.jsp";
 			}
+//			System.out.println("**** number of shows: " + user.getTvShows().size());
+//			for (TVShow s : user.getTvShows()) {
+//				System.out.println("**** number of seasons in " + s.getTitle() + s.getSeasons().size());
+//			}
 			return "profileSplash.jsp";
 		}
 	}
