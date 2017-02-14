@@ -32,6 +32,8 @@ public interface ClientDAO {
 	
 	Party addUsersToParty(int partyId, int... userIds);
 	
+	Party removeUsersFromParty(int partyId, int... userIds);
+	
 	Boolean deleteParty(int partyId, int userId);
 	
 	Boolean deleteParty(int partyId);

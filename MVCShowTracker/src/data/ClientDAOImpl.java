@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -131,8 +132,8 @@ public class ClientDAOImpl implements ClientDAO {
 				user.getTvShows().add(tvs);
 			}
 			em.persist(user);
-	//		em.flush();
-		return user.getTvShows();
+			em.flush();
+			return user.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -198,9 +199,11 @@ public class ClientDAOImpl implements ClientDAO {
 				}
 				for (int id : userIds) {
 					party.getUsers().add(em.find(User.class, id));
+					//party.setUsers(party.getUsers());
+					System.out.println(party.getUsers());
 				}
 				em.persist(party);
-//				em.flush();
+				//em.flush();
 				return party;
 			}
 		} catch (Exception e) {
@@ -217,20 +220,73 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public Boolean deleteParty(int partyId) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Party party = em.find(Party.class, partyId);
+			if (party != null) {
+				em.remove(party);
+				em.flush();
+				return true;
+			} else
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public List<TVShow> addTVShowsToParty(int partyId, int... showIds) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Party party = em.find(Party.class, partyId);
+			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			for (int i : showIds) {
+				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
+				party.getTvShows().add(tvs);
+			}
+			em.persist(party);
+			// em.flush();
+			return party.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Party> getAllParties() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String queryString = "SELECT p FROM Party p";
+			List<Party> parties = em.createQuery(queryString, Party.class).getResultList();
+			
+			return parties;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public Party removeUsersFromParty(int partyId, int... userIds) {
+		try {
+			Party party = em.find(Party.class, partyId);
+			List<User> users = party.getUsers();
+			List<User> users2 = new ArrayList<>();
+			users2.addAll(users);
+ 				for (User user : users2) {
+					for (int id : userIds) {
+					if (user.getId() == id) {
+						users.remove(user);
+					}
+				}
+			}
+
+			em.persist(party);
+			// em.flush();
+			return party;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
