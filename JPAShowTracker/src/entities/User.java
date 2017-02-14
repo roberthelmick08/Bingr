@@ -39,10 +39,25 @@ public class User {
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;
 	
-	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST})
 	private List<UserEpisode> userEpisodes;
+	
+	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
+	private List<UserShow> userShows;
 
 	
+	public List<UserShow> getUserShows() {
+		return userShows;
+	}
+
+	public void setUserShows(List<UserShow> userShows) {
+		this.userShows = userShows;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	// Getters and Setters
 	public String getDisplayName() {
 		return displayName;
