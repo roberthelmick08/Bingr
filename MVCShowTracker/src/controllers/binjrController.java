@@ -27,7 +27,7 @@ public class binjrController {
 			@RequestParam(name = "password") String password, HttpSession session) {
 		System.out.println("running login");
 		User user = null;
-		if (username.equals("admin") && password.equals("12345")) {
+		if (username.toLowerCase().equals("admin") && password.equals("12345")) {
 			session.setAttribute("tvShows", cDao.getAllShows());
 			return "addShow.jsp";
 		} else {
@@ -71,6 +71,7 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.removeAttribute("tvShow");
 		session.setAttribute("tvShow", tvshow);
 		return "addSeason.jsp";
 	}
@@ -84,6 +85,8 @@ public class binjrController {
 	@RequestMapping(path = "editShow.do")
 	public String editTVShow(@RequestParam("id") Integer id, HttpSession session) {
 		TVShow tvShow = aDao.getTVShowById(id);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("seasons");
 		session.setAttribute("tvShow", tvShow);
 		session.setAttribute("seasons", tvShow.getSeasons());
 		return "addSeason.jsp";
