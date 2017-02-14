@@ -14,12 +14,13 @@
 		<class>entities.User</class>
 		<class>entities.Party</class>
 		<class>entities.UserEpisode</class>
+		<class>entities.UserShow</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost:3306/bingesync" />
 <!-- 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/bingesynch?createDatabaseIfNotExist=true" /> -->
+				value="jdbc:mysql://localhost:3306/bingesync?createDatabaseIfNotExist=true" /> -->
 			<property name="javax.persistence.jdbc.user" value="student" />
 			<property name="javax.persistence.jdbc.password" value="student" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -38,8 +39,8 @@
 			<property name="hibernate.c3p0.max_statements" value="0" />
 			<property name="hibernate.c3p0.timeout" value="60" />
 
-			<property name="hbm2ddl.auto" value="validate"></property>
-
+		<!-- 	<property name="hbm2ddl.auto" value="validate"></property> -->
+		
 		</properties>
 	</persistence-unit>
 </persistence>
