@@ -38,7 +38,7 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
-			System.out.println("***********" + user.getId());
+			System.out.println("******user.getID() after userLogin: " + user.getId());
 			session.setAttribute("user", user);
 			return "profileSplash.jsp";
 		}
@@ -198,7 +198,7 @@ public class binjrController {
 	
 	@RequestMapping(path = "trackShow.do")
 	public String trackShow(Integer userId, HttpSession session) {
-		System.out.println("***********" + userId);
+		System.out.println("******** userId in trackShow(): " + userId);
 		session.setAttribute("userId", userId);
 		session.setAttribute("tvShows", cDao.getAllShows());
 		return "trackShow.jsp";
@@ -207,8 +207,9 @@ public class binjrController {
 	@RequestMapping(path = "trackNewShows.do")
 	public String trackNewShows(HttpSession session, Integer userId, Integer... tvShowIds) {
 		try {
-			System.out.println("***********" + userId);
+			System.out.println("*********** userId IN TRACK NEW SHOWS: " + userId);
 			for (int i : tvShowIds) {
+				System.out.println("*********** tvShowIDs IN TRACK NEW SHOWS: " + i);
 				cDao.addUserShow(userId, i);
 			}
 		} catch (Exception e) {
@@ -221,8 +222,7 @@ public class binjrController {
 	@RequestMapping(path="watchEpisode.do")
 	public String watchEpisode(HttpSession session, UserEpisode ue){
 		try {
-			System.out.println("***********" + ue);
-			
+			System.out.println("******* UserEpisode in watchEpisode(): " + ue);
 				cDao.watchEpisode(ue);
 			} catch (Exception e) {
 			return "error.jsp";

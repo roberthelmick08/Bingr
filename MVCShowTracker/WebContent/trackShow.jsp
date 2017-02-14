@@ -33,14 +33,14 @@
 					<div class="checkbox">
 					<c:choose>
 						    <c:when test="${UserEpisode.watched=='1'}">
-							<label class="checkbox-inline no_indent"> <input
-							type='checkbox' checked name='tvShowIds' value='${tvShow.id}'>
-							<label for="tvShow">${tvShow.title}</label>				    
-							</c:when>    
-						    <c:otherwise>
-						               <label class="checkbox-inline no_indent"> <input
-							type='checkbox' name='tvShowIds' value='${tvShow.id}'>
-							<label for="tvShow">${tvShow.title}</label>
+									<label class="checkbox-inline no_indent"> <input
+									type='checkbox' checked name='tvShowIds' value='${tvShow.id}'>
+									<label for="tvShow">${tvShow.title}</label>				    
+								</c:when>    
+							    <c:otherwise>
+								    <label class="checkbox-inline no_indent"> <input
+									type='checkbox' name='tvShowIds' value='${tvShow.id}'>
+									<label for="tvShow">${tvShow.title}</label>
 						    </c:otherwise>
 						</c:choose>
 					</div>
