@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Party {
@@ -24,13 +23,13 @@ public class Party {
 	private String name;
 
 	@ManyToMany
-	@JoinTable(name = "party_tv_show", joinColumns = @JoinColumn(name = "tv_show_id"), 
-	inverseJoinColumns = @JoinColumn(name = "party_id"))
+	@JoinTable(name = "party_tv_show", joinColumns = @JoinColumn(name = "party_id"), 
+	inverseJoinColumns = @JoinColumn(name = "tv_show_id"))
 	List<TVShow> tvShows;
 
-	@ManyToMany
-	@JoinTable(name = "party_user", joinColumns = @JoinColumn(name = "user_id"), 
-	inverseJoinColumns = @JoinColumn(name = "party_id"))
+	@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name = "party_user", joinColumns = @JoinColumn(name = "party_id"), 
+	inverseJoinColumns = @JoinColumn(name = "user_id"))
 	List<User> users;
 
 	public int getId() {
@@ -74,7 +73,7 @@ public class Party {
 		} else {
 			builder.append(", tvShows is null");
 		}
-		if (tvShows != null) {
+		if (users != null) {
 			builder.append(", users size=");
 			builder.append(users.size());
 		} else {

@@ -36,8 +36,8 @@ public class User {
 
 	@ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name="user_tv_show",
-		joinColumns=@JoinColumn(name="tv_show_id"),
-		inverseJoinColumns=@JoinColumn(name="user_id"))
+		joinColumns=@JoinColumn(name="user_id"),
+		inverseJoinColumns=@JoinColumn(name="tv_show_id"))
 	List<TVShow> tvShows;
 
 	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST})
@@ -46,7 +46,7 @@ public class User {
 	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
 	private List<UserShow> userShows;
 
-	@ManyToMany(mappedBy="users")
+	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
 	List<Party> parties;
 
 
@@ -118,7 +118,7 @@ public class User {
 	// toString
 	@Override
 	public String toString() {
-		return "User: " + displayName;
+		return "Id: " +id + " User: " + displayName;
 	}
 
 }
