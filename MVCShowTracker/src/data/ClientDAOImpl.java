@@ -194,11 +194,14 @@ public class ClientDAOImpl implements ClientDAO {
 				if (party.getUsers() == null) {
 					party.setUsers(new ArrayList<User>());
 				}
+					for (int i : userIds) {
+						party.getUsers().add(em.find(User.class, i));
+					}
+				}
 				em.persist(party);
 				em.flush();
 				return party;
-			}
-		} catch (Exception e) {
+			} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
