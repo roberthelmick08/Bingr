@@ -121,7 +121,6 @@ public class ClientDAOTest {
 			assertEquals("Stranger Thrones", tvs.get(1).getTitle());
 			dao.removeMultipleUserShows(1, 1, 2);
 			assertEquals(0, tvs.size());
-			//assertEquals("Stranger Thrones", tvs.get(0).getTitle());
 		}
 		@Test
 		public void test_addParty_method(){
@@ -136,12 +135,12 @@ public class ClientDAOTest {
 			party.setName("Test Party");
 			party = dao.addParty(party);
 			party = em.find(Party.class, party.getId());
+			party = dao.addUsersToParty(party.getId(), 1, 2);
+//			User user = em.find(User.class, 1);
 //			party = dao.addUsersToParty(party.getId(), 1, 2);
-			User user = em.find(User.class, 1);
-			party = dao.addUsersToParty(party.getId(), user.getId());
 			assertNotNull(party);
 //			System.out.println(party);
-			assertEquals(1, party.getUsers().size());
+			assertEquals(2, party.getUsers().size());
 			//assertNotNull(em.find(Party.class, party.getId()));
 			//party = em.find(Party.class, party.getId());
 			//assertEquals("Chaaaz", party.getUsers().get(0).getDisplayName());
@@ -161,24 +160,16 @@ public class ClientDAOTest {
 		
 		@Test
 		public void test_get_all_parties(){
-//			Party party = new Party();
-//			party.setName("Test Party");
-////			
-//			System.out.println(party.getId());
-//			party = dao.addParty(party);
-//			//System.out.println(party.getId());
-//			party = dao.addUsersToParty(party.getId(), 1, 2);
-//			System.out.println("Party ID: " + party.getId());
-////			party.setName("Test Party2");
-//			//party = em.find(Party.class, party.getId());
-//			System.out.println(party);
-////			party = dao.addParty(party);
-////			dao.addUsersToParty(party.getId(), 3, 4);
-//		//	System.out.println(dao.getAllParties());
-//			//System.out.println(dao.getAllParties().get(0).getUsers().get(0).getDisplayName());
-//			//System.out.println(party.getUsers().get(0).getDisplayName());
-//			//assertEquals(2, dao.getAllParties().size());
-//			//assertEquals("Chaz", party.getUsers().get(0).getDisplayName());
+			List<Party> parties = dao.getAllParties();
+			assertNotNull(parties);
+			assertEquals(1, parties.size());
+			Party party = new Party();
+			party.setName("Test Party");
+			party = dao.addParty(party);
+			dao.addUsersToParty(party.getId(), 1, 2);
+			parties = dao.getAllParties();
+			assertNotNull(parties);
+			assertEquals(2, parties.size());
 
 		}
 		
