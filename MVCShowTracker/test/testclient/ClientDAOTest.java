@@ -135,9 +135,13 @@ public class ClientDAOTest {
 			Party party = new Party();
 			party.setName("Test Party");
 			party = dao.addParty(party);
-			party = dao.addUsersToParty(party.getId(), 1, 2);
+			party = em.find(Party.class, party.getId());
+//			party = dao.addUsersToParty(party.getId(), 1, 2);
+			User user = em.find(User.class, 1);
+			party = dao.addUsersToParty(party.getId(), user.getId());
 			assertNotNull(party);
-			assertEquals(2, party.getUsers().size());
+//			System.out.println(party);
+			assertEquals(1, party.getUsers().size());
 			//assertNotNull(em.find(Party.class, party.getId()));
 			//party = em.find(Party.class, party.getId());
 			//assertEquals("Chaaaz", party.getUsers().get(0).getDisplayName());

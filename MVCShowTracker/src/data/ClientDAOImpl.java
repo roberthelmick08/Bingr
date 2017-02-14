@@ -1,7 +1,6 @@
 package data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,7 +26,6 @@ public class ClientDAOImpl implements ClientDAO {
 			String queryString = "select u from User u where u.username = :username AND u.password = :password";
 			User user = em.createQuery(queryString, User.class).setParameter("username", username)
 					.setParameter("password", password).getSingleResult();
-			System.out.println(user);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +38,6 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			String queryString = "select u from User u where u.id = :id";
 			User user = em.createQuery(queryString, User.class).setParameter("id", id).getSingleResult();
-			System.out.println(user);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,7 +67,6 @@ public class ClientDAOImpl implements ClientDAO {
 			// }
 			em.persist(ue);
 			em.flush();
-			System.out.println(ue);
 			return ue;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,13 +193,8 @@ public class ClientDAOImpl implements ClientDAO {
 				if (party.getUsers() == null) {
 					party.setUsers(new ArrayList<User>());
 				}
-				for (int id : userIds) {
-					party.getUsers().add(em.find(User.class, id));
-					//party.setUsers(party.getUsers());
-					System.out.println(party.getUsers());
-				}
 				em.persist(party);
-				//em.flush();
+				em.flush();
 				return party;
 			}
 		} catch (Exception e) {
@@ -244,7 +235,7 @@ public class ClientDAOImpl implements ClientDAO {
 				party.getTvShows().add(tvs);
 			}
 			em.persist(party);
-			// em.flush();
+			em.flush();
 			return party.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -281,7 +272,7 @@ public class ClientDAOImpl implements ClientDAO {
 			}
 
 			em.persist(party);
-			// em.flush();
+			em.flush();
 			return party;
 		} catch (Exception e) {
 			e.printStackTrace();
