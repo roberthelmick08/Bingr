@@ -138,7 +138,61 @@ public class ClientDAOTest {
 			party = dao.addUsersToParty(party.getId(), 1, 2);
 			assertNotNull(party);
 			assertEquals(2, party.getUsers().size());
+			//assertNotNull(em.find(Party.class, party.getId()));
+			//party = em.find(Party.class, party.getId());
+			//assertEquals("Chaaaz", party.getUsers().get(0).getDisplayName());
+		
+		}
+		@Test
+		public void test_deleteParty_Method(){
+			Party party = new Party();
+			party.setName("Test Party");
+			party = dao.addParty(party);
+			assertNotNull(party);
+			int partyId = party.getId();
+			assertNotNull(em.find(Party.class, partyId));
+			assertTrue(dao.deleteParty(partyId));
+			assertNull(em.find(Party.class, partyId));
 		}
 		
+		@Test
+		public void test_get_all_parties(){
+//			Party party = new Party();
+//			party.setName("Test Party");
+////			
+//			System.out.println(party.getId());
+//			party = dao.addParty(party);
+//			//System.out.println(party.getId());
+//			party = dao.addUsersToParty(party.getId(), 1, 2);
+//			System.out.println("Party ID: " + party.getId());
+////			party.setName("Test Party2");
+//			//party = em.find(Party.class, party.getId());
+//			System.out.println(party);
+////			party = dao.addParty(party);
+////			dao.addUsersToParty(party.getId(), 3, 4);
+//		//	System.out.println(dao.getAllParties());
+//			//System.out.println(dao.getAllParties().get(0).getUsers().get(0).getDisplayName());
+//			//System.out.println(party.getUsers().get(0).getDisplayName());
+//			//assertEquals(2, dao.getAllParties().size());
+//			//assertEquals("Chaz", party.getUsers().get(0).getDisplayName());
+
+		}
+		
+		
+		@Test
+		public void test_remove_UsersFromParty_Method(){
+			Party party = new Party();
+			party.setName("Test Party");
+			party = dao.addParty(party);
+			int partyId = party.getId();
+			party = dao.addUsersToParty(party.getId(), 1, 2);
+			assertNotNull(party);
+			assertEquals(2, party.getUsers().size());
+			dao.removeUsersFromParty(partyId, 1);
+			assertEquals(1, party.getUsers().size());
+			dao.removeUsersFromParty(partyId, 2);
+			assertEquals(0, party.getUsers().size());
+			
+		}
 			
 }
