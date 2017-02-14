@@ -13,21 +13,29 @@
 	<h2>Add or Select a Show...</h2>
 
 	<div class="inputForm">
+		<h3>Add Show:</h3>
 		<form action="addShow.do" method="POST">
 			<input type="text" name="title" placeholder="Show Title..." required>
-			<br> <input type="text" name="description"
-				placeholder="Description..." required> <br> <input
-				type="text" name="imgUrl" placeholder="Image url..."> <br>
+			<br> 
+			<input type="text" name="description" placeholder="Description..." required> 
+			<br> 
+			<input type="text" name="imgUrl" placeholder="Image url..."> <br>
 			<input type="submit" value="Add Show">
 		</form>
 	</div>
 	<div>
+	<h3>Current Shows:</h3>
 		<ul>
 			<c:forEach var="tvShow" items="${tvShows}">
-				<li><form action="deleteShow.do?id=${tvShow.id}" method="POST">
-				<h4><a href="editShow.do?id=${tvShow.id}"><c:out value="${tvShow.title}"/></a>
-				<button type="submit">Delete</button></h4>
-				</form></li>
+				<li>
+				<a href="editShow.do?id=${tvShow.id}">
+				<c:out value="${tvShow.title}"/>
+				</a>
+				<form action="deleteShow.do?id=${tvShow.id}" method="POST">
+				<button type="submit">Delete</button>
+				</form>
+				<br>
+				</li>
 			</c:forEach>
 		</ul>
 	</div>

@@ -36,6 +36,21 @@ public class TVShow {
 	@ManyToMany(mappedBy="tvShows")
 	private List<User> users;
 	
+	@OneToMany(mappedBy="tvShow", cascade={CascadeType.REMOVE})
+	private List<UserShow> userShows;
+	
+	public List<UserShow> getUserShows() {
+		return userShows;
+	}
+
+	public void setUserShows(List<UserShow> userShows) {
+		this.userShows = userShows;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	// Getters and Setters
 	public String getTitle() {
 		return title;

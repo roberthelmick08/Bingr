@@ -6,11 +6,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Season</title>
+<title>Edit Show</title>
 </head>
 <body>
-<h2>Add a season to ${tvShow.title} ...</h2>
+	<form action="shows.do" method="POST">
+		<button type="submit">Back to Shows</button>
+	</form>
 	<div class="inputForm">
+		<h2>Edit Show Info: ${tvShow.title}</h2>
+		<form action="updateShow.do?id=${tvShow.id}" method="POST">
+			Title: <input type="text" name="title" value="${tvShow.title}" required>
+			<br>
+			Description: <input type="text" name="description" value="${tvShow.description}" required> 
+			<br> 
+			Image Url: <input type="text" name="imgUrl" value="${tvShow.imgUrl}"> 
+			<br>
+			<input type="hidden" value="${tvShow.id}">
+			<input type="submit" value="Update Show">
+		</form>
+	</div>
+	<hr>
+	<div class="inputForm">
+		<h2>Add Season to: ${tvShow.title}</h2>
 		<form action="addSeason.do" method="POST">
 			<input type="text" name="seasonNumber" placeholder="Season Number..." required>
 			<br>
@@ -23,18 +40,21 @@
 			<input type="hidden" name="tvShowId" value="${tvShow.id}">
 			<input type="submit" value="Add Season">
 		</form>
-		
-		<form action="addMoreSeasons.do" method="POST">
-			<input type="submit" value="Add More Shows"/>
-		</form>
 	</div>
+	<hr><hr>
 	<div>
+	<h3>Edit Show Seasons: ${tvShow.title}</h3>
 		<ul>
 			<c:forEach var="season" items="${seasons}">
-				<li><form action="deleteSeason.do?id=${season.id}" method="POST">
-				<h4><a href="editSeason.do?id=${season.id}"><c:out value="${season.seasonNumber} - ${season.title}"/></a>
-				<button type="submit">Delete</button></h4>
-				</form></li>
+				<li>
+				<a href="editSeason.do?id=${season.id}">
+				<c:out value="${season.seasonNumber} - ${season.title}"/>
+				</a>
+				<form action="deleteSeason.do?id=${season.id}" method="POST">
+				<input type="hidden" name="tvShowId" value="${tvShow.id}">
+				<button type="submit">Delete</button>
+				</form>
+				</li>
 			</c:forEach>
 		</ul>
 	</div>
