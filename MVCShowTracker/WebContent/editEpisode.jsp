@@ -9,11 +9,18 @@
 <title>Edit Episode</title>
 </head>
 <body>
-
-<h2><c:out value="Edit Episode ${episode.title} from ${tvShow.title} ${season.title}..."/></h2>
-
+	<form action="shows.do" method="POST">
+		<button type="submit">Back to Shows</button>
+	</form>
+	<form action="editShow.do?id=${tvShow.id}" method="POST">
+		<button type="submit">Back to Seasons</button>
+	</form>
+	<form action="editSeason.do?id=${season.id}" method="POST">
+		<button type="submit">Back to Episodes</button>
+	</form>
 	<div class="inputForm">
-		<form action="updateEpisode.do" method="POST">
+		<h2><c:out value="Edit Episode ${episode.title} from ${tvShow.title} ${season.title} :"/></h2>
+		<form action="updateEpisode.do?id=${episode.id}" method="POST">
 			<input type="text" name="episodeNumber" value="${episode.episodeNumber}" required>
 			<br>
 			<input type="text" name="title" value="${episode.title}" required>
@@ -24,25 +31,8 @@
 			<br>
 			<input type="hidden" name="episodeId" value="${episode.id}">
 			<input type="hidden" name="seasonId" value="${season.id}">
-			<input type="submit" value="Add Episode">
+			<input type="submit" value="Update Episode">
 		</form>
-	</div>
-	<div>
-		<ul>
-			<c:forEach var="episode" items="${episodes}">
-				<li>
-				<c:out value="${episode.episodeNumber} - ${episode.title}"/>
-				<form action="editEpisode.do?id=${episode.id}" method ="POST">
-				<button type="submit">Edit Info</button>
-				<input type="hidden" name="seasonId" value="${season.id}">
-				</form>
-				<form action="deleteEpisode.do?id=${episode.id}" method="POST">
-				<button type="submit">Delete</button>
-				<input type="hidden" name="seasonId" value="${season.id}">
-				</form>
-				</li>
-			</c:forEach>
-		</ul>
 	</div>
 </body>
 </html>

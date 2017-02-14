@@ -1,8 +1,8 @@
 package data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import entities.Episode;
 import entities.Party;
 import entities.TVShow;
 import entities.User;
@@ -25,9 +26,9 @@ public class ClientDAOImpl implements ClientDAO {
 	public User getUser(String username, String password) {
 		try {
 			String queryString = "select u from User u where u.username = :username AND u.password = :password";
+			System.out.println("PASSWORD IS: " + password);
 			User user = em.createQuery(queryString, User.class).setParameter("username", username)
 					.setParameter("password", password).getSingleResult();
-			System.out.println(user);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,13 +41,24 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			String queryString = "select u from User u where u.id = :id";
 			User user = em.createQuery(queryString, User.class).setParameter("id", id).getSingleResult();
-			System.out.println(user);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+	
+//	@Override
+//	public UserEpisode getTvShowById(int id) {
+//		try {
+//			String queryString = "select ue from UserEpisode ue where ue.episode_id = :id";
+//			UserEpisode ue = em.createQuery(queryString, UserEpisode.class).setParameter("episodeId", id).getSingleResult();
+//			return ue;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
 	@Override
 	public User createUser(User user) {
@@ -68,10 +80,17 @@ public class ClientDAOImpl implements ClientDAO {
 			// } else if (ue.getWatched() == 1) {
 			// ue.setWatched(0);
 			// }
+			
+			User user = em.find(User.class, ue.getUser().getId());
+			Map<Integer, UserEpisode> m = user.getUserEpisodes();
+			if (m.containsKey(ue.getEpisode().getId())){
+				m.replace(ue.getEpisode().getId(), ue);
+			}
+	
 			em.persist(ue);
-			em.flush();
-			System.out.println(ue);
+			em.flush(); 
 			return ue;
+//			return user.getUserEpisodes().get(ue.getEpisode().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -197,13 +216,8 @@ public class ClientDAOImpl implements ClientDAO {
 				if (party.getUsers() == null) {
 					party.setUsers(new ArrayList<User>());
 				}
-				for (int id : userIds) {
-					party.getUsers().add(em.find(User.class, id));
-					//party.setUsers(party.getUsers());
-					System.out.println(party.getUsers());
-				}
 				em.persist(party);
-				//em.flush();
+				em.flush();
 				return party;
 			}
 		} catch (Exception e) {
@@ -244,7 +258,7 @@ public class ClientDAOImpl implements ClientDAO {
 				party.getTvShows().add(tvs);
 			}
 			em.persist(party);
-			// em.flush();
+			em.flush();
 			return party.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -281,7 +295,7 @@ public class ClientDAOImpl implements ClientDAO {
 			}
 
 			em.persist(party);
-			// em.flush();
+			em.flush();
 			return party;
 		} catch (Exception e) {
 			e.printStackTrace();

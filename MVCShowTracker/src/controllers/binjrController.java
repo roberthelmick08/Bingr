@@ -13,6 +13,7 @@ import entities.Episode;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
+import entities.UserEpisode;
 
 @Controller
 public class binjrController {
@@ -26,7 +27,7 @@ public class binjrController {
 			@RequestParam(name = "password") String password, HttpSession session) {
 		System.out.println("running login");
 		User user = null;
-		if (username.equals("admin") && password.equals("12345")) {
+		if (username.toLowerCase().equals("admin") && password.equals("12345")) {
 			session.setAttribute("tvShows", cDao.getAllShows());
 			return "addShow.jsp";
 		} else {
@@ -37,6 +38,10 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
+//			for (int i : user.getUserEpisodes().keySet()) {
+//				System.out.println(i);
+//			}
+			System.out.println("******user.getID() after userLogin: " + user.getId());
 			session.setAttribute("user", user);
 			return "profileSplash.jsp";
 		}
@@ -69,12 +74,15 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.removeAttribute("tvShow");
+		session.removeAttribute("seasons");
 		session.setAttribute("tvShow", tvshow);
 		return "addSeason.jsp";
 	}
 	
 	@RequestMapping(path = "shows.do")
 	public String shows(HttpSession session) {
+		session.removeAttribute("tvShows");
 		session.setAttribute("tvShows", cDao.getAllShows());
 		return "addShow.jsp";
 	}
@@ -82,6 +90,8 @@ public class binjrController {
 	@RequestMapping(path = "editShow.do")
 	public String editTVShow(@RequestParam("id") Integer id, HttpSession session) {
 		TVShow tvShow = aDao.getTVShowById(id);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("seasons");
 		session.setAttribute("tvShow", tvShow);
 		session.setAttribute("seasons", tvShow.getSeasons());
 		return "addSeason.jsp";
@@ -113,6 +123,8 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
+		session.removeAttribute("season");
+		session.removeAttribute("tvShow");
 		session.setAttribute("season", season);
 		session.setAttribute("tvShow", season.getTvShow());
 		return "addEpisode.jsp";
@@ -121,6 +133,9 @@ public class binjrController {
 	@RequestMapping(path = "editSeason.do")
 	public String editSeason(@RequestParam("id") Integer id, HttpSession session) {
 		Season season = aDao.getSeasonById(id);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
@@ -156,6 +171,9 @@ public class binjrController {
 			return "error.jsp";
 		}
 		Season season = aDao.getSeasonById(seasonId);
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
@@ -165,7 +183,11 @@ public class binjrController {
 	@RequestMapping(path = "editEpisode.do")
 	public String editEpisode(@RequestParam("id") Integer id, 
 							Integer seasonId, HttpSession session) {
-		session.setAttribute("episode", aDao.getEpisodeById(id));
+		Episode episode = aDao.getEpisodeById(id);
+		session.removeAttribute("episode");
+		session.removeAttribute("season");
+		session.setAttribute("season", episode.getSeason());
+		session.setAttribute("episode", episode);
 		return "editEpisode.jsp";
 	}
 	
@@ -173,6 +195,9 @@ public class binjrController {
 	public String updateEpisode(@RequestParam("id") Integer id, Episode episode, HttpSession session) {
 		Episode updatedEpisode = aDao.updateEpisode(id, episode);
 		Season season = updatedEpisode.getSeason();
+		session.removeAttribute("tvShow");
+		session.removeAttribute("season");
+		session.removeAttribute("episodes");
 		session.setAttribute("tvShow", season.getTvShow());
 		session.setAttribute("season", season);
 		session.setAttribute("episodes", season.getEpisodes());
@@ -189,5 +214,47 @@ public class binjrController {
 		session.removeAttribute("episodes");
 		session.setAttribute("episodes", aDao.getSeasonById(seasonId).getEpisodes());
 		return "addEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "trackShow.do")
+	public String trackShow(HttpSession session) {
+//		session.setAttribute("userId", userId);
+//		System.out.println("******** userId in trackShow(): " + userId);
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "trackShow.jsp";
+	}
+	
+	@RequestMapping(path = "trackNewShows.do")
+	public String trackNewShows(HttpSession session, Integer userId, Integer... tvShowIds) {
+		try {
+			System.out.println("*********** userId IN TRACK NEW SHOWS: " + userId);
+			for (int i : tvShowIds) {
+				System.out.println("*********** tvShowIDs IN TRACK NEW SHOWS: " + i);
+				cDao.addUserShow(userId, i);
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "profileSplash.jsp";
+	}
+	
+	@RequestMapping(path="watchEpisode.do")
+	public String watchEpisode(HttpSession session, Integer userId, Integer episodeId, Integer watched){
+		try {
+			UserEpisode ue = new UserEpisode();
+			ue.setUser(cDao.getUserByUserId(userId));
+			ue.setEpisode(aDao.getEpisodeById(episodeId));
+			ue.setWatched(watched);				
+			System.out.println("******* BEFORE UserEpisode in watchEpisode(): " + ue);
+			ue = cDao.watchEpisode(ue);
+			System.out.println("******* AFTER UserEpisode in watchEpisode(): " + ue);
+			} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.removeAttribute("user");
+		session.setAttribute("user", cDao.getUserByUserId(userId));
+//		session.setAttribute("tvShows", cDao.getAllShows());
+		return "profileSplash.jsp";
 	}
 }
