@@ -37,6 +37,7 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
+			System.out.println("***********" + user.getId());
 			session.setAttribute("user", user);
 			return "profileSplash.jsp";
 		}
@@ -192,5 +193,27 @@ public class binjrController {
 		session.removeAttribute("episodes");
 		session.setAttribute("episodes", aDao.getSeasonById(seasonId).getEpisodes());
 		return "addEpisode.jsp";
+	}
+	
+	@RequestMapping(path = "trackShow.do")
+	public String trackShow(Integer userId, HttpSession session) {
+		System.out.println("***********" + userId);
+		session.setAttribute("userId", userId);
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "trackShow.jsp";
+	}
+	
+	@RequestMapping(path = "trackNewShows.do")
+	public String trackNewShows(HttpSession session, Integer userId, Integer... tvShowIds) {
+		try {
+			System.out.println("***********" + userId);
+			for (int i : tvShowIds) {
+				cDao.addUserShow(userId, i);
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "profileSplash.jsp";
 	}
 }
