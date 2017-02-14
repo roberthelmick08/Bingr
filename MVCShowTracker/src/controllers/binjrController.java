@@ -132,7 +132,9 @@ public class binjrController {
 		}
 		session.removeAttribute("season");
 		session.removeAttribute("tvShow");
+		session.removeAttribute("episodes");
 		session.setAttribute("season", season);
+		session.setAttribute("episodes", season.getEpisodes());
 		session.setAttribute("tvShow", season.getTvShow());
 		return "addEpisode.jsp";
 	}
