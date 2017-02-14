@@ -211,9 +211,9 @@ public class binjrController {
 	}
 	
 	@RequestMapping(path = "trackShow.do")
-	public String trackShow(Integer userId, HttpSession session) {
-		System.out.println("******** userId in trackShow(): " + userId);
-		session.setAttribute("userId", userId);
+	public String trackShow(HttpSession session) {
+//		session.setAttribute("userId", userId);
+//		System.out.println("******** userId in trackShow(): " + userId);
 		session.setAttribute("tvShows", cDao.getAllShows());
 		return "trackShow.jsp";
 	}
