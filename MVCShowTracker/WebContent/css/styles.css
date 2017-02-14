@@ -1,8 +1,60 @@
+.navBar {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: linear-gradient(gray, silver);
+	width: 100%;
+}
+
+h1 {
+	text-shadow: 2px 3px black;
+	text-align: center;
+}
+
+h3 {
+	color: black;
+	text-align: center;
+}
+
+.navBar h1 {
+	display: inline;
+}
+
+.navBar h1:hover {
+	text-shadow: 1px 1px black;
+}
+
+.navBar a {
+	text-decoration: none;
+	color: white;
+}
+
+.navBar ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.navBar ul li {
+	display: inline-block;
+	float: right;
+	height: 100%;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	border-radius: 25px 5px;
+}
+
+.navBar ul li:hover {
+	background-color: silver;
+}
+
 body {
-	background-color: red;
 	padding: 0px;
 	margin: 0px;
 	color: white;
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 .mainFlexBox {
@@ -17,99 +69,81 @@ body {
 	margin: 0px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: gray;
 }
 
-.groupBox{
+.groupBox {
 	float: left;
-	padding-top: 5px;
 	margin: 0px;
-	background-color: gray;
-	width: 150px;
+	width: 25%;
+	background-color: rgba(255, 255, 255, .7);
 	overflow: hidden;
+	border-radius: 0px 0px 30px 0px;
+	box-shadow: 7px 5px 5px #888888;
+	border-right: 1px solid black;
+	border-bottom: 2px solid black;
 }
 
-.groupNameBox{
-	padding: 0px;
-	margin: 0px;
+input[type=submit] {
+	background: rgba(0, 0, 0, 0.0);
+	padding: 8px 16px;
+	border-radius: 15px;
+	font-size: 1em;
+	color: white;
+	box-shadow: 7px 5px 5px #888888;
+	text-shadow: 1px 2px black;
 }
 
-.showBox{
+input[type=submit]:active {
+	text-shadow: 0px 0px black;
+	box-shadow: 0px 0px 0px #888888;
+}
+
+.episodeBox {
+	overflow-x: scroll;
+}
+
+.showBox {
+	width: 75%;
 	padding-top: 5px;
-	background-color:#cacaca;
+	background: none;
 	margin: 0px;
 }
 
-.episodeBox{
-	background-color: #bababa;
-}
-
-.tvShowBox{
-	background-color: #bababa;
-}
-
-h1 {
-	text-align: center;
-}
 #seasonTitle {
-	text-align: center;
+	text-shadow: 1px 2px black;
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-
-.seasonTitle {
-	background-color: gray;
-}
-.checkbox-wrapper{
-	display:inline-block;
+.checkbox-wrapper {
+	display: inline-block;
 	color: white;
 	margin-left: 5px;
-/* 
-	width: 75px;
-	height: 50px;	 */
 }
 
-input[type=submit]{
-	float:right;
+input[type=submit] {
+	float: right;
 }
+
 input[type=checkbox] {
-/* 	display:none;
- */}
- 
-input[type=checkbox] + label
-{
-background: url("../img/episodeDefault.jpg") no-repeat;
-/* filter: invert (100%);
+	/* 	display:none;
  */
-background-size: 100%;
-height: 75px;
-width: 75px;
-display:inline-block;
-padding: 0 0 0 0px;
-text-align: center;
-}
-input[type=checkbox]:checked + label{
-opacity: 0.3;
+	
 }
 
-.navBar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    width: 100%;
+input[type=checkbox]+label {
+	background: url("../img/episodeDefault.jpg") no-repeat;
+	/* filter: invert (100%);
+ */
+	background-size: 100%;
+	text-shadow: 1px 1px black;
+	height: 75px;
+	width: 75px;
+	display: inline-block;
+	padding: 0 0 0 0px;
+	text-align: center;
 }
 
-select{
-	height: 1.5em;
-	color:white;
-	font-size:1em;
-	background-color: black;
-	float:right;
-}
-
-.navBar h1, h2{
-	text-align: left;
+input[type=checkbox]:checked+label {
+	opacity: 0.3;
 }

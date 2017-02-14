@@ -13,6 +13,7 @@ import entities.Episode;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
+import entities.UserEpisode;
 
 @Controller
 public class binjrController {
@@ -208,6 +209,19 @@ public class binjrController {
 				cDao.addUserShow(userId, i);
 			}
 		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.setAttribute("tvShows", cDao.getAllShows());
+		return "profileSplash.jsp";
+	}
+	
+	@RequestMapping(path="watchEpisode.do")
+	public String watchEpisode(HttpSession session, UserEpisode ue){
+		try {
+			System.out.println("***********" + ue);
+			
+				cDao.watchEpisode(ue);
+			} catch (Exception e) {
 			return "error.jsp";
 		}
 		session.setAttribute("tvShows", cDao.getAllShows());
