@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -40,8 +42,9 @@ public class User {
 		inverseJoinColumns=@JoinColumn(name="tv_show_id"))
 	List<TVShow> tvShows;
 
-	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST})
-	private List<UserEpisode> userEpisodes;
+	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST}, fetch=FetchType.EAGER)
+	@MapKeyColumn(name="episode_id")
+	private Map<Integer, UserEpisode> userEpisodes;
 
 	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
 	private List<UserShow> userShows;
@@ -103,11 +106,11 @@ public class User {
 		this.tvShows = tvShows;
 	}
 
-	public List<UserEpisode> getUserEpisodes() {
+	public Map<Integer, UserEpisode> getUserEpisodes() {
 		return userEpisodes;
 	}
 
-	public void setUserEpisodes(List<UserEpisode> userEpisodes) {
+	public void setUserEpisodes(Map<Integer, UserEpisode> userEpisodes) {
 		this.userEpisodes = userEpisodes;
 	}
 

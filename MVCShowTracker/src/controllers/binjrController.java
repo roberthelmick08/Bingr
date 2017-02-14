@@ -38,6 +38,9 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
+			for (int i : user.getUserEpisodes().keySet()) {
+				System.out.println(i);
+			}
 			System.out.println("******user.getID() after userLogin: " + user.getId());
 			session.setAttribute("user", user);
 			return "profileSplash.jsp";
@@ -235,6 +238,7 @@ public class binjrController {
 	
 	@RequestMapping(path="watchEpisode.do")
 	public String watchEpisode(HttpSession session, UserEpisode ue){
+		
 		try {
 			System.out.println("******* UserEpisode in watchEpisode(): " + ue);
 				cDao.watchEpisode(ue);

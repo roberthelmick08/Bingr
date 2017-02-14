@@ -31,8 +31,6 @@
 			<c:forEach items="${user.tvShows}" var="tvShow">
 				<div class="showBox">
 					<h1>${tvShow.title}</h1>
-
-
 					<c:forEach items="${tvShow.seasons}" var="season">
 						<div class="seasonTitle">
 							<h2 id="seasonTitle">${season.title}</h2>
@@ -41,26 +39,23 @@
 							<form action="watchEpisode.do">
 								<c:forEach items="${season.episodes}" var="episode">
 									<div class="checkbox-wrapper">
-
 										<div class="checkbox">
-											<label class="checkbox-inline no_indent"> <c:choose>
-													<c:when test="${UserEpisode.watched=='1'}">
-														<input type='checkbox' name='${episode.episodeNumber}'
-															value='${episode.id}' checked>
-														<label for="episode">${episode.title}</label>
-													</c:when>
-													<c:otherwise>
-														<input type='checkbox' name='${episode.episodeNumber}'
-															value='${episode.id}'>
-														<label for="episode">${episode.title}</label>
-													</c:otherwise>
-												</c:choose> <input type="hidden" value="${season.seasonNumber}">
+											<label class="checkbox-inline no_indent"> 
+											<c:choose>
+												<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
+													<input type='checkbox' name='${episode.episodeNumber}' value='${episode.id}' checked>
+													<label for="episode">${episode.title}</label>
+												</c:when>
+												<c:otherwise>
+													<input type='checkbox' name='${episode.episodeNumber}' value='${episode.id}'>
+													<label for="episode">${episode.title}</label>
+												</c:otherwise>
+											</c:choose>
+											<input type="hidden" value="${season.seasonNumber}">
 										</div>
 									</div>
 								</c:forEach>
-
-								<input type="hidden" name="userId" value="${user.id}"> <input
-									type="submit" value="Mark as 'Watched'">
+								<input type="hidden" name="userId" value="${user.id}"> <input type="submit" value="Mark as 'Watched'">
 							</form>
 						</div>
 					</c:forEach>

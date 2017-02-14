@@ -24,6 +24,7 @@ public class ClientDAOImpl implements ClientDAO {
 	public User getUser(String username, String password) {
 		try {
 			String queryString = "select u from User u where u.username = :username AND u.password = :password";
+			System.out.println("PASSWORD IS: " + password);
 			User user = em.createQuery(queryString, User.class).setParameter("username", username)
 					.setParameter("password", password).getSingleResult();
 			return user;
