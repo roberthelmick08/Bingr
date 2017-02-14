@@ -38,9 +38,9 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
-			for (int i : user.getUserEpisodes().keySet()) {
-				System.out.println(i);
-			}
+//			for (int i : user.getUserEpisodes().keySet()) {
+//				System.out.println(i);
+//			}
 			System.out.println("******user.getID() after userLogin: " + user.getId());
 			session.setAttribute("user", user);
 			return "profileSplash.jsp";
@@ -237,15 +237,21 @@ public class binjrController {
 	}
 	
 	@RequestMapping(path="watchEpisode.do")
-	public String watchEpisode(HttpSession session, UserEpisode ue){
-		
+	public String watchEpisode(HttpSession session, Integer userId, Integer episodeId, Integer watched){
 		try {
-			System.out.println("******* UserEpisode in watchEpisode(): " + ue);
-				cDao.watchEpisode(ue);
+			UserEpisode ue = new UserEpisode();
+			ue.setUser(cDao.getUserByUserId(userId));
+			ue.setEpisode(aDao.getEpisodeById(episodeId));
+			ue.setWatched(watched);				
+			System.out.println("******* BEFORE UserEpisode in watchEpisode(): " + ue);
+			ue = cDao.watchEpisode(ue);
+			System.out.println("******* AFTER UserEpisode in watchEpisode(): " + ue);
 			} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.setAttribute("tvShows", cDao.getAllShows());
+		session.removeAttribute("user");
+		session.setAttribute("user", cDao.getUserByUserId(userId));
+//		session.setAttribute("tvShows", cDao.getAllShows());
 		return "profileSplash.jsp";
 	}
 }

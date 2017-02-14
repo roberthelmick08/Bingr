@@ -36,27 +36,31 @@
 							<h2 id="seasonTitle">${season.title}</h2>
 						</div>
 						<div class="episodeBox">
-							<form action="watchEpisode.do">
 								<c:forEach items="${season.episodes}" var="episode">
+							<form action="watchEpisode.do">
 									<div class="checkbox-wrapper">
 										<div class="checkbox">
 											<label class="checkbox-inline no_indent"> 
+											<input type="hidden" name="episodeId" value="${episode.id}"> 
 											<c:choose>
 												<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-													<input type='checkbox' name='${episode.episodeNumber}' value='${episode.id}' checked>
+													<input type="hidden" name="watched" value="0"> 
+													<input type='checkbox' name='check' value='${episode.id}' checked>
 													<label for="episode">${episode.title}</label>
 												</c:when>
 												<c:otherwise>
-													<input type='checkbox' name='${episode.episodeNumber}' value='${episode.id}'>
+													<input type='checkbox' name='check' value='${episode.id}'>
 													<label for="episode">${episode.title}</label>
+													<input type="hidden" name="watched" value="1"> 
 												</c:otherwise>
 											</c:choose>
 											<input type="hidden" value="${season.seasonNumber}">
 										</div>
 									</div>
-								</c:forEach>
-								<input type="hidden" name="userId" value="${user.id}"> <input type="submit" value="Mark as 'Watched'">
+								<input type="hidden" name="userId" value="${user.id}"> 
+								<input type="submit" value="Mark as 'Watched'">
 							</form>
+								</c:forEach>
 						</div>
 					</c:forEach>
 				</div>

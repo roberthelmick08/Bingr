@@ -2,6 +2,7 @@ package data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import entities.Episode;
 import entities.Party;
 import entities.TVShow;
 import entities.User;
@@ -45,6 +47,18 @@ public class ClientDAOImpl implements ClientDAO {
 			return null;
 		}
 	}
+	
+//	@Override
+//	public UserEpisode getTvShowById(int id) {
+//		try {
+//			String queryString = "select ue from UserEpisode ue where ue.episode_id = :id";
+//			UserEpisode ue = em.createQuery(queryString, UserEpisode.class).setParameter("episodeId", id).getSingleResult();
+//			return ue;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
 	@Override
 	public User createUser(User user) {
@@ -66,9 +80,17 @@ public class ClientDAOImpl implements ClientDAO {
 			// } else if (ue.getWatched() == 1) {
 			// ue.setWatched(0);
 			// }
+			
+			User user = em.find(User.class, ue.getUser().getId());
+			Map<Integer, UserEpisode> m = user.getUserEpisodes();
+			if (m.containsKey(ue.getEpisode().getId())){
+				m.replace(ue.getEpisode().getId(), ue);
+			}
+	
 			em.persist(ue);
-			em.flush();
+			em.flush(); 
 			return ue;
+//			return user.getUserEpisodes().get(ue.getEpisode().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
