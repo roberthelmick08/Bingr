@@ -19,7 +19,7 @@
 		</div>
 
 		<ul>
-			<li><a href="trackShow.do" active>Track New Show</a></li>
+			<li><a href="trackShow.do">Track New Show</a></li>
 			<li><a href="addGroup.do">Add Group</a></li>
 			<li><a href="editGroup.do">Edit Group</a></li>
 		</ul>
@@ -28,7 +28,7 @@
 
 	<div class="mainFlexBox">
 		<form action="trackNewShows.do">
-			<c:forEach items="${tvShows}" var="tvShow">
+			<c:forEach items="${allTVShows}" var="tvShow">
 				<div class="tvShowBox">
 					<div class="checkbox">
 					<c:choose>

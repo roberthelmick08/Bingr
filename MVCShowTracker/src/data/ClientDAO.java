@@ -16,6 +16,8 @@ public interface ClientDAO {
 	
 	List<TVShow> getAllShows();
 	
+	List<TVShow> cleanUserTVShows(int userId);
+	
 	List<TVShow> getUserShows(int userId);
 	
 	List<TVShow> addUserShow(int userId, int showId);
