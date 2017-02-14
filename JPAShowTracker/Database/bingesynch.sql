@@ -5,15 +5,15 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema BinjrDB
+-- Schema bingesynch
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `BinjrDB` ;
+DROP SCHEMA IF EXISTS `bingesynch` ;
 
 -- -----------------------------------------------------
--- Schema BinjrDB
+-- Schema bingesynch
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `BinjrDB` DEFAULT CHARACTER SET utf8 ;
-USE `BinjrDB` ;
+CREATE SCHEMA IF NOT EXISTS `bingesynch` DEFAULT CHARACTER SET utf8 ;
+USE `bingesynch` ;
 
 -- -----------------------------------------------------
 -- Table `user`
@@ -97,7 +97,8 @@ DROP TABLE IF EXISTS `user_tv_show` ;
 CREATE TABLE IF NOT EXISTS `user_tv_show` (
   `user_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `tv_show_id`),
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_has_Show_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
@@ -162,7 +163,8 @@ DROP TABLE IF EXISTS `party_user` ;
 CREATE TABLE IF NOT EXISTS `party_user` (
   `party_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`party_id`, `user_id`),
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_party_has_user_party1`
     FOREIGN KEY (`party_id`)
     REFERENCES `party` (`id`)
@@ -188,7 +190,8 @@ DROP TABLE IF EXISTS `party_tv_show` ;
 CREATE TABLE IF NOT EXISTS `party_tv_show` (
   `party_id` INT NOT NULL,
   `tv_show_id` INT NOT NULL,
-  PRIMARY KEY (`party_id`, `tv_show_id`),
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_party_has_tv_show_party1`
     FOREIGN KEY (`party_id`)
     REFERENCES `party` (`id`)
@@ -221,7 +224,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Data for table `user`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Chaz', 'chaz', 1, 'Chaaaz', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Nik', 'nik', 2, 'Nikolaus', DEFAULT);
 INSERT INTO `user` (`username`, `password`, `id`, `display_name`, `img_url`) VALUES ('Robert', 'robert', 3, 'Rupert', DEFAULT);
@@ -234,7 +237,7 @@ COMMIT;
 -- Data for table `tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (1, 'Game of Swords', 'People killing eachother', NULL);
 INSERT INTO `tv_show` (`id`, `title`, `description`, `img_url`) VALUES (2, 'Stranger Thrones', 'Throne Improvement Show', NULL);
 
@@ -245,7 +248,7 @@ COMMIT;
 -- Data for table `season`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (1, 'Season 1 of Stranger Thrones', 'Season 1', NULL, 1, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (2, 'Season 2 of Stranger Thrones', 'Season 2', NULL, 2, 2);
 INSERT INTO `season` (`id`, `Description`, `title`, `img_url`, `season_number`, `tv_show_id`) VALUES (3, 'Season 1 of Game of Swords', 'Season 1', NULL, 1, 1);
@@ -258,7 +261,7 @@ COMMIT;
 -- Data for table `episode`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 2 GOS', 'Episode 2', NULL, 2, 3);
 INSERT INTO `episode` (`id`, `title`, `description`, `img_url`, `episode_number`, `season_id`) VALUES (DEFAULT, 'Ep 1 GOS', 'Episode 1', NULL, 1, 4);
@@ -275,10 +278,10 @@ COMMIT;
 -- Data for table `user_tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
-INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (1, 1);
-INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (1, 2);
-INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`) VALUES (2, 1);
+USE `bingesynch`;
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (1, 2, DEFAULT);
+INSERT INTO `user_tv_show` (`user_id`, `tv_show_id`, `id`) VALUES (2, 1, DEFAULT);
 
 COMMIT;
 
@@ -287,7 +290,7 @@ COMMIT;
 -- Data for table `user_episode`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 1, DEFAULT);
 INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 1, 3, DEFAULT);
 INSERT INTO `user_episode` (`watched`, `user_id`, `episode_id`, `id`) VALUES (1, 2, 3, DEFAULT);
@@ -301,7 +304,7 @@ COMMIT;
 -- Data for table `party`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
+USE `bingesynch`;
 INSERT INTO `party` (`id`, `name`) VALUES (1, 'First Group');
 
 COMMIT;
@@ -311,9 +314,9 @@ COMMIT;
 -- Data for table `party_user`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
-INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 1);
-INSERT INTO `party_user` (`party_id`, `user_id`) VALUES (1, 2);
+USE `bingesynch`;
+INSERT INTO `party_user` (`party_id`, `user_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `party_user` (`party_id`, `user_id`, `id`) VALUES (1, 2, DEFAULT);
 
 COMMIT;
 
@@ -322,9 +325,9 @@ COMMIT;
 -- Data for table `party_tv_show`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `BinjrDB`;
-INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 1);
-INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`) VALUES (1, 2);
+USE `bingesynch`;
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`, `id`) VALUES (1, 1, DEFAULT);
+INSERT INTO `party_tv_show` (`party_id`, `tv_show_id`, `id`) VALUES (1, 2, DEFAULT);
 
 COMMIT;
 
