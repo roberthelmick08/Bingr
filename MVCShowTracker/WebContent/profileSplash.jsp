@@ -11,17 +11,13 @@
 </head>
 <body>
 	<div class="navBar">
-		<div class="companyName"><h1>BingerSync</h1></div>
-		<div class="welcomeHeader"><h2>Welcome, ${user.username}!</h2></div>
+		<div class="companyName"><h1>BingeSync</h1></div>
 		
-		<select class="dropdown" name="manageGroup">
-			<option value="" selected>Manage Group</option>
-			<option value="addGroup.do">Add Group</option>
-			<option value="editGroup.do">Edit Group</option>
-			<!-- Add iterable to loop over group -->
-<%-- <c:forEach var="group" item="${groups}"><option value="name"><a href="manageGroup.do">${group.name}</a></option></c:forEach>--%>
-		</select>
-
+		<ul>
+			<li><a href="trackShow.do">Track New Show</a></li>
+			<li><a href="addGroup.do">Add Group</a></li>
+			<li><a href="editGroup.do">Edit Group</a></li>
+		</ul>
 	</div>
 
 	<!-- add forEach loop to iterate over groups -->
@@ -37,6 +33,7 @@
 		<c:forEach items="${user.tvShows}" var="tvShow">
 			<div class="showBox">
 				<h1>${tvShow.title}</h1>
+				
 
 				<c:forEach items="${tvShow.seasons}" var="season">
 					<div class="seasonTitle">
@@ -63,6 +60,8 @@
 									</div>
 								</div>
 							</c:forEach>
+							
+						<input type="hidden" name="userId" value="${user.id}">
 							<input type="submit" value="Mark as 'Watched'">
 						</form>
 					</div>
