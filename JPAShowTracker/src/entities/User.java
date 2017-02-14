@@ -34,7 +34,7 @@ public class User {
 	private String imgUrl;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="user_has_tvshow",
+	@JoinTable(name="user_tv_show",
 		joinColumns=@JoinColumn(name="tv_show_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id"))
 	List<TVShow> tvShows;
