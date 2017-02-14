@@ -1,0 +1,110 @@
+body {
+	background-color: red;
+	padding: 0px;
+	margin: 0px;
+	color: white;
+}
+
+.mainFlexBox {
+	display: block;
+	justify-content: space-around;
+	flex-direction: row;
+	flex-flow: row wrap;
+	padding: 0px;
+	width: 100%;
+	max-height: 100%;
+	overflow: scroll;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: gray;
+}
+
+.groupBox{
+	float: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 0px;
+	background-color: yellow;
+	width: 150px;
+	overflow: hidden;
+}
+
+.groupNameBox{
+	padding: 0px;
+	margin: 0px;
+}
+
+.showBox{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color:orange;
+	margin: 0px;
+}
+
+.episodeBox{
+	background-color: #bababa;
+}
+
+h1 {
+	text-align: center;
+}
+#seasonTitle {
+	text-align: center;
+}
+
+
+.seasonTitle {
+	background-color: gray;
+}
+.checkbox-wrapper{
+	display:inline-block;
+	color: white;
+	margin-left: 5px;
+/* 
+	width: 75px;
+	height: 50px;	 */
+}
+
+input[type=submit]{
+	float:right;
+}
+input[type=checkbox] {
+/* 	display:none;
+ */}
+ 
+input[type=checkbox] + label
+{
+background: url("../img/episodeDefault.jpg") no-repeat;
+/* filter: invert (100%);
+ */background-size: 100%;
+height: 75px;
+width: 75px;
+display:inline-block;
+padding: 0 0 0 0px;
+text-align: center;
+}
+input[type=checkbox]:checked + label{
+opacity: 0.3;
+}
+
+.navBar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+}
+
+select{
+	height: 1.5em;
+	color:white;
+	font-size:1em;
+	background-color: black;
+	float:right;
+}
+
+.navBar h1, h2{
+	text-align: left;
+}

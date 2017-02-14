@@ -3,15 +3,20 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-	<persistence-unit name="ShowTracker">
+	<persistence-unit name="TestShowTracker">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider
    	 </provider>
 
-		<!-- List Entities Here -->
-		<!-- <class>entities.Customer</class> -->
+<!-- List Entities Here -->
+		<class>entities.Episode</class>
+		<class>entities.Season</class>
+		<class>entities.TVShow</class>
+		<class>entities.User</class>
+		<class>entities.Party</class>
+		<class>entities.UserEpisode</class>
 
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sdvid" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/binjrdb" />
 			<property name="javax.persistence.jdbc.user" value="student" />
 			<property name="javax.persistence.jdbc.password" value="student" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
