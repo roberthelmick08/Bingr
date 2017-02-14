@@ -56,6 +56,7 @@ public class AdminDAOImpl implements AdminDAO {
 	public boolean removeTVShow(int id) {
 		try {
 			em.remove(em.find(TVShow.class, id));
+			return true;
 			
 //			List<Season> seasons = getTVShowById(id).getSeasons();
 //			for (Season season : seasons) {
@@ -81,7 +82,6 @@ public class AdminDAOImpl implements AdminDAO {
 			e.printStackTrace();
 			return false;
 		}
-		return false;
 	}
 
 	@Override

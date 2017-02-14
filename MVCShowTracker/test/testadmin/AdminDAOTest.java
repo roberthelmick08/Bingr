@@ -112,15 +112,14 @@ public class AdminDAOTest {
 	
 	@Test
 	public void test_removeEpisode_removes_episode() {
-//		Episode episode = new Episode();
-//		episode.setEpisodeNumber(1);
-//		episode.setTitle("New 1");
-//		episode.setDescription("New Episode");
+		Episode episode = new Episode();
+		episode.setEpisodeNumber(1);
+		episode.setTitle("New 1");
+		episode.setDescription("New Episode");
 		
-		Episode newEpisode = dao.getEpisodeById(23);
-		assertNotNull(newEpisode);
-		int episodeId = newEpisode.getId();
-		assertTrue(dao.removeEpisode(episodeId));
+		assertNotNull(episode);
+		int episodeId = episode.getId();
+		dao.removeEpisode(episodeId);
 		assertNull(dao.getEpisodeById(episodeId));
 	}
 	
