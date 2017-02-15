@@ -67,8 +67,9 @@ public class binjrController {
 	@RequestMapping(path = "addUser.do")
 	public String addUser(@RequestParam(name = "passwordConfirm") String passwordConfirm, User user,
 			HttpSession session) {
-		if (user.getPassword() == passwordConfirm) {
+		if (user.getPassword().equals(passwordConfirm)) {
 			try {
+				user.setImgUrl("img/defaultUser.jpg");
 				cDao.createUser(user);
 			} catch (Exception e) {
 				return "error.jsp";
@@ -277,6 +278,13 @@ public class binjrController {
 	}
 	
 	
+	@RequestMapping(path = "manageParties.do")
+	public String manageParties(HttpSession session) {
+		session.removeAttribute("parties");
+		session.setAttribute("parties", cDao.getAllParties());
+		return "editParty.jsp";
+	}
+	
 	@RequestMapping(path = "addParty.do")
 	public String addParty(Party party, HttpSession session) {
 		try {
@@ -286,7 +294,7 @@ public class binjrController {
 		}
 		session.removeAttribute("parties");
 		session.setAttribute("parties", cDao.getAllParties());
-		return "editGroup.jsp";
+		return "editParty.jsp";
 	}
 	
 	@RequestMapping(path = "addUsersToParty.do")
@@ -302,7 +310,7 @@ public class binjrController {
 		//getUsersInParty DAO method to return list of users in a party?
 		session.removeAttribute("parties");
 		session.setAttribute("parties", cDao.getAllParties());
-		return "editGroup.jsp";
+		return "editParty.jsp";
 	}
 	
 	@RequestMapping(path = "addTVShowsToParty.do")
@@ -318,6 +326,6 @@ public class binjrController {
 		session.removeAttribute("");
 		session.setAttribute("", cDao.getAllParties());
 		session.setAttribute("parties", cDao.getAllParties());
-		return "editGroup.jsp";
+		return "editParty.jsp";
 	}
 }

@@ -13,10 +13,9 @@
 <div class="navBar">
 		<ul>
       		<a href="goHome.do"><h1>BingeSync</h1></a>
-			<a href="trackShow.do"><li>Track New Show</li></a>
-			<a href="addGroup.do"><li>Add Group</li></a>
-			<a href="editGroup.do"><li>Edit Group</li></a>
 			<a href="logOut.do"><li>Log Out</li></a>
+			<a href="trackShow.do"><li>Track New Show</li></a>
+			<a href="manageParties.do"><li>Manage Groups</li></a>
 		</ul>
 	</div>
 		<!-- add forEach loop to iterate over groups -->
@@ -24,7 +23,7 @@
 			<!-- Add conditional statement: if group.name -->
 			<div class="groupBox">
 				<div class="groupNameBox">
-					<h1>${user.username}</h1>
+					<a href="profileSplash.jsp"><h1>${user.username}</h1></a>
 				</div>
 				<!--<img src="${user.imgUrl}" class= /> -->
 			</div>
@@ -45,18 +44,15 @@
 												<div class="checkbox-wrapper">
 													<div class="checkbox">
 														<label class="checkbox-inline no_indent"> 
-			<%-- 											<input type="hidden" name="episodeId" value="${episode.id}"> 
-			 --%>											<c:choose>
+			 											<c:choose>
 															<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-			<!-- 													<input type="hidden" name="watched" value="0"> 
-			 -->													<input type='checkbox' name='watchedEpisodes' value='${episode.id}' checked>
+			 													<input type='checkbox' name='watchedEpisodes' value='${episode.id}' checked>
 																<label for="episode">${episode.title}</label>
 															</c:when>
 															<c:otherwise>
 																<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
 																<label for="episode">${episode.title}</label>
-			<!-- 													<input type="hidden" name="watched" value="1"> 
-			 -->												</c:otherwise>
+			 												</c:otherwise>
 														</c:choose>
 													</div>
 												</div>

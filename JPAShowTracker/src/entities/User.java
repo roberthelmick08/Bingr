@@ -118,6 +118,14 @@ public class User {
 		return id;
 	}
 
+	public List<Party> getParties() {
+		return parties;
+	}
+
+	public void setParties(List<Party> parties) {
+		this.parties = parties;
+	}
+
 	// toString
 	@Override
 	public String toString() {
