@@ -11,17 +11,11 @@
 </head>
 <body>
 	<div class="navBar">
-		<div class="companyName">
-			<h1>BingeSync</h1>
-		</div>
-		<div class="welcomeHeader">
-			<h2>Welcome, ${user.username}!</h2>
-		</div>
-
 		<ul>
-			<li><a href="trackShow.do">Track New Show</a></li>
-			<li><a href="addGroup.do">Add Group</a></li>
-			<li><a href="editGroup.do">Edit Group</a></li>
+      		<a href="goHome.do"><h1>BingeSync</h1></a>
+			<a href="trackShow.do"><li>Track New Show</li></a>
+			<a href="addGroup.do"><li>Add Group</li></a>
+			<a href="editGroup.do"><li>Edit Group</li></a>
 		</ul>
 	</div>
 
