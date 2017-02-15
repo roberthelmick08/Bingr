@@ -249,7 +249,8 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.setAttribute("allTVShows", cDao.getAllShows());
+		session.removeAttribute("user");
+		session.setAttribute("user", cDao.getUserByUserId(userId));
 		return "profileSplash.jsp";
 	}
 	
