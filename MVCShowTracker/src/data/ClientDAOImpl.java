@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import entities.Episode;
 import entities.Party;
+import entities.Season;
 import entities.TVShow;
 import entities.User;
 import entities.UserEpisode;
@@ -323,5 +324,36 @@ public class ClientDAOImpl implements ClientDAO {
 			return null;
 		}
 	}
-
+	
+	@Override
+	public void updateSeason(Integer userId, Integer seasonId, Integer... watchedEpisodes){
+		Season season = em.find(Season.class, seasonId);
+		User user = em.find(User.class, userId);
+		List<Episode> episodes = season.getEpisodes();
+		Map<Integer, UserEpisode> userEpisodes = user.getUserEpisodes();
+		
+		List<Integer> we = new ArrayList<>();
+		
+		for (int i : watchedEpisodes) {
+			we.add(i);
+		}
+		
+		for (Episode e : episodes) {
+			if(we.contains(e.getId())){
+				if(userEpisodes.containsKey(e.getId())){
+					userEpisodes.get(e.getId()).setWatched(1);
+				}
+				UserEpisode ue = new UserEpisode();
+				ue.setWatched(1);
+				ue.setUser(user);
+				ue.setEpisode(e);
+				userEpisodes.put(e.getId(), ue);
+			}
+			else if(userEpisodes.containsKey(e.getId())){
+				userEpisodes.get(e.getId()).setWatched(0);
+			}
+		}
+		em.persist(user);
+		
+	}
 }

@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import data.AdminDAO;
 import data.ClientDAO;
 import entities.Episode;
+import entities.Party;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
@@ -40,7 +45,7 @@ public class binjrController {
 			}
 //			System.out.println("******user.getID() after userLogin: " + user.getId());
 			if (user != null) {
-				resetSessionAttributes(session, user);
+				resetSessionAttributes(session, user.getId());
 			} else {
 				session.setAttribute("noUser", true);
 				return "index.jsp";
@@ -53,9 +58,9 @@ public class binjrController {
 		}
 	}
 
-	private void resetSessionAttributes(HttpSession session, User user) {
-		user = cDao.getUserByUserId(user.getId());
-		user.setTvShows(cDao.cleanUserTVShows(user.getId()));
+	private void resetSessionAttributes(HttpSession session, Integer userId) {
+		User user = cDao.getUserByUserId(userId);
+		user.setTvShows(cDao.cleanUserTVShows(userId));
 		session.setAttribute("user", user);
 	}
 
@@ -255,20 +260,64 @@ public class binjrController {
 	}
 	
 	@RequestMapping(path="watchEpisode.do")
-	public String watchEpisode(HttpSession session, Integer userId, Integer episodeId, Integer watched){
+	public String watchEpisode(HttpSession session, Integer userId, Integer seasonId, Integer... watchedEpisodes){
+		if (watchedEpisodes == null){
+			watchedEpisodes = new Integer[0];
+		}
+		cDao.updateSeason(userId, seasonId, watchedEpisodes);
+		
+		resetSessionAttributes(session, userId);
+		return "profileSplash.jsp";
+	}
+	
+	@RequestMapping(path="logOut.do")
+	public String logOut(HttpSession session){
+		session.invalidate();
+		return "index.jsp";
+	}
+	
+	
+	@RequestMapping(path = "addParty.do")
+	public String addParty(Party party, HttpSession session) {
 		try {
-			UserEpisode ue = new UserEpisode();
-			ue.setUser(cDao.getUserByUserId(userId));
-			ue.setEpisode(aDao.getEpisodeById(episodeId));
-			ue.setWatched(watched);				
-			System.out.println("******* BEFORE UserEpisode in watchEpisode(): " + ue);
-			ue = cDao.watchEpisode(ue);
-			System.out.println("******* AFTER UserEpisode in watchEpisode(): " + ue);
-			} catch (Exception e) {
+			cDao.addParty(party);
+		} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.removeAttribute("user");
-		session.setAttribute("user", cDao.getUserByUserId(userId));
-		return "profileSplash.jsp";
+		session.removeAttribute("parties");
+		session.setAttribute("parties", cDao.getAllParties());
+		return "editGroup.jsp";
+	}
+	
+	@RequestMapping(path = "addUsersToParty.do")
+	public String addUsersToParty(@RequestParam("userId")List<Integer> userIds, @RequestParam("partyId") Integer partyId, HttpSession session) {
+		try {
+			for (Integer i : userIds) {
+				cDao.addUsersToParty(partyId, i);
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		//Need to set attribute for new users added to party. Need method
+		//getUsersInParty DAO method to return list of users in a party?
+		session.removeAttribute("parties");
+		session.setAttribute("parties", cDao.getAllParties());
+		return "editGroup.jsp";
+	}
+	
+	@RequestMapping(path = "addTVShowsToParty.do")
+	public String addTVShowsToParty(@RequestParam("tvShowId")List<Integer> tvShowIds, @RequestParam("partyId") Integer partyId, HttpSession session) {
+		try {
+			for (Integer i : tvShowIds) {
+				cDao.addTVShowsToParty(partyId, i);
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.removeAttribute("parties");
+		session.removeAttribute("");
+		session.setAttribute("", cDao.getAllParties());
+		session.setAttribute("parties", cDao.getAllParties());
+		return "editGroup.jsp";
 	}
 }

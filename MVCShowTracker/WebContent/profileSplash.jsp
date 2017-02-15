@@ -16,6 +16,7 @@
 			<a href="trackShow.do"><li>Track New Show</li></a>
 			<a href="addGroup.do"><li>Add Group</li></a>
 			<a href="editGroup.do"><li>Edit Group</li></a>
+			<a href="logOut.do"><li>Log Out</li></a>
 		</ul>
 	</div>
 		<!-- add forEach loop to iterate over groups -->
@@ -35,33 +36,33 @@
 						<div class="seasonTitle">
 							<h2 id="seasonTitle">${season.title}</h2>
 						</div>
-						<div class="episodeBox">
-								<c:forEach items="${season.episodes}" var="episode">
 							<form action="watchEpisode.do">
-									<div class="checkbox-wrapper">
-										<div class="checkbox">
-											<label class="checkbox-inline no_indent"> 
-											<input type="hidden" name="episodeId" value="${episode.id}"> 
-											<c:choose>
-												<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-													<input type="hidden" name="watched" value="0"> 
-													<input type='checkbox' name='check' value='${episode.id}' checked>
-													<label for="episode">${episode.title}</label>
-												</c:when>
-												<c:otherwise>
-													<input type='checkbox' name='check' value='${episode.id}'>
-													<label for="episode">${episode.title}</label>
-													<input type="hidden" name="watched" value="1"> 
-												</c:otherwise>
-											</c:choose>
-											<input type="hidden" value="${season.seasonNumber}">
-										</div>
-									</div>
+								<input type="hidden" name="seasonId" value="${season.id}">
 								<input type="hidden" name="userId" value="${user.id}"> 
-								<input type="submit" value="Mark as 'Watched'">
+								<input type="submit" value="Update"/>
+									<div class="episodeBox">
+											<c:forEach items="${season.episodes}" var="episode">
+												<div class="checkbox-wrapper">
+													<div class="checkbox">
+														<label class="checkbox-inline no_indent"> 
+			<%-- 											<input type="hidden" name="episodeId" value="${episode.id}"> 
+			 --%>											<c:choose>
+															<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
+			<!-- 													<input type="hidden" name="watched" value="0"> 
+			 -->													<input type='checkbox' name='watchedEpisodes' value='${episode.id}' checked>
+																<label for="episode">${episode.title}</label>
+															</c:when>
+															<c:otherwise>
+																<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
+																<label for="episode">${episode.title}</label>
+			<!-- 													<input type="hidden" name="watched" value="1"> 
+			 -->												</c:otherwise>
+														</c:choose>
+													</div>
+												</div>
+											</c:forEach>
+									</div>
 							</form>
-								</c:forEach>
-						</div>
 					</c:forEach>
 				</div>
 			</c:forEach>

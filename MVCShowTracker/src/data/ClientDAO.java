@@ -27,7 +27,9 @@ public interface ClientDAO {
 	List<TVShow> removeUserShow(int userId, int showId);
 
 	List<TVShow> removeMultipleUserShows(int userId, int... showIds);
-	
+
+	void updateSeason(Integer userId, Integer seasonId, Integer[] watchedEpisodes);
+
 	//Phase II
 
 	Party addParty(Party party);
@@ -42,6 +44,6 @@ public interface ClientDAO {
 	
 	List<TVShow> addTVShowsToParty(int partyId, int... showIds);
 	
-	List<Party> getAllParties();
-	
+	List<Party> getAllParties();	
+
 }
