@@ -20,6 +20,10 @@ eclipse {
   }
 }
 
+war {
+  archiveName = "${baseName}.war"
+}
+
 sourceSets {
   main {
     java.srcDirs 'src'
