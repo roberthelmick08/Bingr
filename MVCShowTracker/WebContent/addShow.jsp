@@ -11,18 +11,19 @@
 <body>
 
 	<h2>Add or Select a Show...</h2>
-
+	<hr><hr>
 	<div class="inputForm">
 		<h3>Add Show:</h3>
 		<form action="addShow.do" method="POST">
 			<input type="text" name="title" placeholder="Show Title..." required>
 			<br> 
-			<input type="text" name="description" placeholder="Description..." required> 
+			<textarea rows="3" cols="75" name="description" placeholder="Description..." required></textarea> 
 			<br> 
 			<input type="text" name="imgUrl" placeholder="Image url..."> <br>
 			<input type="submit" value="Add Show">
 		</form>
 	</div>
+	<hr><hr>
 	<div>
 	<h3>Current Shows:</h3>
 		<ul>
@@ -36,6 +37,7 @@
 				</form>
 				<br>
 				</li>
+				<hr>
 			</c:forEach>
 		</ul>
 	</div>
