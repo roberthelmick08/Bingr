@@ -48,7 +48,7 @@
                     <c:forEach items="${user.tvShows}" var="tvShow">
                     
                     
-                    
+                    	
 	                        <div id="showDiv">
 	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
