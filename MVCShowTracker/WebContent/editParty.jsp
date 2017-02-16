@@ -4,82 +4,136 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="css/styles.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Manage&nbsp${user.displayName}'s&nbspGroups</title>
-</head>
-<body>
-<div class="navBar">
-		<ul>
-      		<a href="goHome.do"><h1>BingeSync</h1></a>
-			<a href="logOut.do"><li>Log Out</li></a>
-			<a href="trackShow.do"><li>Track New Show</li></a>
-			<a href="addParty.jsp"><li>Add Group</li></a>
-		</ul>
-	</div>
-		<!-- add forEach loop to iterate over groups -->
-		<div class="mainFlexBox">
-			<!-- Add conditional statement: if group.name -->
-			<div class="groupBox">
-				<div class="groupNameBox">
-					<a href="profileSplash.jsp"><h1>${user.username}'s</a> Current Groups</h1>
-				</div>
-				<!--<img src="${user.imgUrl}" class= /> -->
 
-			
-			<c:forEach items="${user.parties}" var="party">
-				<div class="showBox">
-					<h3>${party.name}</h3>
-						<form action="leaveParty.do">
-							<input type="submit" name="editGroup" value="Edit"/>
-							<input type="submit" name="leaveGroup" value="Leave"/>
-							<input type="submit" name="deleteGroup" value="Delete"/>
-							<input type="hidden" name="partyId" value="${party.id}"/>
-					<c:forEach items="${party.tvShows}" var="tvShow">
-						<h5>${tvShow.title}</h5>
-					</c:forEach>
-						</form>
-				</div>
-			</c:forEach>
-			</div>
-			<div class="groupBox">
-				<div class="groupTitleBox">
-					<h1>Groups to join</h1>
-				</div>
-				<c:forEach items="${nonUserParties}" var="party">
-				<div class="showBox">
-					<h3>${party.name}</h3>
-						<form action="addUsersToParty.do">
-							<input type="hidden" name="partyId" value="${party.id}"/>
-							<input type="hidden" name="userId" value="${user.id}"/>
-							<input type="submit" value="Join"/>
-						</form>
-					<c:forEach items="${party.users}" var="user">
-						<h5>${user.displayName}</h5>
-					</c:forEach>
-					<c:forEach items="${party.tvShows}" var="tvShow">
-						<h5>${tvShow.title}</h5>
-					</c:forEach>
-				</div>
-			</c:forEach>
-			</div>
-			<div class="groupBox">
-				<div class="groupTitleBox">
-					<h1>Add Group</h1>
-				</div>
-				<form action="addParty.do">
-				
-				<input type="text" name="partyName" placeholder="Group Name..."/>
-				<select multiple name="tvShows">
-					<c:forEach var="tvShow" items="${tvShows}">
-						<option value="${tvShow.id}">${tvShow.title}</option>
-					</c:forEach>
-				</select>
-					<input type="hidden" name="userId" value="${user.id}"/>
-					<input type="submit" value="Add"/>
-				</form>
-			</div>
-		</div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BingeSync > Edit Groups</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/manageParties.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll.css">
+    <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll1.css">
+</head>
+
+<body>
+    <div id="navbarOpacityDiv">
+        <nav class="navbar navbar-default navbar-fixed-top opaque-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand navbar-link" href="goHome.do"> <strong>BingeSync</strong><span id="hiUserSpan"> &gt; Hi, user.</span></a>
+                    <button class="navbar-toggle collapsed toggle-animated" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                </div>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li role="presentation"><a href="trackShow.do">ManageShows.</a></li>
+                        <li role="presentation"><a href="manageParties.do">ManageGroups. </a></li>
+                        <li role="presentation"><a class="text-muted" href="logOut.do" id="logOutButton">LogOut. </a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-left"></ul>
+                    <ul class="nav navbar-nav navbar-left" data-bs-hover-animate="flash"></ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div>
+        <div class="container" id="groupsDiv">
+            <div class="row" id="groupsRow">
+                <div class="col-md-4 groupsColumn">
+                    <div id="currentGroups" class="groupsSubDiv">
+                        <h1 class="groupsHeading">Current Groups: </h1>
+                        
+                        <c:forEach items="${user.parties}" var="party">
+	                        <form action="leaveParty.do">
+	                            <div class="singleGroupDiv">
+	                                <h2 class="groupNameHeading">${party.name}</h2>
+	                                <div class="groupShowsDiv">
+	                                	<c:forEach items="${party.tvShows}" var="tvShow">
+	                                    	<h3 class="groupShowHeading">${tvShow.title}</h3>
+	                                	</c:forEach>
+	                                </div>
+	                                <button class="btn btn-default currentGroupBtns" type="submit" name="leaveGroup">Leave </button>
+	                                <button class="btn btn-default currentGroupBtns" type="submit" name="editGroup">Edit </button>
+	                                <button class="btn btn-default currentGroupBtns" type="submit" name="deleteGroup">Delete </button>
+	                            	<input type="hidden" name="partyId" value="${party.id}"/>
+	                            </div>
+	                        </form>
+	                  	</c:forEach>
+                   
+                    </div>
+                </div>
+                <div class="col-md-4 groupsColumn">
+                    <div id="groupsToJoinDiv" class="groupsSubDiv">
+                        <h1 class="groupsHeading">Groups to Join: </h1>
+                        
+                        <c:forEach items="${nonUserParties}" var="party">
+	                        <form action="addUsersToParty.do">
+	                            <div class="singleGroupDiv">
+	                                <h2 class="groupNameHeading">${party.name}</h2>
+	                                <div class="groupShowsDiv">
+	                                	<h3 class="groupShowHeading">Group Members:</h3>
+	                                	<c:forEach items="${party.users}" var="user">
+	                                    	<h3 class="groupShowHeading">${user.displayName}</h3>
+	                                	</c:forEach>
+	                                	<h2></h2>
+	                                	<h3 class="groupShowHeading">Group Shows:</h3>
+	                                	<c:forEach items="${party.tvShows}" var="tvShow">
+	                                    	<h3 class="groupShowHeading">${tvShow.title}</h3>
+	                      				</c:forEach>
+	                                </div>
+	                                <input type="hidden" name="partyId" value="${party.id}"/>
+									<input type="hidden" name="userId" value="${user.id}"/>
+	                                <button class="btn btn-default currentGroupBtns" type="submit" value="Join">Join </button>
+	                            </div>
+	                        </form>
+                    	</c:forEach>
+                    
+                    </div>
+                </div>
+                <div class="col-md-4 groupsColumn">
+                    <div id="groupsToJoinDiv" class="groupsSubDiv">
+                        <h1 class="groupsHeading">Create a Group: </h1>
+                        <form action="addParty.do">
+                            <div id="createGroupDiv" class="singleGroupDiv">
+                                <input class="form-control input-lg" type="text" name="partyName" placeholder="Group Name..." id="groupNameInput">
+                                <select class="form-control" name="tvShows" multiple="" id="createGroupTVShowSelect">
+                                    <c:forEach var="tvShow" items="${tvShows}">
+                                   		<option value="${tvShow.id}">${tvShow.title}</option>
+                                    </c:forEach>
+                                </select>
+                                <input type="hidden" name="userId" value="${user.id}"/>
+                                <button class="btn btn-default currentGroupBtns" type="submit" id="createGroupButton" value="Add">Create </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-basic">
+        <div id="footerOpacityDiv">
+            <footer>
+                <ul class="list-inline">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+                <p class="copyright">BingeSync © 2017</p>
+            </footer>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-animation.js"></script>
+    <script src="assets/js/Transparent-Navigation-with-animation-on-scroll.js"></script>
+    <script src="assets/js/Transparent-Navigation-with-animation-on-scroll1.js"></script>
 </body>
+
 </html>

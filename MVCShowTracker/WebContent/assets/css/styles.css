@@ -15,6 +15,7 @@ nav.navbar.navbar-default.navbar-fixed-top {
   height:70px;
   background:url(../../assets/img/tvbackground.jpg)no-repeat top center fixed;
   background-size:cover;
+  border-bottom: solid #e49263 1px;
 }
 
 button.btn.btn-default.btn-block.btn-lg {
