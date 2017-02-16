@@ -273,6 +273,68 @@ img.showImage {
 }
 
 
+div#allUnwatchedShows.container {
+  margin-top:100px;
+  display:flex;
+  color:rgb(49,49,171);
+  background-color:rgba(53,53,54,0.4);
+  /*margin-left:20px;*/
+  /*margin-right:20px;*/
+  /*padding-left:10px;*/
+  /*padding-right:10px;*/
+  justify-content:flex-start;
+  flex-wrap:wrap;
+}
+
+div.showToDisplayInAllShows {
+  text-align:center;
+}
+
+h4.showTitleInManageShow {
+  font-family:'Monda';
+  font-weight:800;
+  color:#f1f7fc;
+  text-align:left;
+  min-height:60px;
+}
+
+div.individualShowBoxInManagesShow {
+  margin:20px;
+  justify-content:flex-start;
+  width:100px;
+  /*height:200px;*/
+}
+
+label.trackShowLabel {
+  color:#f1f7fc;
+}
+
+button#trackShowsSubmitButton.btn.btn-default {
+  width:100px;
+  height:40px;
+  bottom:0px;
+  background-color:rgba(101,100,100,0.498039);
+}
+
+div#submitButtonDivMangedShows {
+}
+
+div#buttonColumnMangeShows.col-md-4 {
+  display:flex;
+  justify-content:center;
+}
+
+div#buttonRowManageShow.row {
+  display:flex;
+  justify-content:center;
+  margin-bottom:75px;
+}
+
+img.showImageInManageShow {
+  justify-content:center;
+  width:100px;
+}
+
 
 
 
