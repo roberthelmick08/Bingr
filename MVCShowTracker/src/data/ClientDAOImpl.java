@@ -184,9 +184,9 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public List<TVShow> removeMultipleUserShows(int userId, int... showIds) {
+	public List<TVShow> removeMultipleUserShows(int userId, Integer... showIds) {
 		try {
-			
+
 			User user = getUserByUserId(userId);
 			List<TVShow> tvShows = user.getTvShows();
 			for (int i : showIds) {
@@ -252,13 +252,14 @@ public class ClientDAOImpl implements ClientDAO {
 	@Override
 	public Boolean deleteParty(int partyId) {
 		try {
-			Party party = em.find(Party.class, partyId);
-			if (party != null) {
-				em.remove(party);
-				em.flush();
-				return true;
-			} else
-				return false;
+			String queryString = "DELETE FROM PartyUser pu WHERE pu.partyId = :id";
+			int i = em.createQuery(queryString).setParameter("id", partyId).executeUpdate();
+			queryString = "DELETE FROM PartyTVShow pts WHERE pts.partyId = :id";
+			int j = em.createQuery(queryString).setParameter("id", partyId).executeUpdate();
+			queryString = "DELETE FROM Party p WHERE p.id = :id";
+			int k = em.createQuery(queryString).setParameter("id", partyId).executeUpdate();
+			em.flush();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -270,7 +271,7 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			Party party = em.find(Party.class, partyId);
 			List<TVShow> tvShows = party.getTvShows();
-			
+
 			for (int i : showIds) {
 				TVShow tvs = em.find(TVShow.class, i);
 				tvShows.add(tvs);

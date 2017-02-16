@@ -22,26 +22,35 @@
 
 	<div class="mainFlexBox">
 		<form action="trackNewShows.do">
-			<c:forEach items="${allTVShows}" var="tvShow">
+				<h1>Untracked Shows: </h1>
+			<c:forEach items="${nonUserShows}" var="tvShow">
 				<div class="tvShowBox">
 					<div class="checkbox">
-					<c:choose>
-						    <c:when test="${UserEpisode.watched=='1'}">
-									<label class="checkbox-inline no_indent"> <input
-									type='checkbox' checked name='tvShowIds' value='${tvShow.id}'>
-									<label for="tvShow">${tvShow.title}</label>				    
-								</c:when>    
-							    <c:otherwise>
-								    <label class="checkbox-inline no_indent"> <input
-									type='checkbox' name='tvShowIds' value='${tvShow.id}'>
-									<label for="tvShow">${tvShow.title}</label>
-						    </c:otherwise>
-						</c:choose>
+						<label class="checkbox-inline no_indent"> <input
+						type='checkbox' name='tvShowIds' value='${tvShow.id}'>
+						<label for="tvShow">${tvShow.title} <br> ${tvShow.description}</label>				    
 					</div>
 				</div>
 			</c:forEach>
 			<input type="hidden" name="userId" value="${user.id}">
 			<input type="submit" value="Track Shows">
+		</form>
+	</div>
+	
+	<div class="mainFlexBox">
+		<form action="untrackShows.do">
+			<h1>Tracked Shows: </h1>
+			<c:forEach items="${user.tvShows}" var="tvShow">
+				<div class="tvShowBox">
+					<div class="checkbox">
+						<label class="checkbox-inline no_indent"> 
+						<input type='checkbox' name='tvShowIds' value='${tvShow.id}'>
+						<label for="tvShow">${tvShow.title} <br> ${tvShow.description}</label>						
+					</div>
+				</div>
+			</c:forEach>
+			<input type="hidden" name="userId" value="${user.id}">
+			<input type="submit" value="Untrack Shows">
 		</form>
 	</div>
 </body>

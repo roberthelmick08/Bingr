@@ -26,7 +26,7 @@ public interface ClientDAO {
 	
 	List<TVShow> removeUserShow(int userId, int showId);
 
-	List<TVShow> removeMultipleUserShows(int userId, int... showIds);
+	List<TVShow> removeMultipleUserShows(int userId, Integer... showIds);
 
 	void updateSeason(Integer userId, Integer seasonId, Integer[] watchedEpisodes);
 
