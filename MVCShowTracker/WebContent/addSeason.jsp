@@ -12,12 +12,13 @@
 	<form action="shows.do" method="POST">
 		<button type="submit">Back to Shows</button>
 	</form>
+	<hr><hr>
 	<div class="inputForm">
 		<h2>Edit Show Info: ${tvShow.title}</h2>
 		<form action="updateShow.do?id=${tvShow.id}" method="POST">
-			Title: <input type="text" name="title" value="${tvShow.title}" required>
+			Show Title: <input type="text" name="title" value="${tvShow.title}" required>
 			<br>
-			Description: <input type="text" name="description" value="${tvShow.description}" required> 
+			Description: <textarea rows="3" cols="75" name="description" required>${tvShow.description}</textarea>
 			<br> 
 			Image Url: <input type="text" name="imgUrl" value="${tvShow.imgUrl}"> 
 			<br>
@@ -25,7 +26,7 @@
 			<input type="submit" value="Update Show">
 		</form>
 	</div>
-	<hr>
+	<hr><hr>
 	<div class="inputForm">
 		<h2>Add Season to: ${tvShow.title}</h2>
 		<form action="addSeason.do" method="POST">
@@ -33,7 +34,7 @@
 			<br>
 			<input type="text" name="title" placeholder="Season Title..." required>
 			<br>
-			<input type="text" name="description" placeholder="Description..." required>
+			<textarea rows="3" cols="75" name="description" placeholder="Description..." required></textarea>
 			<br>
 			<input type="text" name="imgUrl" placeholder="Image url...">
 			<br>
@@ -55,6 +56,7 @@
 				<button type="submit">Delete</button>
 				</form>
 				</li>
+				<hr>
 			</c:forEach>
 		</ul>
 	</div>
