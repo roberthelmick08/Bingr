@@ -2,12 +2,11 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,6 +34,16 @@ public class Party implements HasID {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "party_user", joinColumns = @JoinColumn(name = "party_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	Set<User> users;
+//	
+//	private Map<Integer, Integer> watchMap = null;
+//
+//	public Map<Integer, Integer> getWatchMap() {
+//		return watchMap;
+//	}
+//
+//	public void setWatchMap(Map<Integer, Integer> watchMap) {
+//		this.watchMap = watchMap;
+//	}
 
 	public int getId() {
 		return id;

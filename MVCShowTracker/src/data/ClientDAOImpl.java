@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -404,7 +405,7 @@ public class ClientDAOImpl implements ClientDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<TVShow> addTVShowsToParty(int partyId, Integer... showIds) {
 		try {
@@ -419,6 +420,76 @@ public class ClientDAOImpl implements ClientDAO {
 			em.persist(party);
 			em.flush();
 			return party.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public Map<Integer, Integer> buildEpisodeWatchMap(Integer userId, Integer partyId) {
+		try {
+			Party party = getPartyById(partyId);
+
+			if (party.getUsers().size() == 2) {
+				User userA = null;
+				User userB = null;
+				if (party.getUsers().get(0).getId() == userId) {
+					userA = party.getUsers().get(0);
+					userB = party.getUsers().get(1);
+				} else {
+					userA = party.getUsers().get(1);
+					userB = party.getUsers().get(0);
+				}
+
+				Map<Integer, UserEpisode> userAList = userA.getUserEpisodes();
+				Map<Integer, UserEpisode> userBList = userB.getUserEpisodes();
+				Map<Integer, Integer> watchMap = new HashMap<>();
+
+				List<TVShow> tvShows = party.getTvShows();
+
+				for (TVShow tvs : tvShows) {
+					List<Season> seasons = tvs.getSeasons();
+					for (Season season : seasons) {
+						List<Episode> episodes = season.getEpisodes();
+						for (Episode e : episodes) {
+							int i = 0;
+							UserEpisode ueA = userAList.get(e.getId());
+							UserEpisode ueB = userBList.get(e.getId());
+
+							if (ueA != null) {
+								i += (ueA.getWatched() * 2);
+							}
+							if (ueB != null) {
+								i += ueB.getWatched();
+							}
+							watchMap.put(e.getId(), i);
+						}
+					}
+				}
+				return watchMap;
+			} else {
+				User userA = getUserByUserId(userId);
+				Map<Integer, UserEpisode> userAList = userA.getUserEpisodes();
+				Map<Integer, Integer> watchMap = new HashMap<>();
+				List<TVShow> tvShows = party.getTvShows();
+
+				for (TVShow tvs : tvShows) {
+					List<Season> seasons = tvs.getSeasons();
+					for (Season season : seasons) {
+						List<Episode> episodes = season.getEpisodes();
+						for (Episode e : episodes) {
+							int i = 0;
+							UserEpisode ue = userAList.get(e.getId());
+							if (ue != null) {
+								i += ue.getWatched();
+							}
+							watchMap.put(e.getId(), i);
+						}
+					}
+				}
+				return watchMap;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
