@@ -34,7 +34,7 @@ public interface ClientDAO {
 
 	Party addParty(Party party);
 	
-	Party addUsersToParty(int partyId, int... userIds);
+	Party addUsersToParty(int partyId, Integer... userIds);
 	
 	Party removeUsersFromParty(int partyId, int... userIds);
 	
@@ -45,5 +45,7 @@ public interface ClientDAO {
 	List<TVShow> addTVShowsToParty(int partyId, int... showIds);
 	
 	List<Party> getAllParties();	
+	
+	List<Party> loadUserParties(int userId);	
 
 }

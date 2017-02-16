@@ -3,6 +3,7 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -130,11 +131,13 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<TVShow> addUserShow(int userId, int showId) {
+		User user = getUserByUserId(userId);
+		List<TVShow> tvShows = user.getTvShows();
 		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
 		try {
 			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
-			User user = getUserByUserId(userId);
-			user.getTvShows().add(tvs);
+			tvShows.add(tvs);
+			user.setTvShows(tvShows);
 			em.persist(user);
 			em.flush();
 			return user.getTvShows();
@@ -148,11 +151,12 @@ public class ClientDAOImpl implements ClientDAO {
 	public List<TVShow> addMultipleUserShows(int userId, int... showIds) {
 		try {
 			User user = getUserByUserId(userId);
-			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			List<TVShow> tvShows = user.getTvShows();
 			for (int i : showIds) {
-				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
-				user.getTvShows().add(tvs);
+				TVShow tvs = em.find(TVShow.class, i);
+				tvShows.add(tvs);
 			}
+			user.setTvShows(tvShows);
 			em.persist(user);
 			em.flush();
 			return user.getTvShows();
@@ -164,11 +168,12 @@ public class ClientDAOImpl implements ClientDAO {
 
 	@Override
 	public List<TVShow> removeUserShow(int userId, int showId) {
-		String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
 		try {
-			TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", showId).getSingleResult();
+			TVShow tvs = em.find(TVShow.class, showId);
 			User user = getUserByUserId(userId);
-			user.getTvShows().remove(tvs);
+			List<TVShow> tvShows = user.getTvShows();
+			tvShows.remove(tvs);
+			user.setTvShows(tvShows);
 			em.persist(user);
 			em.flush();
 			return user.getTvShows();
@@ -181,12 +186,14 @@ public class ClientDAOImpl implements ClientDAO {
 	@Override
 	public List<TVShow> removeMultipleUserShows(int userId, int... showIds) {
 		try {
+			
 			User user = getUserByUserId(userId);
-			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			List<TVShow> tvShows = user.getTvShows();
 			for (int i : showIds) {
-				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
-				user.getTvShows().remove(tvs);
+				TVShow tvs = em.find(TVShow.class, i);
+				tvShows.remove(tvs);
 			}
+			user.setTvShows(tvShows);
 			em.persist(user);
 			em.flush();
 			return user.getTvShows();
@@ -210,18 +217,22 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public Party addUsersToParty(int partyId, int... userIds) {
+	public Party addUsersToParty(int partyId, Integer... userIds) {
 		try {
 			Party party = em.find(Party.class, partyId);
 			if (party == null) {
 				return null;
 			} else {
-				if (party.getUsers() == null) {
+				int pSize = party.getUsers().size();
+				if (pSize == 0) {
 					party.setUsers(new ArrayList<User>());
 				}
+				List<User> users = party.getUsers();
 				for (int i : userIds) {
-					party.getUsers().add(em.find(User.class, i));
+					User user = em.find(User.class, i);
+					users.add(user);
 				}
+				party.setUsers(users);
 			}
 			em.persist(party);
 			em.flush();
@@ -290,8 +301,7 @@ public class ClientDAOImpl implements ClientDAO {
 		try {
 			Party party = em.find(Party.class, partyId);
 			List<User> users = party.getUsers();
-			List<User> users2 = new ArrayList<>();
-			users2.addAll(users);
+			List<User> users2 = party.getUsers();
 			for (User user : users2) {
 				for (int id : userIds) {
 					if (user.getId() == id) {
@@ -299,7 +309,7 @@ public class ClientDAOImpl implements ClientDAO {
 					}
 				}
 			}
-
+			party.setUsers(users);
 			em.persist(party);
 			em.flush();
 			return party;
@@ -324,23 +334,23 @@ public class ClientDAOImpl implements ClientDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
-	public void updateSeason(Integer userId, Integer seasonId, Integer... watchedEpisodes){
+	public void updateSeason(Integer userId, Integer seasonId, Integer... watchedEpisodes) {
 		Season season = em.find(Season.class, seasonId);
 		User user = em.find(User.class, userId);
 		List<Episode> episodes = season.getEpisodes();
 		Map<Integer, UserEpisode> userEpisodes = user.getUserEpisodes();
-		
+
 		List<Integer> we = new ArrayList<>();
-		
+
 		for (int i : watchedEpisodes) {
 			we.add(i);
 		}
-		
+
 		for (Episode e : episodes) {
-			if(we.contains(e.getId())){
-				if(userEpisodes.containsKey(e.getId())){
+			if (we.contains(e.getId())) {
+				if (userEpisodes.containsKey(e.getId())) {
 					userEpisodes.get(e.getId()).setWatched(1);
 				}
 				UserEpisode ue = new UserEpisode();
@@ -348,12 +358,36 @@ public class ClientDAOImpl implements ClientDAO {
 				ue.setUser(user);
 				ue.setEpisode(e);
 				userEpisodes.put(e.getId(), ue);
-			}
-			else if(userEpisodes.containsKey(e.getId())){
+			} else if (userEpisodes.containsKey(e.getId())) {
 				userEpisodes.get(e.getId()).setWatched(0);
 			}
 		}
 		em.persist(user);
-		
+
+	}
+
+	@Override
+	public List<Party> loadUserParties(int userId) {
+		try {
+			User user = em.find(User.class, userId);
+			String queryString = "SELECT p FROM Party p";
+
+			List<Party> allParties = em.createQuery(queryString, Party.class).setParameter("id", userId)
+					.getResultList();
+
+			List<Party> parties = new ArrayList<>();
+			for (Party p : parties) {
+				if (p.getUsers().contains(user)) {
+					parties.add(p);
+				}
+			}
+			user.setParties(parties);
+			em.persist(user);
+			em.flush();
+			return parties;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

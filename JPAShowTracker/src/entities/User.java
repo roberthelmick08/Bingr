@@ -1,7 +1,11 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,46 +24,31 @@ import javax.persistence.OneToMany;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="display_name")
+	@Column(name = "display_name")
 	private String displayName;
 
-	@Column(name="username")
+	@Column(name = "username")
 	private String username;
 
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
 
-	@Column(name="img_url")
+	@Column(name = "img_url")
 	private String imgUrl;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "user_tv_show", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tv_show_id"))
+	Set<TVShow> tvShows;
 
-	@ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinTable(name="user_tv_show",
-		joinColumns=@JoinColumn(name="user_id"),
-		inverseJoinColumns=@JoinColumn(name="tv_show_id"))
-	List<TVShow> tvShows;
-
-	@OneToMany(mappedBy="user", cascade={CascadeType.PERSIST}, fetch=FetchType.EAGER)
-	@MapKeyColumn(name="episode_id")
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@MapKeyColumn(name = "episode_id")
 	private Map<Integer, UserEpisode> userEpisodes;
 
-//	@OneToMany(mappedBy= "user", cascade={CascadeType.REMOVE})
-//	private List<UserShow> userShows;
-
-	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
-	List<Party> parties;
-
-//
-//	public List<UserShow> getUserShows() {
-//		return userShows;
-//	}
-//
-//	public void setUserShows(List<UserShow> userShows) {
-//		this.userShows = userShows;
-//	}
+	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	Set<Party> parties;
 
 	public void setId(int id) {
 		this.id = id;
@@ -98,13 +87,13 @@ public class User {
 		this.imgUrl = imgUrl;
 	}
 
-	public List<TVShow> getTvShows() {
-		return tvShows;
-	}
-
-	public void setTvShows(List<TVShow> tvShows) {
-		this.tvShows = tvShows;
-	}
+	// public List<TVShow> getTvShows() {
+	// return tvShows;
+	// }
+	//
+	// public void setTvShows(List<TVShow> tvShows) {
+	// this.tvShows = tvShows;
+	// }
 
 	public Map<Integer, UserEpisode> getUserEpisodes() {
 		return userEpisodes;
@@ -119,17 +108,49 @@ public class User {
 	}
 
 	public List<Party> getParties() {
-		return parties;
+		List<Party> tempParties = new ArrayList<>();
+		if (parties != null) {
+			for (Party p : parties) {
+				tempParties.add(p);
+			}
+		}
+		Collections.sort(tempParties, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+		return tempParties;
 	}
 
 	public void setParties(List<Party> parties) {
-		this.parties = parties;
+		this.parties = new HashSet<>();
+		if (parties != null) {
+			for (Party p : parties) {
+				this.parties.add(p);
+			}
+		}
+	}
+
+	public List<TVShow> getTvShows() {
+		List<TVShow> tempTVShows = new ArrayList<>();
+		if (tvShows != null) {
+			for (TVShow tvs : tvShows) {
+				tempTVShows.add(tvs);
+			}
+		}
+		Collections.sort(tempTVShows, (a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+		return tempTVShows;
+	}
+
+	public void setTvShows(List<TVShow> tvShows) {
+		this.tvShows = new HashSet<>();
+		if (tvShows != null) {
+			for (TVShow tvs : tvShows) {
+				this.tvShows.add(tvs);
+			}
+		}
 	}
 
 	// toString
 	@Override
 	public String toString() {
-		return "Id: " +id + " User: " + displayName;
+		return "Id: " + id + " User: " + displayName;
 	}
 
 }

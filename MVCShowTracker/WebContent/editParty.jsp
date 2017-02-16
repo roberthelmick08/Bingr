@@ -15,7 +15,7 @@
       		<a href="goHome.do"><h1>BingeSync</h1></a>
 			<a href="logOut.do"><li>Log Out</li></a>
 			<a href="trackShow.do"><li>Track New Show</li></a>
-			<a href="editParty.jsp"><li>Manage Groups</li></a>
+			<a href="addParty.jsp"><li>Add Group</li></a>
 		</ul>
 	</div>
 		<!-- add forEach loop to iterate over groups -->
@@ -27,13 +27,15 @@
 				</div>
 				<!--<img src="${user.imgUrl}" class= /> -->
 
+			
 			<c:forEach items="${user.parties}" var="party">
 				<div class="showBox">
 					<h3>${party.name}</h3>
 					<c:forEach items="${party.tvShows}" var="tvShow">
+						<h5>${tvShow.title}</h5>
 						<form action="leaveParty.do">
 							<input type="hidden" name="partyId" value="${party.id}"/>
-							<input type="submit" value="Update"/>
+							<input type="submit" value="Leave"/>
 						</form>
 					</c:forEach>
 				</div>
@@ -43,12 +45,13 @@
 				<div class="groupTitleBox">
 					<h1>Groups to join</h1>
 				</div>
-				<c:forEach items="${parties}" var="party">
+				<c:forEach items="${nonUserParties}" var="party">
 				<div class="showBox">
 					<h3>${party.name}</h3>
-						<form action="addParty.do">
+						<form action="addUsersToParty.do">
 							<input type="hidden" name="partyId" value="${party.id}"/>
-							<input type="submit" value="Update"/>
+							<input type="hidden" name="userId" value="${user.id}"/>
+							<input type="submit" value="Join"/>
 						</form>
 					<c:forEach items="${party.users}" var="user">
 						<h5>${user.displayName}</h5>
