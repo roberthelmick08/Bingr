@@ -266,14 +266,16 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public List<TVShow> addTVShowsToParty(int partyId, int... showIds) {
+	public List<TVShow> addTVShowsToParty(int partyId, Integer... showIds) {
 		try {
 			Party party = em.find(Party.class, partyId);
-			String queryString = "SELECT tvs FROM TVShow tvs WHERE id = :id";
+			List<TVShow> tvShows = party.getTvShows();
+			
 			for (int i : showIds) {
-				TVShow tvs = em.createQuery(queryString, TVShow.class).setParameter("id", i).getSingleResult();
-				party.getTvShows().add(tvs);
+				TVShow tvs = em.find(TVShow.class, i);
+				tvShows.add(tvs);
 			}
+			party.setTvShows(tvShows);
 			em.persist(party);
 			em.flush();
 			return party.getTvShows();
@@ -297,7 +299,7 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public Party removeUsersFromParty(int partyId, int... userIds) {
+	public Party removeUsersFromParty(int partyId, Integer... userIds) {
 		try {
 			Party party = em.find(Party.class, partyId);
 			List<User> users = party.getUsers();

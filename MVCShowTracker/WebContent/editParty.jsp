@@ -31,13 +31,14 @@
 			<c:forEach items="${user.parties}" var="party">
 				<div class="showBox">
 					<h3>${party.name}</h3>
+						<form action="leaveParty.do">
+							<input type="submit" name="leaveGroup" value="Leave"/>
+							<input type="submit" name="deleteGroup" value="Delete"/>
+							<input type="hidden" name="partyId" value="${party.id}"/>
 					<c:forEach items="${party.tvShows}" var="tvShow">
 						<h5>${tvShow.title}</h5>
-						<form action="leaveParty.do">
-							<input type="hidden" name="partyId" value="${party.id}"/>
-							<input type="submit" value="Leave"/>
-						</form>
 					</c:forEach>
+						</form>
 				</div>
 			</c:forEach>
 			</div>
@@ -61,6 +62,22 @@
 					</c:forEach>
 				</div>
 			</c:forEach>
+			</div>
+			<div class="groupBox">
+				<div class="groupTitleBox">
+					<h1>Add Group</h1>
+				</div>
+				<form action="addParty.do">
+				
+				<input type="text" name="partyName" placeholder="Group Name..."/>
+				<select multiple name="tvShows">
+					<c:forEach var="tvShow" items="${tvShows}">
+						<option value="${tvShow.id}">${tvShow.title}</option>
+					</c:forEach>
+				</select>
+					<input type="hidden" name="userId" value="${user.id}"/>
+					<input type="submit" value="Add"/>
+				</form>
 			</div>
 		</div>
 </body>

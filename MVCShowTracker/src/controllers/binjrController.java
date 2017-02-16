@@ -305,15 +305,22 @@ public class binjrController {
 		}
 		session.removeAttribute("user");
 		session.setAttribute("user", user);
+		session.removeAttribute("tvShows");
+		session.setAttribute("tvShows", cDao.getAllShows());
 		session.removeAttribute("nonUserParties");
 		session.setAttribute("nonUserParties", tempParties);
 		return "editParty.jsp";
 	}
 
 	@RequestMapping(path = "addParty.do")
-	public String addParty(Party party, HttpSession session) {
+	public String addParty(String partyName, Integer userId, HttpSession session, Integer ... tvShows ) {
 		try {
-			cDao.addParty(party);
+			Party p = new Party();
+			p.setName(partyName);
+			p = cDao.addParty(p);
+			p = cDao.addUsersToParty(p.getId(), userId);
+			List<TVShow> tvs = cDao.addTVShowsToParty(p.getId(), tvShows);
+			System.out.println(tvs);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
@@ -322,7 +329,7 @@ public class binjrController {
 		return manageParties(session);
 	}
 	
-	@RequestMapping(path = "leaveParty.do")
+	@RequestMapping(path = "leaveParty.do", params="leaveGroup")
 	public String leaveParty(Integer partyId, HttpSession session) {
 		try {
 			int userId = ((User)session.getAttribute("user")).getId();
@@ -335,6 +342,16 @@ public class binjrController {
 		return manageParties(session);
 	}
 
+	@RequestMapping(path = "leaveParty.do", params="deleteGroup")
+	public String deleteParty(Integer partyId, HttpSession session) {
+		try {
+			cDao.deleteParty(partyId);
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		return manageParties(session);
+	}
+	
 	@RequestMapping(path = "addUsersToParty.do")
 	public String addUsersToParty(@RequestParam("partyId") Integer partyId, HttpSession session,
 			@RequestParam("userId") Integer... userIds) {

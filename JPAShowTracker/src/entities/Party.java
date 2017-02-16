@@ -28,7 +28,7 @@ public class Party {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
 	@JoinTable(name = "party_tv_show", joinColumns = @JoinColumn(name = "party_id"), inverseJoinColumns = @JoinColumn(name = "tv_show_id"))
 	Set<TVShow> tvShows;
 

@@ -36,13 +36,13 @@ public interface ClientDAO {
 	
 	Party addUsersToParty(int partyId, Integer... userIds);
 	
-	Party removeUsersFromParty(int partyId, int... userIds);
+	Party removeUsersFromParty(int partyId, Integer... userIds);
 	
 	Boolean deleteParty(int partyId, int userId);
 	
 	Boolean deleteParty(int partyId);
 	
-	List<TVShow> addTVShowsToParty(int partyId, int... showIds);
+	List<TVShow> addTVShowsToParty(int partyId, Integer... showIds);
 	
 	List<Party> getAllParties();	
 	
