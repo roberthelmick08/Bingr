@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import data.AdminDAO;
 import data.ClientDAO;
 import entities.Episode;
+import entities.Party;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
@@ -38,32 +43,36 @@ public class binjrController {
 				e.printStackTrace();
 				return "index.jsp";
 			}
-//			System.out.println("******user.getID() after userLogin: " + user.getId());
+			// System.out.println("******user.getID() after userLogin: " +
+			// user.getId());
 			if (user != null) {
-				resetSessionAttributes(session, user);
+				resetSessionAttributes(session, user.getId());
 			} else {
 				session.setAttribute("noUser", true);
 				return "index.jsp";
 			}
-//			System.out.println("**** number of shows: " + user.getTvShows().size());
-//			for (TVShow s : user.getTvShows()) {
-//				System.out.println("**** number of seasons in " + s.getTitle() + s.getSeasons().size());
-//			}
+			// System.out.println("**** number of shows: " +
+			// user.getTvShows().size());
+			// for (TVShow s : user.getTvShows()) {
+			// System.out.println("**** number of seasons in " + s.getTitle() +
+			// s.getSeasons().size());
+			// }
 			return "profileSplash.jsp";
 		}
 	}
 
-	private void resetSessionAttributes(HttpSession session, User user) {
-		user = cDao.getUserByUserId(user.getId());
-		user.setTvShows(cDao.cleanUserTVShows(user.getId()));
+	private void resetSessionAttributes(HttpSession session, Integer userId) {
+		User user = cDao.getUserByUserId(userId);
+		user.setTvShows(cDao.cleanUserTVShows(userId));
 		session.setAttribute("user", user);
 	}
 
 	@RequestMapping(path = "addUser.do")
 	public String addUser(@RequestParam(name = "passwordConfirm") String passwordConfirm, User user,
 			HttpSession session) {
-		if (user.getPassword() == passwordConfirm) {
+		if (user.getPassword().equals(passwordConfirm)) {
 			try {
+				user.setImgUrl("img/defaultUser.jpg");
 				cDao.createUser(user);
 			} catch (Exception e) {
 				return "error.jsp";
@@ -91,14 +100,14 @@ public class binjrController {
 		session.setAttribute("tvShow", tvshow);
 		return "addSeason.jsp";
 	}
-	
+
 	@RequestMapping(path = "shows.do")
 	public String shows(HttpSession session) {
 		session.removeAttribute("tvShows");
 		session.setAttribute("tvShows", cDao.getAllShows());
 		return "addShow.jsp";
 	}
-	
+
 	@RequestMapping(path = "editShow.do")
 	public String editTVShow(@RequestParam("id") Integer id, HttpSession session) {
 		TVShow tvShow = aDao.getTVShowById(id);
@@ -108,7 +117,7 @@ public class binjrController {
 		session.setAttribute("seasons", tvShow.getSeasons());
 		return "addSeason.jsp";
 	}
-	
+
 	@RequestMapping(path = "updateShow.do")
 	public String updateTVShow(@RequestParam("id") Integer id, TVShow tvShow, HttpSession session) {
 		TVShow tvShow1 = aDao.updateTVShow(id, tvShow);
@@ -143,7 +152,7 @@ public class binjrController {
 		session.setAttribute("tvShow", season.getTvShow());
 		return "addEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "editSeason.do")
 	public String editSeason(@RequestParam("id") Integer id, HttpSession session) {
 		Season season = aDao.getSeasonById(id);
@@ -155,7 +164,7 @@ public class binjrController {
 		session.setAttribute("episodes", season.getEpisodes());
 		return "addEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "updateSeason.do")
 	public String updateSeason(@RequestParam("id") Integer id, Season season, HttpSession session) {
 		aDao.updateSeason(id, season);
@@ -193,10 +202,9 @@ public class binjrController {
 		session.setAttribute("episodes", season.getEpisodes());
 		return "addEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "editEpisode.do")
-	public String editEpisode(@RequestParam("id") Integer id, 
-							Integer seasonId, HttpSession session) {
+	public String editEpisode(@RequestParam("id") Integer id, Integer seasonId, HttpSession session) {
 		Episode episode = aDao.getEpisodeById(id);
 		session.removeAttribute("episode");
 		session.removeAttribute("season");
@@ -204,7 +212,7 @@ public class binjrController {
 		session.setAttribute("episode", episode);
 		return "editEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "updateEpisode.do")
 	public String updateEpisode(@RequestParam("id") Integer id, Episode episode, HttpSession session) {
 		Episode updatedEpisode = aDao.updateEpisode(id, episode);
@@ -229,15 +237,15 @@ public class binjrController {
 		session.setAttribute("episodes", aDao.getSeasonById(seasonId).getEpisodes());
 		return "addEpisode.jsp";
 	}
-	
+
 	@RequestMapping(path = "trackShow.do")
 	public String trackShow(HttpSession session) {
-//		session.setAttribute("userId", userId);
-//		System.out.println("******** userId in trackShow(): " + userId);
+		// session.setAttribute("userId", userId);
+		// System.out.println("******** userId in trackShow(): " + userId);
 		session.setAttribute("allTVShows", cDao.getAllShows());
 		return "trackShow.jsp";
 	}
-	
+
 	@RequestMapping(path = "trackNewShows.do")
 	public String trackNewShows(HttpSession session, Integer userId, Integer... tvShowIds) {
 		try {
@@ -253,23 +261,127 @@ public class binjrController {
 		session.setAttribute("user", cDao.getUserByUserId(userId));
 		return "profileSplash.jsp";
 	}
-	
-	@RequestMapping(path="watchEpisode.do")
-	public String watchEpisode(HttpSession session, Integer userId, Integer episodeId, Integer watched){
-		try {
-			UserEpisode ue = new UserEpisode();
-			ue.setUser(cDao.getUserByUserId(userId));
-			ue.setEpisode(aDao.getEpisodeById(episodeId));
-			ue.setWatched(watched);				
-			System.out.println("******* BEFORE UserEpisode in watchEpisode(): " + ue);
-			ue = cDao.watchEpisode(ue);
-			System.out.println("******* AFTER UserEpisode in watchEpisode(): " + ue);
-			} catch (Exception e) {
-			return "error.jsp";
+
+	@RequestMapping(path = "watchEpisode.do")
+	public String watchEpisode(HttpSession session, Integer userId, Integer seasonId, Integer... watchedEpisodes) {
+		if (watchedEpisodes == null) {
+			watchedEpisodes = new Integer[0];
+		}
+		cDao.updateSeason(userId, seasonId, watchedEpisodes);
+
+		resetSessionAttributes(session, userId);
+		return "profileSplash.jsp";
+	}
+
+	@RequestMapping(path = "logOut.do")
+	public String logOut(HttpSession session) {
+		session.invalidate();
+		return "index.jsp";
+	}
+
+	@RequestMapping(path = "manageParties.do")
+	public String manageParties(HttpSession session) {
+		User user = cDao.getUserByUserId(((User) session.getAttribute("user")).getId());
+		// user.setParties(cDao.loadUserParties(user.getId()));
+		List<Party> userParties = user.getParties();
+		List<Party> tempParties = new ArrayList<>();
+		List<Party> parties = cDao.getAllParties();
+		boolean userHasParty = false;
+		if (userParties.size() == 0) {
+			tempParties = parties;
+		} else {
+			for (Party party : parties) {
+				for (Party p : userParties) {
+					if (party.getId() == p.getId()) {
+						userHasParty = true;
+						break;
+					}
+				}
+				if (!userHasParty) {
+					tempParties.add(party);
+				}
+				userHasParty = false;
+			}
 		}
 		session.removeAttribute("user");
-		session.setAttribute("user", cDao.getUserByUserId(userId));
-//		session.setAttribute("tvShows", cDao.getAllShows());
-		return "profileSplash.jsp";
+		session.setAttribute("user", user);
+		session.removeAttribute("tvShows");
+		session.setAttribute("tvShows", cDao.getAllShows());
+		session.removeAttribute("nonUserParties");
+		session.setAttribute("nonUserParties", tempParties);
+		return "editParty.jsp";
+	}
+
+	@RequestMapping(path = "addParty.do")
+	public String addParty(String partyName, Integer userId, HttpSession session, Integer ... tvShows ) {
+		try {
+			Party p = new Party();
+			p.setName(partyName);
+			p = cDao.addParty(p);
+			p = cDao.addUsersToParty(p.getId(), userId);
+			List<TVShow> tvs = cDao.addTVShowsToParty(p.getId(), tvShows);
+			System.out.println(tvs);
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.removeAttribute("parties");
+		session.setAttribute("parties", cDao.getAllParties());
+		return manageParties(session);
+	}
+	
+	@RequestMapping(path = "leaveParty.do", params="leaveGroup")
+	public String leaveParty(Integer partyId, HttpSession session) {
+		try {
+			int userId = ((User)session.getAttribute("user")).getId();
+			cDao.removeUsersFromParty(partyId, userId);
+
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		
+		return manageParties(session);
+	}
+
+	@RequestMapping(path = "leaveParty.do", params="deleteGroup")
+	public String deleteParty(Integer partyId, HttpSession session) {
+		try {
+			cDao.deleteParty(partyId);
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		return manageParties(session);
+	}
+	
+	@RequestMapping(path = "addUsersToParty.do")
+	public String addUsersToParty(@RequestParam("partyId") Integer partyId, HttpSession session,
+			@RequestParam("userId") Integer... userIds) {
+		try {
+			Party party = cDao.addUsersToParty(partyId, userIds);
+			System.out.println(party);
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		// Need to set attribute for new users added to party. Need method
+		// getUsersInParty DAO method to return list of users in a party?
+		session.removeAttribute("parties");
+		session.setAttribute("parties", cDao.getAllParties());
+		return manageParties(session);
+	}
+
+	@RequestMapping(path = "addTVShowsToParty.do")
+	public String addTVShowsToParty(@RequestParam("tvShowId") List<Integer> tvShowIds,
+			@RequestParam("partyId") Integer partyId, HttpSession session) {
+		try {
+			for (Integer i : tvShowIds) {
+				cDao.addTVShowsToParty(partyId, i);
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.removeAttribute("parties");
+		session.removeAttribute("");
+		session.setAttribute("", cDao.getAllParties());
+		session.setAttribute("parties", cDao.getAllParties());
+		return "editParty.jsp";
 	}
 }

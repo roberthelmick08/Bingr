@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" type="submit">Log In</button>
                     </div>
-                    <a href="/addUser.jsp" class="forgot">
+                    <a href="addUser.jsp" class="forgot">
                         <button class="btn btn-primary btn-block" type="button">Add User</button>
                     </a>
                     <c:if test="${noUser}"><h4>Username and password combination does not exist</h4></c:if>
