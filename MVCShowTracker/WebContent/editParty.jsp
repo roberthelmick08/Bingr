@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BingeSync2</title>
+    <title>BingeSync > Edit Groups</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -80,7 +80,7 @@
 	                                	<c:forEach items="${party.users}" var="user">
 	                                    	<h3 class="groupShowHeading">${user.displayName}</h3>
 	                                	</c:forEach>
-	                                	<h4></h4>
+	                                	<h2></h2>
 	                                	<h3 class="groupShowHeading">Group Shows:</h3>
 	                                	<c:forEach items="${party.tvShows}" var="tvShow">
 	                                    	<h3 class="groupShowHeading">${tvShow.title}</h3>
