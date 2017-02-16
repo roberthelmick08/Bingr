@@ -32,7 +32,7 @@ a.btn.btn-default {
 }
 
 a.navbar-brand.navbar-link {
-  color:#265bc1;
+  color:#e49263;
   font-family:'Monda';
   font-size:x-large;
   padding-top:25px;
@@ -90,6 +90,7 @@ div#showDiv {
   background-color:rgba(101,100,100,0.498039);
   border:solid #e49263 1px;
   color:#fff;
+  padding-left: 16px;
   margin-left:-1px;
   margin-right:-1px;
 }
@@ -127,7 +128,8 @@ span#hiUserSpan {
 }
 
 a.navbar-brand.navbar-link:hover {
-  color:#e49263;
+  color:#265bc1;
+
 }
 
 span#hiUserSpan {
@@ -264,7 +266,9 @@ form#loginBox {
 
 img.showImage {
   float:right;
-  margin:15px;
+  margin-top:-30px;
+  margin-right:5vw;
+  
 }
 
 
