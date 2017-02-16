@@ -46,6 +46,10 @@ public interface ClientDAO {
 	
 	List<Party> getAllParties();	
 	
-	List<Party> loadUserParties(int userId);	
+	List<Party> loadUserParties(int userId);
+
+	Party getPartyById(int id);
+
+	List<TVShow> removePartyShows(Integer partyId, Integer... tvShowIds);	
 
 }
