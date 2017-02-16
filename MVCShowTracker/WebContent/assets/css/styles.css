@@ -1,0 +1,273 @@
+body {
+  background:url("../../assets/img/tvbackground.jpg") no-repeat top center fixed;
+  background-size:cover;
+  background-color:rgba(0,0,0,0);
+  
+}
+
+.primary {
+  color:#265bc1;
+}
+
+nav.navbar.navbar-default.navbar-fixed-top {
+  background-color:rgba(8,8,8,0.69);
+  min-height:40px;
+  height:70px;
+  background:url(../../assets/img/tvbackground.jpg)no-repeat top center fixed;
+  background-size:cover;
+}
+
+button.btn.btn-default.btn-block.btn-lg {
+}
+
+a.btn.btn-primary.btn-block.btn-lg {
+  padding-bottom:4.5vh;
+  padding-top:4.5vh;
+  background-color:#999;
+}
+
+a.btn.btn-default {
+  padding-top:4.5vh;
+  padding-bottom:4.5vh;
+}
+
+a.navbar-brand.navbar-link {
+  color:#265bc1;
+  font-family:'Monda';
+  font-size:x-large;
+  padding-top:25px;
+  padding-left:30px;
+}
+
+a#logOutButton.text-muted {
+  color:#e49263;
+}
+
+a#logOutButton.text-muted:hover {
+  color:#265bc1;
+}
+
+a#logOutButton.text-muted .navbar-nav > li > a:focus, a#logOutButton.text-muted > li > a:hover {
+  color:#e49263;
+}
+
+div.row {
+  /*margin-top:70px;*/
+  margin-left:0;
+  margin-right:0;
+}
+
+span#lastC {
+  color:#265bc1;
+}
+
+div#showTitleDiv {
+  background-color:rgba(153,152,152,0.5);
+  display:inline-block;
+  padding:0px 15px;
+  margin:10px;
+  border-radius:5px;
+}
+
+div#ShowTitleColumn.col-md-12.col-md-offset-0 {
+  text-align:center;
+}
+
+h2.ShowTitleHeader.text-center {
+  margin:10px;
+  margin-bottom: 20px;
+}
+
+div#showTitleColumn.col-md-10.col-md-offset-0 {
+  text-align:center;
+}
+
+h3#seasonTitle.text-left {
+  margin-left:25px;
+}
+
+div#showDiv {
+  background-color:rgba(101,100,100,0.498039);
+  border:solid #e49263 1px;
+  color:#fff;
+  margin-left:-1px;
+  margin-right:-1px;
+}
+
+h2#showTitleHeader.text-left {
+  margin-left:5px;
+  border:solid black 1px;
+  display:inline-block;
+  margin-bottom:-20px;
+  padding:5px;
+}
+
+div.container-fluid {
+  padding-right:0px;
+  padding-left:0px;
+}
+
+div#showColumn.col-md-12.col-md-offset-0 {
+  padding-left:0px;
+  padding-right:0px;
+}
+
+span.episodeChkBox {
+  margin-left:10px;
+}
+
+div#episodesDiv {
+  margin-bottom:10px;
+}
+
+span#hiUserSpan {
+  color:white;
+  font-size:smaller;
+  font-weight:200;
+}
+
+a.navbar-brand.navbar-link:hover {
+  color:#e49263;
+}
+
+span#hiUserSpan {
+  animation-name:flash;
+  animation-duration:5s;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+  animation-direction:alternate;
+  animation-play-state:running;
+}
+
+@media (max-width:768px) {
+  div#navcol-1.collapse.navbar-collapse {
+    background-color:rgba(16,47,105,0.75);
+    width:180px;
+    float:right;
+  }
+}
+
+button.btn.btn-default {
+  margin-left:15px;
+  padding:5px;
+  background-color:rgba(1,1,1,0.498039);
+  color:#eeeeee;
+  font-weight:200;
+  margin-top:-2px;
+  font-size:16px;
+  text-shadow:none;
+  border-color:black;
+  box-shadow:none;
+}
+
+button.btn.btn-default:hover {
+  color:#265bc1;
+}
+
+.footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-basic li {
+  padding:0 10px;
+}
+
+.footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity:1;
+}
+
+.footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+}
+
+.footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+}
+
+.footer-basic .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity:0.9;
+}
+
+button.btn.btn-primary.btn-block: hover {
+}
+
+button.btn.btn-primary.btn-block: hover {
+  background:#fff !important;
+}
+
+form#loginBox {
+  background-color:rgba(255,255,255,0.54);
+  /*font-family:'Monda';*/
+  border:solid 1px #e49263;
+  background-color:#fafafa;
+}
+
+span#lastC {
+  color:#e49263;
+}
+
+.container {
+  padding-right:15px;
+  padding-left:15px;
+  margin-right:auto;
+  margin-left:auto;
+  margin-top:15px;
+}
+
+h2#bingeSyncLoginHeading.text-center {
+  color:#265bc1;
+  font-size:3em;
+  font-weight:bold;
+}
+
+form#loginBox {
+  text-align:center;
+  font-family:'Monda';
+}
+
+.checkbox-inline {
+  position:relative;
+  display:inline-block;
+  padding-left:20px;
+  margin-bottom:0;
+  font-weight:400;
+  vertical-align:middle;
+  cursor:pointer;
+}
+
+img.showImage {
+  float:right;
+  margin:15px;
+}
+
+
+
+
+
