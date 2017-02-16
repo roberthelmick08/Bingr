@@ -80,7 +80,7 @@
 	                                	<c:forEach items="${party.users}" var="user">
 	                                    	<h3 class="groupShowHeading">${user.displayName}</h3>
 	                                	</c:forEach>
-	                                	<h4></h4>
+	                                	<h2></h2>
 	                                	<h3 class="groupShowHeading">Group Shows:</h3>
 	                                	<c:forEach items="${party.tvShows}" var="tvShow">
 	                                    	<h3 class="groupShowHeading">${tvShow.title}</h3>
