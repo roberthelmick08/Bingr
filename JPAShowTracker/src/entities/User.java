@@ -21,7 +21,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 
 @Entity
-public class User {
+public class User  implements HasID {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

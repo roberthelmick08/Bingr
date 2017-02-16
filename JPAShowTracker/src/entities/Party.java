@@ -19,7 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Party {
+public class Party implements HasID {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

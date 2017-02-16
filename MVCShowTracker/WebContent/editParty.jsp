@@ -32,6 +32,7 @@
 				<div class="showBox">
 					<h3>${party.name}</h3>
 						<form action="leaveParty.do">
+							<input type="submit" name="editGroup" value="Edit"/>
 							<input type="submit" name="leaveGroup" value="Leave"/>
 							<input type="submit" name="deleteGroup" value="Delete"/>
 							<input type="hidden" name="partyId" value="${party.id}"/>

@@ -50,6 +50,17 @@ public class ClientDAOImpl implements ClientDAO {
 		}
 	}
 
+	@Override
+	public Party getPartyById(int id) {
+		try {
+			Party party = em.find(Party.class, id);
+			return party;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	// @Override
 	// public UserEpisode getTvShowById(int id) {
 	// try {
@@ -267,26 +278,6 @@ public class ClientDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public List<TVShow> addTVShowsToParty(int partyId, Integer... showIds) {
-		try {
-			Party party = em.find(Party.class, partyId);
-			List<TVShow> tvShows = party.getTvShows();
-
-			for (int i : showIds) {
-				TVShow tvs = em.find(TVShow.class, i);
-				tvShows.add(tvs);
-			}
-			party.setTvShows(tvShows);
-			em.persist(party);
-			em.flush();
-			return party.getTvShows();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public List<Party> getAllParties() {
 		try {
 			String queryString = "SELECT p FROM Party p";
@@ -388,6 +379,46 @@ public class ClientDAOImpl implements ClientDAO {
 			em.persist(user);
 			em.flush();
 			return parties;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<TVShow> removePartyShows(Integer partyId, Integer... tvShowIds) {
+		try {
+
+			Party party = getPartyById(partyId);
+			List<TVShow> tvShows = party.getTvShows();
+			for (int i : tvShowIds) {
+				TVShow tvs = em.find(TVShow.class, i);
+				tvShows.remove(tvs);
+			}
+			party.setTvShows(tvShows);
+			em.persist(party);
+			em.flush();
+			return party.getTvShows();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public List<TVShow> addTVShowsToParty(int partyId, Integer... showIds) {
+		try {
+			Party party = getPartyById(partyId);
+			List<TVShow> tvShows = party.getTvShows();
+
+			for (int i : showIds) {
+				TVShow tvs = em.find(TVShow.class, i);
+				tvShows.add(tvs);
+			}
+			party.setTvShows(tvShows);
+			em.persist(party);
+			em.flush();
+			return party.getTvShows();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

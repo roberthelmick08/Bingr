@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import data.AdminDAO;
 import data.ClientDAO;
 import entities.Episode;
+import entities.HasID;
 import entities.Party;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
-import entities.UserEpisode;
 
 @Controller
 public class binjrController {
@@ -316,25 +315,8 @@ public class binjrController {
 		User user = cDao.getUserByUserId(((User) session.getAttribute("user")).getId());
 		// user.setParties(cDao.loadUserParties(user.getId()));
 		List<Party> userParties = user.getParties();
-		List<Party> tempParties = new ArrayList<>();
 		List<Party> parties = cDao.getAllParties();
-		boolean userHasParty = false;
-		if (userParties.size() == 0) {
-			tempParties = parties;
-		} else {
-			for (Party party : parties) {
-				for (Party p : userParties) {
-					if (party.getId() == p.getId()) {
-						userHasParty = true;
-						break;
-					}
-				}
-				if (!userHasParty) {
-					tempParties.add(party);
-				}
-				userHasParty = false;
-			}
-		}
+		List<Party> tempParties = (List<Party>)comparePartyLists(userParties, parties);
 		session.removeAttribute("user");
 		session.setAttribute("user", user);
 		session.removeAttribute("tvShows");
@@ -342,6 +324,28 @@ public class binjrController {
 		session.removeAttribute("nonUserParties");
 		session.setAttribute("nonUserParties", tempParties);
 		return "editParty.jsp";
+	}
+
+	private List<Party> comparePartyLists(List<Party> userObjs, List<Party> allObjs) {
+		boolean userHasObj = false;
+		List<Party> tempObjs = new ArrayList<>();
+		if (userObjs.size() == 0) {
+			tempObjs = allObjs;
+		} else {
+			for (Party party : allObjs) {
+				for (Party o : userObjs) {
+					if (party.getId() == o.getId()) {
+						userHasObj = true;
+						break;
+					}
+				}
+				if (!userHasObj) {
+					tempObjs.add(party);
+				}
+				userHasObj = false;
+			}
+		}
+		return tempObjs;
 	}
 
 	@RequestMapping(path = "addParty.do")
@@ -359,6 +363,36 @@ public class binjrController {
 		session.removeAttribute("parties");
 		session.setAttribute("parties", cDao.getAllParties());
 		return manageParties(session);
+	}
+	
+	@RequestMapping(path = "managePartyShows.do")
+	public String managePartyShows(HttpSession session, Integer partyId) {
+		
+		Party party = cDao.getPartyById(partyId);
+		List<TVShow> partyTVShows = party.getTvShows();
+		List<TVShow> tempTVShows = new ArrayList<>();
+		List<TVShow> tvShows = cDao.getAllShows();
+		boolean partyHasShow = false;
+		if (partyTVShows.size() == 0) {
+			tempTVShows = tvShows;
+		} else {
+			for (TVShow tvs : tvShows) {
+				for (TVShow t : partyTVShows) {
+					if (tvs.getId() == t.getId()) {
+						partyHasShow = true;
+						break;
+					}
+				}
+				if (!partyHasShow) {
+					tempTVShows.add(tvs);
+				}
+				partyHasShow = false;
+			}
+		}
+		session.removeAttribute("party");
+		session.setAttribute("party", party);
+		session.setAttribute("nonPartyShows", tempTVShows);
+		return "managePartyShows.jsp";
 	}
 
 	@RequestMapping(path = "leaveParty.do", params = "leaveGroup")
@@ -384,6 +418,11 @@ public class binjrController {
 		return manageParties(session);
 	}
 
+	@RequestMapping(path = "leaveParty.do", params = "editGroup")
+	public String editParty(Integer partyId, HttpSession session) {
+		return managePartyShows(session, partyId);
+	}
+
 	@RequestMapping(path = "addUsersToParty.do")
 	public String addUsersToParty(@RequestParam("partyId") Integer partyId, HttpSession session,
 			@RequestParam("userId") Integer... userIds) {
@@ -393,27 +432,28 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		// Need to set attribute for new users added to party. Need method
-		// getUsersInParty DAO method to return list of users in a party?
 		session.removeAttribute("parties");
 		session.setAttribute("parties", cDao.getAllParties());
 		return manageParties(session);
 	}
-
-	@RequestMapping(path = "addTVShowsToParty.do")
-	public String addTVShowsToParty(@RequestParam("tvShowId") List<Integer> tvShowIds,
-			@RequestParam("partyId") Integer partyId, HttpSession session) {
+	
+	@RequestMapping(path = "removePartyShows.do")
+	public String removePartyShows(HttpSession session, Integer partyId, Integer... tvShowIds) {
 		try {
-			for (Integer i : tvShowIds) {
-				cDao.addTVShowsToParty(partyId, i);
-			}
+			cDao.removePartyShows(partyId, tvShowIds);
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		session.removeAttribute("parties");
-		session.removeAttribute("");
-		session.setAttribute("", cDao.getAllParties());
-		session.setAttribute("parties", cDao.getAllParties());
-		return "editParty.jsp";
+		return "managePartyShows.do";
+	}
+
+	@RequestMapping(path = "addPartyShows.do")
+	public String addTVShowsToParty(HttpSession session, Integer partyId, Integer... tvShowIds) {
+		try {
+			cDao.addTVShowsToParty(partyId, tvShowIds);
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		return "managePartyShows.do";
 	}
 }

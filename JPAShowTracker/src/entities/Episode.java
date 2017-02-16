@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Episode {
+public class Episode  implements HasID{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
