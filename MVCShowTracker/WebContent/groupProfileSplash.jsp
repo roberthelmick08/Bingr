@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BootstrapProfileSplash</title>
+    <title>${user.username}'s&nbspProfile</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -51,6 +51,7 @@
                     
                     	
 	                        <div id="showDiv">
+	                            <h1 class="text-left" class="groupNameHeader">${party.name} </h1>
 	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
 	                            
@@ -82,11 +83,11 @@
 					 											<c:choose>
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
 					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
-				 														${episode.title} ******* ${userWatchMap[party.id][episode.id]}
+				 														${episode.title}
 																	</c:when>
 																	<c:otherwise>
 																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
-																		${episode.title} ******* ${userWatchMap[party.id][episode.id]}
+																		${episode.title}
 		 			 												</c:otherwise>
 																</c:choose>
 																</label>
