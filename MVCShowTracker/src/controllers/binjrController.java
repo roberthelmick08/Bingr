@@ -292,7 +292,7 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "trackShow.jsp";
+		return "profileSplash.jsp";
 	}
 
 	@RequestMapping(path = "watchEpisode.do")

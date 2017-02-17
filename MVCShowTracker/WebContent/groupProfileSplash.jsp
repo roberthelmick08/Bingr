@@ -44,6 +44,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 col-md-offset-0" id="showColumn">
+                    <c:forEach items="${user.parties}" var="party">
                     <div id="allShowsDiv">
                     <c:forEach items="${user.tvShows}" var="tvShow">
                     
@@ -64,21 +65,22 @@
 													<div class="checkbox">
 			 											<div id="episodesDiv">
 			                            	 			<c:forEach items="${season.episodes}" var="episode">
-			 											<c:choose>
-			 												<c:when test="${userWatchMap[party.id][episode.id] = 1}">
-			 													<span class="episodeChkBoxGray">
-			 												</c:when>
-			 												<c:when test="${userWatchMap[party.id][episode.id] = 2}">
-			 													<span class="episodeChkBoxRed">
-			 												</c:when>
-			 												<c:when test="${userWatchMap[party.id][episode.id] = 3}">
-			 													<span class="episodeChkBoxGreen">
-			 												</c:when>
-			 												<c:otherwise>
-			 													<span class="episodeChkBox">
-			 												</c:otherwise>
-		 												</c:choose>
+				 											<c:choose>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 1}">
+				 													<span class="episodeChkBoxGray">
+				 												</c:when>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 2}">
+				 													<span class="episodeChkBoxRed">
+				 												</c:when>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 3}">
+				 													<span class="episodeChkBoxGreen">
+				 												</c:when>
+				 												<c:otherwise>
+				 													<span class="episodeChkBox">
+				 												</c:otherwise>
+			 												</c:choose>
 														<label class="checkbox-inline">
+														
 			 											
 					 											<c:choose>
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
@@ -106,6 +108,7 @@
                         
                         </c:forEach>
                     </div>
+                  </c:forEach>
                 </div>
             </div>
         </div>
