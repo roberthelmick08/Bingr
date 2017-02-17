@@ -56,7 +56,7 @@
 	                            <input type="hidden" name="userId" value="${user.id}">
 	                            <input type="hidden" name="tvShowIds" value="${tvShow.id}">
 	                            </form>
-	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
+	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:150px;" />
 	                            
 	                            <c:forEach items="${tvShow.seasons}" var="season">
 			                            <div id="seasonDiv">
@@ -70,23 +70,20 @@
 			 											<div id="episodesDiv">
 				                            	 			<c:forEach items="${season.episodes}" var="episode">
 					 											<span class="episodeChkBox profileSplashEpisodeCheckboxes">
-					 										
+					 																	
 					 											<c:choose>
-					 										
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-																		
-																		
-					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
+																	<label class="checkbox-inlineGreen">
+					 													<input type='checkbox' class="checkbox-inlineGreen" name='watchedEpisodes' value='${episode.id}' checked>
 				 														${episode.title}
-		 		 
 																	</c:when>
 																	<c:otherwise>
-																	
+																	<label>
 																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
 																		${episode.title}
 		 			 												</c:otherwise>
 																</c:choose>
-															
+															</label>
 				 												</span>
 															</c:forEach>
 		 												</div>
