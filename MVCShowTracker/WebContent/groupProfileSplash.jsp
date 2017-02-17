@@ -51,6 +51,7 @@
                     
                     	
 	                        <div id="showDiv">
+	                            <h1 class="text-left" class="groupNameHeader">${party.name} </h1>
 	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
 	                            
@@ -82,11 +83,11 @@
 					 											<c:choose>
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
 					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
-				 														${episode.title} ******* ${userWatchMap[party.id][episode.id]}
+				 														${episode.title}
 																	</c:when>
 																	<c:otherwise>
 																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
-																		${episode.title} ******* ${userWatchMap[party.id][episode.id]}
+																		${episode.title}
 		 			 												</c:otherwise>
 																</c:choose>
 																</label>
