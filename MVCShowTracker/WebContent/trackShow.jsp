@@ -8,16 +8,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BingeSync2</title>
+    <title>BingeSync > Track New Shows</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll.css">
     <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll1.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         <nav class="navbar navbar-default navbar-fixed-top opaque-navbar">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand navbar-link" href="goHome.do"> <strong>BingeSync</strong><span id="hiUserSpan"> &gt; Hi, user.</span></a>
+                    <a class="navbar-brand navbar-link" href="goHome.do"> <strong>BingeSync</strong><span id="hiUserSpan"> &gt; Hi, ${user.username}.</span></a>
                     <button class="navbar-toggle collapsed toggle-animated" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
@@ -40,29 +40,30 @@
             </div>
         </nav>
     </div>
-    <div class="container" id="allUnwatchedShows">
        <form action="trackNewShows.do"> 
+    <div id="allUnwatchedShows">
         <c:forEach items="${nonUserShows}" var="tvShow">
         <div class="individualShowBoxInManagesShow">
-            <h4 class="showTitleInManageShow">${tvShow.title}</h4><img src="${tvShow.imgUrl}" class="showImageInManageShow">
+            <h4 class="showTitleInManageShow">${tvShow.title}</h4>
+             <img src="${tvShow.imgUrl}" class="showImageInManageShow">
             <div class="checkbox">
                 <label class="trackShowLabel">
                     <input type="checkbox" name="tvShowIds" value='${tvShow.id}'>Track Show</label>
             </div>
         </div>
+
         			</c:forEach>
         <input type="hidden" name="userId" value="${user.id}">
-        
-        <div id="submitButtonDivMangedShows"></div>
-        <div class="container">
+       
+    <div class="container">
             <div class="row" id="buttonRowManageShow">
                 <div class="col-md-4" id="buttonColumnMangeShows">
                     <button class="btn btn-default btn-sm" type="submit" id="trackShowsSubmitButton">Update </button>
                 </div>
             </div>
         </div>
-        </form>
     </div>
+        </form>
     <div>
     </div>
     <div class="footer-basic">
