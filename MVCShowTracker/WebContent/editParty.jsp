@@ -34,7 +34,7 @@
                         <li role="presentation"><a href="trackShow.do">ManageShows.</a></li>
                        <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>   
                         <li role="presentation"><a href="manageParties.do">ManageGroups. </a></li>
-                        <li role="presentation"><a class="text-muted" href="goHome.do" id="logOutButton">Home. </a></li>
+              
                         <li role="presentation"><a class="text-muted" href="logOut.do" id="logOutButton">LogOut. </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-left"></ul>
