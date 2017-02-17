@@ -56,7 +56,7 @@
 	                            
 	                            <c:forEach items="${tvShow.seasons}" var="season">
 			                            <div id="seasonDiv">
-			                            	 <form action="watchEpisodeAlt.do" method="post">
+			                            	<form action="watchEpisodeAlt.do" method="post">
 			                                <h3 class="text-left" id="seasonTitle">${season.title}
 			                                <button class="btn btn-default" type="submit">Update </button></h3>
 											<input type="hidden" name="seasonId" value="${season.id}">
