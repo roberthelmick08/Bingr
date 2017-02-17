@@ -67,36 +67,31 @@
 			                            	 			<c:forEach items="${season.episodes}" var="episode">
 				 											<c:choose>
 				 												<c:when test="${userWatchMap[party.id][episode.id] == 1}">
-				 													<span class="episodeChkBoxGray">
+				 													<label class="checkbox-inlineGray">
 				 												</c:when>
 				 												<c:when test="${userWatchMap[party.id][episode.id] == 2}">
-				 													<span class="episodeChkBoxRed">
+				 													<label class="checkbox-inlineRed">
 				 												</c:when>
 				 												<c:when test="${userWatchMap[party.id][episode.id] == 3}">
-				 													<span class="episodeChkBoxGreen">
+				 													<label class="checkbox-inlineGreen">
 				 												</c:when>
 				 												<c:otherwise>
-				 													<span class="episodeChkBox">
+				 													<label class="checkbox-inline">
 				 												</c:otherwise>
 			 												</c:choose>
-														<label class="checkbox-inline">
-														
-			 											
 					 											<c:choose>
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
 					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
-				 														${episode.title}
+				 														${episode.title} ******* ${userWatchMap[party.id][episode.id]}
 																	</c:when>
 																	<c:otherwise>
 																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
-																		${episode.title}
+																		${episode.title} ******* ${userWatchMap[party.id][episode.id]}
 		 			 												</c:otherwise>
 																</c:choose>
 																</label>
-		 												</span>
-											</c:forEach>
+													</c:forEach>
 		 												</div>
-														
 													</div>
 												</div>
 											
