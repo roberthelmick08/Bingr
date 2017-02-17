@@ -25,7 +25,7 @@
         <nav class="navbar navbar-default navbar-fixed-top opaque-navbar">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand navbar-link" href="goHome.do"> <strong>BingeSync</strong><span id="hiUserSpan"> &gt; Hi, user.</span></a>
+                    <a class="navbar-brand navbar-link" href="goHome.do"> <strong>BingeSync</strong><span id="hiUserSpan"> &gt; Hi, ${user.username}.</span></a>
                     <button class="navbar-toggle collapsed toggle-animated" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
@@ -52,9 +52,8 @@
         </div>
         			</c:forEach>
         <input type="hidden" name="userId" value="${user.id}">
-        
-        <div id="submitButtonDivMangedShows"></div>
-        <div class="container">
+       
+    <div class="container">
             <div class="row" id="buttonRowManageShow">
                 <div class="col-md-4" id="buttonColumnMangeShows">
                     <button class="btn btn-default btn-sm" type="submit" id="trackShowsSubmitButton">Update </button>
