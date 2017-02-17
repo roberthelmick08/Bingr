@@ -47,10 +47,13 @@
                     <div id="allShowsDiv">
                     <c:forEach items="${user.tvShows}" var="tvShow">
                     
-                    
-                    
 	                        <div id="showDiv">
-	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
+	                        	<form action="untrackShows.do">
+	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title}
+	                            <button class="btn btn-default" type="submit">Un-Track Show</button> </h2>
+	                            <input type="hidden" name="userId" value="${user.id}">
+	                            <input type="hidden" name="userId" value="${tvShow.id}">
+	                            </form>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
 	                            
 	                            <c:forEach items="${tvShow.seasons}" var="season">
@@ -63,36 +66,32 @@
 												<div class="checkbox-wrapper">
 													<div class="checkbox">
 			 											<div id="episodesDiv">
-			                            	 			<c:forEach items="${season.episodes}" var="episode">
-			 											<span class="episodeChkBox">
-														<label class="checkbox-inline">
-			 											<c:choose>
-															<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-														
-			 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
-		 													${episode.title}
- 		 
-		 												
-															</c:when>
-															<c:otherwise>
-															
-																<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
-																${episode.title}
- 			 												</c:otherwise>
-														</c:choose>
+				                            	 			<c:forEach items="${season.episodes}" var="episode">
+					 											<span class="episodeChkBox">
+																<label class="checkbox-inline">
+					 											<c:choose>
+																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
+																
+					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
+				 														${episode.title}
+		 		 
+																	</c:when>
+																	<c:otherwise>
+																	
+																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
+																		${episode.title}
+		 			 												</c:otherwise>
+																</c:choose>
 																</label>
-		 												</span>
-											</c:forEach>
+				 												</span>
+															</c:forEach>
 		 												</div>
-														
 													</div>
 												</div>
-											
 											</form>
 			                            </div>
 	                            </c:forEach>
 	                        </div>
-                        
                         
                         </c:forEach>
                     </div>
