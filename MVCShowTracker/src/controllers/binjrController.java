@@ -1,7 +1,9 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import data.AdminDAO;
 import data.ClientDAO;
 import entities.Episode;
-import entities.HasID;
 import entities.Party;
 import entities.Season;
 import entities.TVShow;
 import entities.User;
+import entities.UserEpisode;
 
 @Controller
 public class binjrController {
@@ -290,7 +292,7 @@ public class binjrController {
 		} catch (Exception e) {
 			return "error.jsp";
 		}
-		return "trackShow.jsp";
+		return "profileSplash.jsp";
 	}
 
 	@RequestMapping(path = "watchEpisode.do")
@@ -455,5 +457,24 @@ public class binjrController {
 			return "error.jsp";
 		}
 		return "managePartyShows.do";
+	}
+	
+	@RequestMapping(path = "viewParties.do")
+	public String viewGroups(HttpSession session) {
+		Map<Integer, Map<Integer, Integer>> userWatchMap = new HashMap<>();
+		try {
+			User user = (User)session.getAttribute("user");
+			List<Party> userParties = user.getParties();
+			
+			for (Party party : userParties) {
+				userWatchMap.put(party.getId(), cDao.buildEpisodeWatchMap(user.getId(), party.getId()));
+			}
+		} catch (Exception e) {
+			return "error.jsp";
+		}
+		session.removeAttribute("userWatchMap");
+		session.setAttribute("userWatchMap", userWatchMap);
+		
+		return "groupProfileSplash.jsp";
 	}
 }

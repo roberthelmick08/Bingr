@@ -1,6 +1,7 @@
 package data;
 
 import java.util.List;
+import java.util.Map;
 
 import entities.*;
 
@@ -50,6 +51,8 @@ public interface ClientDAO {
 
 	Party getPartyById(int id);
 
-	List<TVShow> removePartyShows(Integer partyId, Integer... tvShowIds);	
+	List<TVShow> removePartyShows(Integer partyId, Integer... tvShowIds);
+
+	Map<Integer, Integer> buildEpisodeWatchMap(Integer userId, Integer partyId);	
 
 }

@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BingeSync > Track New Shows</title>
+    <title>BootstrapProfileSplash</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -40,29 +40,78 @@
             </div>
         </nav>
     </div>
-    <div class="container" id="allUnwatchedShows">
-       <form action="trackNewShows.do"> 
-        <c:forEach items="${nonUserShows}" var="tvShow">
-        <div class="individualShowBoxInManagesShow">
-            <h4 class="showTitleInManageShow">${tvShow.title}</h4><img src="${tvShow.imgUrl}" class="showImageInManageShow">
-            <div class="checkbox">
-                <label class="trackShowLabel">
-                    <input type="checkbox" name="tvShowIds" value='${tvShow.id}'>Track Show</label>
-            </div>
-        </div>
-        			</c:forEach>
-        <input type="hidden" name="userId" value="${user.id}">
-       
-    <div class="container">
-            <div class="row" id="buttonRowManageShow">
-                <div class="col-md-4" id="buttonColumnMangeShows">
-                    <button class="btn btn-default btn-sm" type="submit" id="trackShowsSubmitButton">Update </button>
+    <div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-md-offset-0" id="showColumn">
+                    <c:forEach items="${user.parties}" var="party">
+                    <div id="allShowsDiv">
+                    <c:forEach items="${user.tvShows}" var="tvShow">
+                    
+                    
+                    	
+	                        <div id="showDiv">
+	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
+	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
+	                            
+	                            <c:forEach items="${tvShow.seasons}" var="season">
+			                            <div id="seasonDiv">
+			                            	 <form action="watchEpisode.do" method="post">
+			                                <h3 class="text-left" id="seasonTitle">${season.title}
+			                                <button class="btn btn-default" type="submit">Update </button></h3>
+											<input type="hidden" name="seasonId" value="${season.id}">
+											<input type="hidden" name="userId" value="${user.id}"> 
+												<div class="checkbox-wrapper">
+													<div class="checkbox">
+			 											<div id="episodesDiv">
+			                            	 			<c:forEach items="${season.episodes}" var="episode">
+				 											<c:choose>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 1}">
+				 													<span class="episodeChkBoxGray">
+				 												</c:when>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 2}">
+				 													<span class="episodeChkBoxRed">
+				 												</c:when>
+				 												<c:when test="${userWatchMap[party.id][episode.id] == 3}">
+				 													<span class="episodeChkBoxGreen">
+				 												</c:when>
+				 												<c:otherwise>
+				 													<span class="episodeChkBox">
+				 												</c:otherwise>
+			 												</c:choose>
+														<label class="checkbox-inline">
+														
+			 											
+					 											<c:choose>
+																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
+					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
+				 														${episode.title}
+																	</c:when>
+																	<c:otherwise>
+																		<input type='checkbox' name='watchedEpisodes' value='${episode.id}'>
+																		${episode.title}
+		 			 												</c:otherwise>
+																</c:choose>
+																</label>
+		 												</span>
+											</c:forEach>
+		 												</div>
+														
+													</div>
+												</div>
+											
+											</form>
+			                            </div>
+	                            </c:forEach>
+	                        </div>
+                        
+                        
+                        </c:forEach>
+                    </div>
+                  </c:forEach>
                 </div>
             </div>
         </div>
-        </form>
-    </div>
-    <div>
     </div>
     <div class="footer-basic">
         <div id="footerOpacityDiv">
