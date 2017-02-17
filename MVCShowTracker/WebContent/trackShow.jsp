@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll.css">
     <link rel="stylesheet" href="assets/css/Transparent-Navigation-with-animation-on-scroll1.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body>
@@ -40,16 +40,18 @@
             </div>
         </nav>
     </div>
-    <div class="container" id="allUnwatchedShows">
        <form action="trackNewShows.do"> 
+    <div id="allUnwatchedShows">
         <c:forEach items="${nonUserShows}" var="tvShow">
         <div class="individualShowBoxInManagesShow">
-            <h4 class="showTitleInManageShow">${tvShow.title}</h4><img src="${tvShow.imgUrl}" class="showImageInManageShow">
+            <h4 class="showTitleInManageShow">${tvShow.title}</h4>
+             <img src="${tvShow.imgUrl}" class="showImageInManageShow">
             <div class="checkbox">
                 <label class="trackShowLabel">
                     <input type="checkbox" name="tvShowIds" value='${tvShow.id}'>Track Show</label>
             </div>
         </div>
+
         			</c:forEach>
         <input type="hidden" name="userId" value="${user.id}">
        
@@ -60,8 +62,8 @@
                 </div>
             </div>
         </div>
-        </form>
     </div>
+        </form>
     <div>
     </div>
     <div class="footer-basic">

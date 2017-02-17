@@ -273,7 +273,7 @@ img.showImage {
 }
 
 
-div#allUnwatchedShows.container {
+div#allUnwatchedShows {
   margin-top:100px;
   display:flex;
   color:rgb(49,49,171);
@@ -300,9 +300,8 @@ h4.showTitleInManageShow {
 
 div.individualShowBoxInManagesShow {
   margin:20px;
-  justify-content:flex-start;
   width:100px;
-  /*height:200px;*/
+  
 }
 
 label.trackShowLabel {
@@ -332,7 +331,8 @@ div#buttonRowManageShow.row {
 
 img.showImageInManageShow {
   justify-content:center;
-  width:100px;
+  width: 100px;
+  height:150px;
 }
 
 .episodeChkBoxGreen {
