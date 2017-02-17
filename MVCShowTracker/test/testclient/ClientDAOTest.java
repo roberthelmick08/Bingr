@@ -2,6 +2,7 @@ package testclient;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -77,7 +78,6 @@ public class ClientDAOTest {
 		assertEquals(2, tvs.size());
 		assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
 		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
-		
 	}
 	
 	@Test
@@ -86,9 +86,8 @@ public class ClientDAOTest {
 		assertNotNull(tvs);
 		assertEquals(1, tvs.size());
 		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
-		dao.addUserShow(2, 2);
+		tvs = dao.addUserShow(2, 2);
 		assertEquals(2, tvs.size());
-		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
 		
 	}
 	@Test
@@ -97,9 +96,8 @@ public class ClientDAOTest {
 		assertNotNull(tvs);
 		assertEquals(0, tvs.size());
 		//assertEquals("Season 1", tvs.get(0).getSeasons().get(0).getTitle());
-		dao.addMultipleUserShows(3, 1, 2);
+		tvs = dao.addMultipleUserShows(3, 1, 2);
 		assertEquals(2, tvs.size());
-		assertEquals("Stranger Thrones", tvs.get(1).getTitle());
 		
 	}
 		@Test
@@ -107,10 +105,9 @@ public class ClientDAOTest {
 			List<TVShow> tvs = dao.getUserShows(1);
 			assertNotNull(tvs);
 			assertEquals(2, tvs.size());
-			assertEquals("Stranger Thrones", tvs.get(1).getTitle());
-			dao.removeUserShow(1, 1);
+			assertEquals("Game of Swords", tvs.get(0).getTitle());
+			tvs = dao.removeUserShow(1, 1);
 			assertEquals(1, tvs.size());
-			assertEquals("Stranger Thrones", tvs.get(0).getTitle());
 		}
 		
 		@Test
@@ -119,7 +116,7 @@ public class ClientDAOTest {
 			assertNotNull(tvs);
 			assertEquals(2, tvs.size());
 			assertEquals("Stranger Thrones", tvs.get(1).getTitle());
-			dao.removeMultipleUserShows(1, 1, 2);
+			tvs = dao.removeMultipleUserShows(1, 1, 2);
 			assertEquals(0, tvs.size());
 		}
 		@Test
@@ -183,9 +180,9 @@ public class ClientDAOTest {
 			party = dao.addUsersToParty(party.getId(), 1, 2);
 			assertNotNull(party);
 			assertEquals(2, party.getUsers().size());
-			dao.removeUsersFromParty(partyId, 1);
+			party = dao.removeUsersFromParty(partyId, 1);
 			assertEquals(1, party.getUsers().size());
-			dao.removeUsersFromParty(partyId, 2);
+			party = dao.removeUsersFromParty(partyId, 2);
 			assertEquals(0, party.getUsers().size());
 			
 		}

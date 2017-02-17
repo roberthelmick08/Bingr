@@ -1,0 +1,65 @@
+div#groupsDiv {
+  background-color:rgba(181,181,181,0.75);
+  border:solid #e49263 1px;
+  font-family:'Monda';
+  margin:0;
+  width:100%;
+  margin-top:70px;
+  margin-bottom:48px;
+  padding:0;
+}
+
+.groupsSubDiv {
+  margin:1.5%;
+  display:inline-block;
+  width:95%;
+}
+
+button.btn.btn-default.currentGroupBtns {
+  padding-top:5px;
+  margin: 5px;
+}
+
+.groupsHeading {
+  border:solid black 1px;
+  padding:5px;
+}
+
+div.singleGroupDiv {
+  padding:5px;
+  border:solid #265bc1 1px;
+}
+
+h2.groupNameHeading {
+  margin-top:0px;
+}
+
+h3.groupShowHeading {
+  margin:5px;
+}
+
+div.groupShowsDiv {
+  margin:15px;
+}
+
+input#groupNameInput.input-lg {
+  display:block;
+  width:95%;
+  margin:5px;
+}
+
+select#createGroupTVShowSelect {
+  width:62%;
+  margin-left:5px;
+  margin-top:5px;
+  display:inline;
+}
+
+button#createGroupButton.btn.btn-default.currentGroupBtns {
+  margin-bottom:18px;
+}
+
+div.col-md-4.groupsColumn {
+  text-align:center;
+}
+

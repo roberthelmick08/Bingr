@@ -1,6 +1,7 @@
 package data;
 
 import java.util.List;
+import java.util.Map;
 
 import entities.*;
 
@@ -26,22 +27,32 @@ public interface ClientDAO {
 	
 	List<TVShow> removeUserShow(int userId, int showId);
 
-	List<TVShow> removeMultipleUserShows(int userId, int... showIds);
-	
+	List<TVShow> removeMultipleUserShows(int userId, Integer... showIds);
+
+	void updateSeason(Integer userId, Integer seasonId, Integer[] watchedEpisodes);
+
 	//Phase II
 
 	Party addParty(Party party);
 	
-	Party addUsersToParty(int partyId, int... userIds);
+	Party addUsersToParty(int partyId, Integer... userIds);
 	
-	Party removeUsersFromParty(int partyId, int... userIds);
+	Party removeUsersFromParty(int partyId, Integer... userIds);
 	
 	Boolean deleteParty(int partyId, int userId);
 	
 	Boolean deleteParty(int partyId);
 	
-	List<TVShow> addTVShowsToParty(int partyId, int... showIds);
+	List<TVShow> addTVShowsToParty(int partyId, Integer... showIds);
 	
-	List<Party> getAllParties();
+	List<Party> getAllParties();	
 	
+	List<Party> loadUserParties(int userId);
+
+	Party getPartyById(int id);
+
+	List<TVShow> removePartyShows(Integer partyId, Integer... tvShowIds);
+
+	Map<Integer, Integer> buildEpisodeWatchMap(Integer userId, Integer partyId);	
+
 }

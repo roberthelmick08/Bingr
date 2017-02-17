@@ -1,0 +1,37 @@
+a#backToLoginLink:hover {
+  color:#e49263;
+}
+
+h2#bingeSyncCreateUserHeading.text-center {
+  color:#265bc1;
+  font-size:40px;
+  font-weight:600;
+}
+
+h2#bingeSyncCreateUserHeading.text-center:hover {
+  color:#e49263;
+}
+
+i.glyphicon.glyphicon-edit {
+  font-size:35px;
+  margin:10px;
+  color:#e49263;
+}
+
+h3#createUserHeader {
+  text-align:left;
+  display:inline-block;
+  font-size:21px;
+}
+
+div.editIcon {
+  margin-bottom:15px;
+}
+
+input#displayNameInput.form-control {
+  margin-top:5px;
+}
+
+input#confirmPasswordInput.form-control {
+  margin-top:5px;
+}

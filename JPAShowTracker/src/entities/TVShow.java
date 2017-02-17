@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tv_show")
-public class TVShow {
+public class TVShow  implements HasID{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -98,15 +98,6 @@ public class TVShow {
 			seasons.add(season);
 		}
 	}
-
-//	public List<User> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<User> users) {
-//		this.users = users;
-//	}
-
 	
 	// toString
 	@Override

@@ -18,16 +18,17 @@
 	<form action="editSeason.do?id=${season.id}" method="POST">
 		<button type="submit">Back to Episodes</button>
 	</form>
+	<hr><hr>
 	<div class="inputForm">
 		<h2><c:out value="Edit Episode ${episode.title} from ${tvShow.title} ${season.title} :"/></h2>
 		<form action="updateEpisode.do?id=${episode.id}" method="POST">
-			<input type="text" name="episodeNumber" value="${episode.episodeNumber}" required>
+			Episode Number: <input type="text" name="episodeNumber" value="${episode.episodeNumber}" required>
 			<br>
-			<input type="text" name="title" value="${episode.title}" required>
+			Episode Title: <input type="text" name="title" value="${episode.title}" required>
 			<br>
-			<input type="text" name="description" value="${episode.description}" required>
+			Description<textarea rows="3" cols="75" name="description" required>${episode.description}</textarea>
 			<br>
-			<input type="text" name="imgUrl" value="${episode.imgUrl}">
+			Img Url<input type="text" name="imgUrl" value="${episode.imgUrl}">
 			<br>
 			<input type="hidden" name="episodeId" value="${episode.id}">
 			<input type="hidden" name="seasonId" value="${season.id}">
