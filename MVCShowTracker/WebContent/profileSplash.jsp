@@ -68,10 +68,12 @@
 													<div class="checkbox">
 			 											<div id="episodesDiv">
 				                            	 			<c:forEach items="${season.episodes}" var="episode">
-					 											<span class="episodeChkBox">
+					 											<span class="episodeChkBox profileSplashEpisodeCheckboxes">
+					 										
 					 											<c:choose>
+					 										
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-																		<label class="checkbox-inlineGray">
+																		
 																		
 					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
 				 														${episode.title}
@@ -83,7 +85,7 @@
 																		${episode.title}
 		 			 												</c:otherwise>
 																</c:choose>
-																</label>
+															
 				 												</span>
 															</c:forEach>
 		 												</div>
