@@ -31,8 +31,9 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li role="presentation"><a href="trackShow.do">ManageShows.</a></li>
-                        <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>
+                       <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>   
                         <li role="presentation"><a href="manageParties.do">ManageGroups. </a></li>
+                        <li role="presentation"><a class="text-muted" href="goHome.do" id="logOutButton">Home. </a></li>
                         <li role="presentation"><a class="text-muted" href="logOut.do" id="logOutButton">LogOut. </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-left"></ul>
@@ -71,7 +72,7 @@
         <div id="footerOpacityDiv">
             <footer>
                 <ul class="list-inline">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="goHome.do">Home</a></li>
                     <li><a href="#">Services</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Terms</a></li>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BingeSync > Edit Groups</title>
+    <title>BingeSync > Manage Groups</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monda:400,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -30,10 +30,11 @@
                     <button class="navbar-toggle collapsed toggle-animated" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav navbar-right">
+                                        <ul class="nav navbar-nav navbar-right">
                         <li role="presentation"><a href="trackShow.do">ManageShows.</a></li>
-                        <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>
+                       <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>   
                         <li role="presentation"><a href="manageParties.do">ManageGroups. </a></li>
+                        <li role="presentation"><a class="text-muted" href="goHome.do" id="logOutButton">Home. </a></li>
                         <li role="presentation"><a class="text-muted" href="logOut.do" id="logOutButton">LogOut. </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-left"></ul>
@@ -120,7 +121,7 @@
         <div id="footerOpacityDiv">
             <footer>
                 <ul class="list-inline">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="goHome.do">Home</a></li>
                     <li><a href="#">Services</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Terms</a></li>

@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>BingSync > Error</title>
+<title>BingeSync > Error</title>
 </head>
 <body>
 <h1>SOMETHING WENT WRONG OH NO </h1>
+<br>
+<a href="goHome.do">Home</a>
 </body>
 </html>

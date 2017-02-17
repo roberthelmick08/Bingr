@@ -31,7 +31,9 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li role="presentation"><a href="trackShow.do">ManageShows.</a></li>
+                        <li role="presentation"><a href="viewParties.do">ViewGroups.</a></li>   
                         <li role="presentation"><a href="manageParties.do">ManageGroups. </a></li>
+                        <li role="presentation"><a class="text-muted" href="goHome.do" id="logOutButton">Home. </a></li>
                         <li role="presentation"><a class="text-muted" href="logOut.do" id="logOutButton">LogOut. </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-left"></ul>
@@ -46,12 +48,9 @@
                 <div class="col-md-12 col-md-offset-0" id="showColumn">
                     <c:forEach items="${user.parties}" var="party">
                     <div id="allShowsDiv">
-                    <c:forEach items="${user.tvShows}" var="tvShow">
-                    
-                    
-                    	
+	                <h1 class="text-left" class="groupNameHeader">${party.name} </h1>
+                    <c:forEach items="${party.tvShows}" var="tvShow">
 	                        <div id="showDiv">
-	                            <h1 class="text-left" class="groupNameHeader">${party.name} </h1>
 	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title} </h2>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
 	                            
@@ -113,7 +112,7 @@
         <div id="footerOpacityDiv">
             <footer>
                 <ul class="list-inline">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="goHome.do">Home</a></li>
                     <li><a href="#">Services</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Terms</a></li>
