@@ -438,16 +438,12 @@ public class ClientDAOImpl implements ClientDAO {
 
 				if (users.get(0).getId() == userId) {
 					userA = users.get(0);
-					System.out.println("****USERA USERNAME: " + userA.getUsername());
 
 					userB = users.get(1);
-					System.out.println("****USERB USERNAME: " + userB.getUsername());
 
 				} else {
 					userA = users.get(1);
-					System.out.println("****USERA USERNAME: " + userA.getUsername());
 					userB = users.get(0);
-					System.out.println("****USERB USERNAME: " + userB.getUsername());
 				}
 
 				Map<Integer, UserEpisode> userAList = userA.getUserEpisodes();

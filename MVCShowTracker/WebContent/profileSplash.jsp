@@ -68,10 +68,10 @@
 			 											<div id="episodesDiv">
 				                            	 			<c:forEach items="${season.episodes}" var="episode">
 					 											<span class="episodeChkBox">
-																<label class="checkbox-inline">
 					 											<c:choose>
 																	<c:when test="${user.userEpisodes[episode.id].watched=='1'}">
-																
+																		<label class="checkbox-inlineGray">
+																		
 					 													<input type="checkbox" name='watchedEpisodes' value='${episode.id}' checked>
 				 														${episode.title}
 		 		 
