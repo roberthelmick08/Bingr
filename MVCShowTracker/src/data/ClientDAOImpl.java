@@ -430,16 +430,24 @@ public class ClientDAOImpl implements ClientDAO {
 	public Map<Integer, Integer> buildEpisodeWatchMap(Integer userId, Integer partyId) {
 		try {
 			Party party = getPartyById(partyId);
-
-			if (party.getUsers().size() == 2) {
+			List<User> users = party.getUsers();
+			
+			if (users.size() == 2) {
 				User userA = null;
 				User userB = null;
-				if (party.getUsers().get(0).getId() == userId) {
-					userA = party.getUsers().get(0);
-					userB = party.getUsers().get(1);
+
+				if (users.get(0).getId() == userId) {
+					userA = users.get(0);
+					System.out.println("****USERA USERNAME: " + userA.getUsername());
+
+					userB = users.get(1);
+					System.out.println("****USERB USERNAME: " + userB.getUsername());
+
 				} else {
-					userA = party.getUsers().get(1);
-					userB = party.getUsers().get(0);
+					userA = users.get(1);
+					System.out.println("****USERA USERNAME: " + userA.getUsername());
+					userB = users.get(0);
+					System.out.println("****USERB USERNAME: " + userB.getUsername());
 				}
 
 				Map<Integer, UserEpisode> userAList = userA.getUserEpisodes();
@@ -458,10 +466,10 @@ public class ClientDAOImpl implements ClientDAO {
 							UserEpisode ueB = userBList.get(e.getId());
 
 							if (ueA != null) {
-								i += (ueA.getWatched() * 2);
+								i += (ueA.getWatched());
 							}
 							if (ueB != null) {
-								i += ueB.getWatched();
+								i += ueB.getWatched() * 2;
 							}
 							watchMap.put(e.getId(), i);
 						}

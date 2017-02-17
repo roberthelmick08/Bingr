@@ -52,7 +52,7 @@
 	                            <h2 class="text-left" class="showTitleHeader">${tvShow.title}
 	                            <button class="btn btn-default" type="submit">Un-Track Show</button> </h2>
 	                            <input type="hidden" name="userId" value="${user.id}">
-	                            <input type="hidden" name="userId" value="${tvShow.id}">
+	                            <input type="hidden" name="tvShowIds" value="${tvShow.id}">
 	                            </form>
 	                            <img src="${tvShow.imgUrl}" class="showImage" style="height:70px;" />
 	                            
